@@ -17,6 +17,9 @@ pip install -r requeriments.txt
 ```
 
 
+__NOTE__ It is important to keep in mind that IN GENERAL portability across different _Operating Systems_ is not guaranteed. This means that exact package versions for some libraries may not be able to be installed in both Windows or Linux, for instance. This has some technical reasons. Also, installing identical libraries may find troubles for different CPU architectures. 
+
+
 # CHANGE LOG
 
 * Incorporated suggested changes for code transparency (Thanks v!) 
