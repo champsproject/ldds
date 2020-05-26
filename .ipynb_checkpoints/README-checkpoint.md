@@ -1,25 +1,34 @@
 Repository hosting work in progress towards the construction of a Python package for Computation of Lagrangian Descriptors for Nonlinear Dynamical Systems.
 
 
+# Install minimal package dependencies before running Notebooks
+
+
+First, make sure to use `pip` within the `conda` environment.
+
+So, do as shown below.
+
+
+```bash
+# FIRST
+conda install pip
+# SECOND
+pip install -r requeriments.txt
+```
+
+
 # CHANGE LOG
 
-* Redefined inputs/outputs as `(t, x)`, where `x` has to be a 1D-array of length `(2*Nx*Ny)` for every vector field function. This is needed to be able to use `scipy.integrate.solv_ivp`. Internally every vector field function, need to reshape the array to `(Nx*Ny, 2)` for matrix operations though.
-
-* Temporarily, `forcing` was removed from `HamiltonCentre` and `HamiltonSaddle` vector field functions, but internally incorporated within `HamiltonDuffing`.
-
-* Removed redundant call to perturbation parameters `pert_params` by LD calculator.
-
-* Swapped variable and function names for more self-descriptive ones.
-
+* Incorporated suggested changes for code transparency (Thanks v!) 
+* Added `requirements.txt`
 
 
 # TO-DOs
 
-* Continue renaming variables and functions to be self-descriptive
-* Remove redundant variable calls
-* Reduce number of input arguments for all functions, use lists of variables or dictionaries to pass parameters to functions, for example. `PARAMETERS`
-* Add description within functions
-* Continue commenting functions
+* Add `docstrings` for description of define functions
+* Add further comments to functions
+* Port functions defined within notebook to script libraries
+* Once done, as use examples
 
 
 ## NEXT STAGES
