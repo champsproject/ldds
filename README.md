@@ -28,8 +28,11 @@ pip install -r requeriments.txt
 
 # TO-DOs
 
-* Add `docstrings` for description within functions
-* Continue commenting functions
+* Add another benchmark example for 1D nonlinear systems
+* Add `docstrings` for description within functions in `Python_LD_Examples.ipynb`
+* Continue commenting functions too
+* Implement computation of LD gradient to isolate visualization of invariant manifolds
+* Move on to higher dimensions
 
 # NEXT STAGES
 * Break down functions to achieve a more modular structure
