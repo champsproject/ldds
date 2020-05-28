@@ -17,7 +17,7 @@ pip install -r requeriments.txt
 ```
 
 
-__NOTE__ It is important to keep in mind that IN GENERAL portability across different _Operating Systems_ is not guaranteed. This means that exact package versions for some libraries may not be able to be installed in both Windows or Linux, for instance. This has some technical reasons. Also, installing identical libraries may find troubles for different CPU architectures. 
+<span style='color:red'><b>NOTE</b></span> It is important to keep in mind that IN GENERAL portability across different _Operating Systems_ is not guaranteed. This means that exact package versions for some libraries may not be able to be installed in both Windows or Linux, for instance. This has some technical reasons. Also, installing identical libraries may find troubles for different CPU architectures. 
 
 
 # CHANGE LOG
@@ -28,12 +28,9 @@ __NOTE__ It is important to keep in mind that IN GENERAL portability across diff
 
 # TO-DOs
 
-* Add `docstrings` for description of define functions
-* Add further comments to functions
-* Port functions defined within notebook to script libraries
-* Once done, as use examples
+* Add `docstrings` for description within functions
+* Continue commenting functions
 
-
-## NEXT STAGES
+# NEXT STAGES
 * Break down functions to achieve a more modular structure
 * Maybe define classes of objects
