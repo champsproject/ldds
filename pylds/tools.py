@@ -58,7 +58,8 @@ def draw_lagrangian_descriptor(LD, LD_type, GRID_PARAMETERS, LD_PARAMETERS, norm
     points_y = np.linspace(y_min, y_max, Ny)    
     X, Y = np.meshgrid(points_x, points_y)  # Grid in phase-space
     
-    scatter = plt.scatter(X, Y, c = LD, cmap = colormap_name)
+#     scatter = plt.scatter(X, Y, c = LD, cmap = colormap_name)
+    contour = plt.contourf(X,Y,LD,cmap=colormap_name,levels=200)
     ###################################
     # Customise appearance
     if p_norm != 2:
@@ -81,8 +82,10 @@ def draw_lagrangian_descriptor(LD, LD_type, GRID_PARAMETERS, LD_PARAMETERS, norm
     ax.set_xlabel('$x$', fontsize=18)
     ax.set_ylabel('$y$', fontsize=18)
     ax.set_aspect('auto')
+    
+    fig.colorbar(contour)
 
-    fig.colorbar(scatter) # Add color bar
+#     fig.colorbar(scatter) # Add color bar
 
     plt.show()
     
