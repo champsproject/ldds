@@ -1,3 +1,10 @@
+"""
+Module description ...
+
+Reference:
+- Surename1, Forename1 Initials., Surename2, Forename2 Initials, YEAR. Publication/Book title
+Publisher, Number(Volume No), pp.142-161.
+"""
 import numpy as np
 
 def HamCenter1D(t, u):
@@ -31,10 +38,10 @@ def HamSaddle1D(t, u):
     Parameters
     ----------
     t : float
-        fixed time-point of vector field, for all points in phase-space
+        fixed time-point of vector field, for all points in phase-space.
         
     u : array_like, shape(n,)
-        points in phase-space to determine vector field at common time t
+        points in phase-space to determine vector field at common time t.
         
     Returns
     -------
@@ -55,15 +62,15 @@ def HamDuffing1D(t, u):
     Parameters
     ----------
     t : float
-        fixed time-point of vector field, for all points in phase-space
+        fixed time-point of vector field, for all points in phase-space.
         
     u : array_like, shape(n,)
-        points in phase-space to determine vector field at common time t
+        points in phase-space to determine vector field at common time t.
         
     Returns
     -------
     v : array_like, shape(n,)
-        vector field corresponding to points u in phase-space at time t
+        vector field corresponding to points u in phase-space at time t.
         functional form and parameters of the field is hard-coded.
     """
     x, y = u.T
@@ -78,15 +85,15 @@ def HamSN1D(t, u):
     Parameters
     ----------
     t : float
-        fixed time-point of vector field, for all points in phase-space
+        fixed time-point of vector field, for all points in phase-space.
         
     u : array_like, shape(n,)
-        points in phase-space to determine vector field at common time t
+        points in phase-space to determine vector field at common time t.
         
     Returns
     -------
     v : array_like, shape(n,)
-        vector field corresponding to points u in phase-space at time t
+        vector field corresponding to points u in phase-space at time t.
         functional form and parameters of the field is hard-coded.
     """
     x, y = u.T
@@ -101,15 +108,15 @@ def HamSN1D_inverted(t, u):
     Parameters
     ----------
     t : float
-        fixed time-point of vector field, for all points in phase-space
+        fixed time-point of vector field, for all points in phase-space.
         
     u : array_like, shape(n,)
-        points in phase-space to determine vector field at common time t
+        points in phase-space to determine vector field at common time t.
         
     Returns
     -------
     v : array_like, shape(n,)
-        vector field corresponding to points u in phase-space at time t
+        vector field corresponding to points u in phase-space at time t.
         functional form and parameters of the field is hard-coded.
     """
     x, y = u.T

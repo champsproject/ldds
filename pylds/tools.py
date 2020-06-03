@@ -1,7 +1,14 @@
+"""
+Module description ...
+
+Reference:
+- Surename1, Forename1 Initials., Surename2, Forename2 Initials, YEAR. Publication/Book title
+Publisher, Number(Volume No), pp.142-161.
+"""
 import numpy as np
 import matplotlib.pyplot as plt
 
-def draw_lagrangian_descriptor(LD, LD_type, GRID_PARAMETERS, LD_PARAMETERS, norm = True):
+def draw_lagrangian_descriptor(LD, LD_type, GRID_PARAMETERS, LD_PARAMETERS, norm = True, colormap_name='bone'):
     """
     Returns ..
 
@@ -11,10 +18,21 @@ def draw_lagrangian_descriptor(LD, LD_type, GRID_PARAMETERS, LD_PARAMETERS, norm
         array of computed LD values for array of initial conditions
     
     LD_type : str
-        Type of LD to plot. Options: 'forward', 'backward', 'total'
-        
-    p_norm = float
-        p-value of Lp-norm used to calculated input LD
+        type of LD to plot. Options: 'forward', 'backward', 'total'
+    
+    GRID_PARAMETERS : list of 3-tuples of floats
+        input parameters of limits and size of mesh per axis
+    
+    LD_PARAMETERS : list made of a 3-tuple and a float
+        input parameters for LD computation
+        3-tuple contains floats t_initial, t_final, dt (timestep)
+        float is p-value of Lp-norm
+    
+    norm : bool, optional
+        normalise LD values by maximum
+    
+    colormap_name : str, optional
+        valid name of matplotlib color-map for plot
     
     Returns
     -------
@@ -40,7 +58,6 @@ def draw_lagrangian_descriptor(LD, LD_type, GRID_PARAMETERS, LD_PARAMETERS, norm
     points_y = np.linspace(y_min, y_max, Ny)    
     X, Y = np.meshgrid(points_x, points_y)  # Grid in phase-space
     
-    colormap_name = 'bone'
     scatter = plt.scatter(X, Y, c = LD, cmap = colormap_name)
     ###################################
     # Customise appearance

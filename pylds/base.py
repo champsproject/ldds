@@ -1,10 +1,15 @@
-"""Module"""
+"""
+Module description ...
+
+Reference:
+- Surename1, Forename1 Initials., Surename2, Forename2 Initials, YEAR. Publication/Book title
+Publisher, Number(Volume No), pp.142-161.
+"""
 
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import solve_ivp as integrator # RK45 (default)
 
-#%%
 def generate_points(GRID_PARAMETERS):
     """
     Returns a 1D array of all points from a meshgrid with dimensions and size defined by list of input parameters.
@@ -27,7 +32,6 @@ def generate_points(GRID_PARAMETERS):
     mesh = np.transpose([X.flatten(), Y.flatten()]) # 2D grid
     return mesh
 
-#%%
 def perturb_field(vector_field, perturbation):
     """
     Returns the vector field function with a linearly added pertubation
@@ -38,6 +42,7 @@ def perturb_field(vector_field, perturbation):
     ----------
         vector_field: function
             unperturbed vector field
+    
         perturbation: function
             forcing added to the vector field
     
@@ -47,7 +52,7 @@ def perturb_field(vector_field, perturbation):
     """
     return lambda t, u: vector_field(t, u) + perturbation(t, u)
 
-#%%
+
 def check_if_points_escape_box(u, box_BOUNDARIES):
     """
     Determine if points in phase-space u have scaped box with user-defined defined dimensions
@@ -73,7 +78,7 @@ def check_if_points_escape_box(u, box_BOUNDARIES):
     
     return u_indices
 
-#%%
+
 def vector_field_flat(t, points, vector_field, box_BOUNDARIES):
     """
     Returns input vector field values (y0) for integrator as 1d array 
@@ -88,7 +93,9 @@ def vector_field_flat(t, points, vector_field, box_BOUNDARIES):
     
     vector_field: function
     
-    box_BOUNDARIES : list of 3-tuples
+    box_BOUNDARIES : list of 2-tuples, optional
+        box boundaries for escape condition of variable time integration
+        boundaries are infinite by default.
         
     Returns
     ------- 
@@ -104,7 +111,7 @@ def vector_field_flat(t, points, vector_field, box_BOUNDARIES):
     
     return v.flatten()
 
-#%%
+
 def accumulate_lagrangian_descriptor(LD, points_initial, points_final, LD_PARAMETERS):
     """
     Returns the cumulative values of the LD function from trajectory segments in the evolution of a system.
@@ -121,9 +128,11 @@ def accumulate_lagrangian_descriptor(LD, points_initial, points_final, LD_PARAME
     points_final : array_like, shape(n, )
         points ahead of initial points in the evolution of their dynamics.
         
-    p_norm : float
-        p-value of the Lp norm.
-        
+    LD_PARAMETERS : list made of a 3-tuple and a float
+        input parameters for LD computation
+        3-tuple contains floats t_initial, t_final, dt (timestep)
+        float is p-value of Lp-norm.
+
     Returns
     -------
     LD_accum : array_like, shape(n, )
@@ -144,7 +153,7 @@ def accumulate_lagrangian_descriptor(LD, points_initial, points_final, LD_PARAME
     
     return LD_accum
 
-#%%
+
 def extract_y_final(solution_object):
     """
     Returns the y-values from only at time `t + dt` from solution_object outputted by integrator.
@@ -162,7 +171,7 @@ def extract_y_final(solution_object):
     
     return y_final
 
-#%%
+
 def compute_lagrangian_descriptor(points_initial, vector_field, LD_PARAMETERS, box_BOUNDARIES = [(-np.infty, np.infty), (-np.infty, np.infty)]):
     """
     Returns the values of the LD function from integrated trajectories from initial conditions in phase-space.
@@ -170,21 +179,24 @@ def compute_lagrangian_descriptor(points_initial, vector_field, LD_PARAMETERS, b
     Parameters
     ----------
     points_initial : ndarray, shape(n, )
-        initial conditions in phase-space 
+        initial conditions in phase-space.
     
     vector_field: function
         vector field over phase-space
         
-    time_interval: 2-tuple of floats
-        integration time interval
-        
-    dt : float
-        timestep for integration
+    LD_PARAMETERS : list made of a 3-tuple and a float
+        input parameters for LD computation
+        3-tuple contains floats t_initial, t_final, dt (timestep)
+        float is p-value of Lp-norm.
+    
+    box_BOUNDARIES : list of 2-tuples, optional
+        box boundaries for escape condition of variable time integration
+        boundaries are infinite by default.
     
     Returns
     -------
     LD : 1d array, shape (n, )
-        array of computed LD values for all initial conditions
+        array of computed LD values for all initial conditions.
     """
     f = vector_field_flat
     
