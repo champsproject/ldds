@@ -8,7 +8,7 @@ Publisher, Number(Volume No), pp.142-161.
 import numpy as np
 import matplotlib.pyplot as plt
 
-def draw_lagrangian_descriptor(LD, LD_type, GRID_PARAMETERS, LD_PARAMETERS, norm = True, colormap_name='bone'):
+def draw_lagrangian_descriptor(LD, LD_type, grid_parameters, tau, p_value, norm = True, colormap_name='bone'):
     """
     Returns ..
 
@@ -20,13 +20,14 @@ def draw_lagrangian_descriptor(LD, LD_type, GRID_PARAMETERS, LD_PARAMETERS, norm
     LD_type : str
         type of LD to plot. Options: 'forward', 'backward', 'total'
     
-    GRID_PARAMETERS : list of 3-tuples of floats
+    grid_parameters : list of 3-tuples of floats
         input parameters of limits and size of mesh per axis
     
-    LD_PARAMETERS : list made of a 3-tuple and a float
-        input parameters for LD computation
-        3-tuple contains floats t_initial, t_final, dt (timestep)
-        float is p-value of Lp-norm
+    tau : float
+        Upper limit of integration.
+        
+    p_value : float
+        Exponent in Lagrangian descriptor definition.
     
     norm : bool, optional
         normalise LD values by maximum
@@ -38,56 +39,46 @@ def draw_lagrangian_descriptor(LD, LD_type, GRID_PARAMETERS, LD_PARAMETERS, norm
     -------
         scatter plot of LD function in phase-space 
     """
-    x_min, x_max, Nx = GRID_PARAMETERS[0]
-    y_min, y_max, Ny = GRID_PARAMETERS[1]
-    
-    t_initial, t_final, dt = LD_PARAMETERS[0]
-    p_norm = LD_PARAMETERS[1]
-    
-    tau = t_final - t_initial
-    
-    LD = LD.reshape(Nx, Ny).T # Reshape 1D array
+    x_min, x_max, Nx = grid_parameters[0]
+    y_min, y_max, Ny = grid_parameters[1]
+        
     if norm:
         LD = LD / LD.max()  # Scale LD output
-    ################################### 
+    
     # Plot LDs
-    resolution = 100 # in dpi
-    fig,ax = plt.subplots(1, 1, dpi = resolution)
+    fig,ax = plt.subplots(1, 1, dpi = 100)
     
     points_x = np.linspace(x_min, x_max, Nx)
     points_y = np.linspace(y_min, y_max, Ny)    
-    X, Y = np.meshgrid(points_x, points_y)  # Grid in phase-space
     
-#     scatter = plt.scatter(X, Y, c = LD, cmap = colormap_name)
-    contour = plt.contourf(X,Y,LD,cmap=colormap_name,levels=200)
-    ###################################
+    contour = plt.contourf(points_x,points_y,LD,cmap=colormap_name,levels=200)
+    
     # Customise appearance
-    if p_norm != 2:
-        str_meth = ' '.join(['p-norm (p=',str(p_norm),') - '])
-    else:
-        str_meth = 'arclength - '
+    if p_value == 2:
+        str_method = 'arclength - '
+    elif p_value >= 1:
+        str_method = r'p-norm $(p={})$'.format(p_value)
+    elif p_value < 1:
+        str_method = r'LD$_p$ $(p={})$'.format(p_value)
     
+    t_final=abs(tau)
     if LD_type == 'forward':
-        string_title = ['Forward LD ', str_meth, '(','$\\tau=$ ',str(tau),' , ','$t_0=$',str(t_initial),')']
+        string_title = r'Forward LD {}, $\tau={}$'.format(str_method,t_final)
     elif LD_type == 'backward':
-        string_title = ['Backward LD ', str_meth, '(','$\\tau=$ ',str(tau),' , ','$t_0=$',str(t_initial),')']
+        string_title = r'Backward LD {}, $\tau={}$'.format(str_method,t_final)
     elif LD_type == 'total':
-        string_title = ['Total LD ', str_meth, '(','$\\tau=$ ',str(tau),' , ','$t_0=$',str(t_initial),')']
+        string_title = r'Total LD {}, $\tau={}$'.format(str_method,t_final)
     else: 
-        string_title = ['']
+        string_title = ''
         print('Incorrect "LD_type". Valid options: forward, backward, total. Plot will appear without title')
-    string_title = ' '.join(string_title)
     
     ax.set_title(string_title, fontsize=12)
     ax.set_xlabel('$x$', fontsize=18)
     ax.set_ylabel('$y$', fontsize=18)
-    ax.set_aspect('auto')
     
     fig.colorbar(contour)
 
-#     fig.colorbar(scatter) # Add color bar
-
     plt.show()
     
-__author__ = 'Broncio Aguilar-Sanjuan, Victor-Jose Garcia-Garrido'
+__author__ = 'Broncio Aguilar-Sanjuan, Victor-Jose Garcia-Garrido, Vladimir Krajnak'
 __status__ = 'Development'
