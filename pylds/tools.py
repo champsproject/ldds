@@ -58,6 +58,8 @@ def draw_lagrangian_descriptor(LD, LD_type, grid_parameters, tau, p_value, norm 
         str_method = 'arclength - '
     elif p_value >= 1:
         str_method = r'p-norm $(p={})$'.format(p_value)
+    elif p_value == 0:        
+        str_method = 'action-based'
     elif p_value < 1:
         str_method = r'LD$_p$ $(p={})$'.format(p_value)
     

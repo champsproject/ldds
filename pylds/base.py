@@ -79,7 +79,7 @@ def check_if_points_escape_box(u, box_boundaries):
     
     return u_indices
 
-def lag_des(v, p_value = 0.5):
+def lag_des(u, v, p_value = 0.5):
     """
     Vector field equation for Lagrangian descriptor.
 
@@ -96,8 +96,12 @@ def lag_des(v, p_value = 0.5):
     LD : ndarray, shape(n,1)
         Vector field for Lagrangian descriptor dimension.
     """
-    
-    LD = np.sum(np.abs(v)**p_value, axis=1)
+    if p_value == 0:
+        LD = np.abs(u[:,1]*v[:,0])
+    elif p_value>0:
+        LD = np.sum(np.abs(v)**p_value, axis=1)
+    else:
+        LD=np.zeros(len(u[:,0]))
     return LD
 
 def vector_field_flat(t, points, vector_field, p_value, box_boundaries):
@@ -135,7 +139,7 @@ def vector_field_flat(t, points, vector_field, p_value, box_boundaries):
     v[u_inbox == True] = vector_field(t, u[u_inbox == True])
     # Calculate LD vector field
     LD_vec = np.zeros(len(u))
-    LD_vec [u_inbox == True] = lag_des(v[u_inbox == True], p_value)
+    LD_vec [u_inbox == True] = lag_des(u[u_inbox == True], v[u_inbox == True], p_value)
     # Add LD
     v_out=np.column_stack((v, LD_vec))
     return v_out.flatten()
