@@ -91,7 +91,7 @@ def lagrangian_descriptor(u, v, p_value = 0.5):
     p_value : float, optional
         Exponent in Lagrangian descriptor definition.
         0 is the acton-based LD,
-        0 < p_value < 1 is the LDp desctiptor,
+        0 < p_value < 1 is the Lp quasinorm,
         1 <= p_value < 2 is the Lp norm LD,
         2 is the arclength LD.
         The default is 0.5.
@@ -106,7 +106,7 @@ def lagrangian_descriptor(u, v, p_value = 0.5):
     elif p_value>0:
         LD = np.sum(np.abs(v)**p_value, axis=1)
     else:
-        LD=np.zeros(len(u[:,0]))
+        LD = np.zeros(len(u[:,0]))
     return LD
 
 def vector_field_flat(t, points, vector_field, p_value, box_boundaries):
@@ -126,7 +126,7 @@ def vector_field_flat(t, points, vector_field, p_value, box_boundaries):
     p_value : float, optional
         Exponent in Lagrangian descriptor definition.
         0 is the acton-based LD,
-        0 < p_value < 1 is the LDp desctiptor,
+        0 < p_value < 1 is the Lp quasinorm,
         1 <= p_value < 2 is the Lp norm LD,
         2 is the arclength LD.
         The default is 0.5.
@@ -172,7 +172,7 @@ def compute_lagrangian_descriptor(grid_parameters, vector_field, tau, p_value=0.
     p_value : float, optional
         Exponent in Lagrangian descriptor definition.
         0 is the acton-based LD,
-        0 < p_value < 1 is the LDp desctiptor,
+        0 < p_value < 1 is the Lp quasinorm,
         1 <= p_value < 2 is the Lp norm LD,
         2 is the arclength LD.
         The default is 0.5.
