@@ -8,29 +8,30 @@ Publisher, Number(Volume No), pp.142-161.
 
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.integrate import solve_ivp as integrator # RK45 (default)
+from scipy.integrate import solve_ivp
 
-def generate_points(GRID_PARAMETERS):
+def generate_points(grid_parameters):
     """
-    Returns a 1D array of all points from a meshgrid with dimensions and size defined by list of input parameters.
+    Returns a 1D array of all points from a on a uniform grid with dimensions and size defined by list of input parameters.
+    An additional dimension initiallised with zeros is added for the calculation of Lagrangian Descriptors.
     
     Parameters
     ----------
-    GRID_PARAMETERS : list of 3-tuples of floats
+    grid_parameters : list of 3-tuples of floats
         input parameters of limits and size of mesh per axis
         
     Returns
     -------
     mesh : 1d numpy array
-        points from meshgrid 
+        flattened array of initial conditions
     """
-    x_min, x_max, Nx = GRID_PARAMETERS[0]
-    y_min, y_max, Ny = GRID_PARAMETERS[1]
+    x_min, x_max, Nx = grid_parameters[0]
+    y_min, y_max, Ny = grid_parameters[1]
     points_x = np.linspace(x_min, x_max, Nx)
     points_y = np.linspace(y_min, y_max, Ny)    
     Y, X = np.meshgrid(points_y, points_x)  # Grid in phase-space
-    mesh = np.transpose([X.flatten(), Y.flatten()]) # 2D grid
-    return mesh
+    mesh = np.transpose([X.flatten(), Y.flatten(), np.zeros(Nx*Ny)]) # 2D grid + a zero column for LDs
+    return mesh.flatten()
 
 def perturb_field(vector_field, perturbation):
     """
@@ -53,7 +54,7 @@ def perturb_field(vector_field, perturbation):
     return lambda t, u: vector_field(t, u) + perturbation(t, u)
 
 
-def check_if_points_escape_box(u, box_BOUNDARIES):
+def check_if_points_escape_box(u, box_boundaries):
     """
     Determine if points in phase-space u have scaped box with user-defined defined dimensions
     
@@ -62,7 +63,7 @@ def check_if_points_escape_box(u, box_BOUNDARIES):
     u : array_like, shape(n, )
         points in phase-space to check if outside box boundaries
     
-    box_BOUNDARIES : list of 2-tuples of floats
+    box_boundaries : list of 2-tuples of floats
         box lower and upper limits along X and Y axes
         
     Returns
@@ -72,28 +73,65 @@ def check_if_points_escape_box(u, box_BOUNDARIES):
     """
     x, y = u.T
     # Escape condition
-    box_x_min, box_x_max = box_BOUNDARIES[0]
-    box_y_min, box_y_max = box_BOUNDARIES[1]
+    box_x_min, box_x_max = box_boundaries[0]
+    box_y_min, box_y_max = box_boundaries[1]
     u_indices = (x >= box_x_min) & (x <= box_x_max) & (y >= box_y_min) & (y <= box_y_max)
     
     return u_indices
 
-
-def vector_field_flat(t, points, vector_field, box_BOUNDARIES):
+def lagrangian_descriptor(u, v, p_value = 0.5):
     """
-    Returns input vector field values (y0) for integrator as 1d array 
-    obtained from applying vector_field to a set of initial conditions (points)
+    Vector field equation for Lagrangian descriptor.
+
+    Parameters
+    ----------
+    v : ndarray, shape(n,2)
+        Vector field at given point.
+            
+    p_value : float, optional
+        Exponent in Lagrangian descriptor definition.
+        0 is the acton-based LD,
+        0 < p_value < 1 is the Lp quasinorm,
+        1 <= p_value < 2 is the Lp norm LD,
+        2 is the arclength LD.
+        The default is 0.5.
+
+    Returns
+    -------
+    LD : ndarray, shape(n,1)
+        Vector field for Lagrangian descriptor dimension.
+    """
+    if p_value == 0:
+        LD = np.abs(u[:,1]*v[:,0])
+    elif p_value>0:
+        LD = np.sum(np.abs(v)**p_value, axis=1)
+    else:
+        LD = np.zeros(len(u[:,0]))
+    return LD
+
+def vector_field_flat(t, points, vector_field, p_value, box_boundaries):
+    """
+    Returns vector field values for integration of flattened input array.
     
     Parameters
     ----------
     t : float
         time
     
-    points : ndarray, shape(n,2)
+    points : ndarray, shape(n,3)
     
     vector_field: function
+        User defined vector field.
     
-    box_BOUNDARIES : list of 2-tuples, optional
+    p_value : float, optional
+        Exponent in Lagrangian descriptor definition.
+        0 is the acton-based LD,
+        0 < p_value < 1 is the Lp quasinorm,
+        1 <= p_value < 2 is the Lp norm LD,
+        2 is the arclength LD.
+        The default is 0.5.
+    
+    box_boundaries : list of 2-tuples, optional
         box boundaries for escape condition of variable time integration
         boundaries are infinite by default.
         
@@ -102,131 +140,68 @@ def vector_field_flat(t, points, vector_field, box_BOUNDARIES):
     1d array
         y0 values for integrator 
     """
-    u = points.reshape((-1,2))
+    u = points.reshape((-1,3))
+    u = u[:,:-1] #remove LD values
     # Apply Escape condition
-    u_inbox = check_if_points_escape_box(u, box_BOUNDARIES)
+    u_inbox = check_if_points_escape_box(u, box_boundaries)
     # Define output vector field in combination with escape condition
     v = np.zeros(u.shape)
     v[u_inbox == True] = vector_field(t, u[u_inbox == True])
-    
-    return v.flatten()
+    # Calculate LD vector field
+    LD_vec = np.zeros(len(u))
+    LD_vec [u_inbox == True] = lagrangian_descriptor(u[u_inbox == True], v[u_inbox == True], p_value)
+    # Add LD
+    v_out=np.column_stack((v, LD_vec))
+    return v_out.flatten()
 
-
-def accumulate_lagrangian_descriptor(LD, points_initial, points_final, LD_PARAMETERS):
-    """
-    Returns the cumulative values of the LD function from trajectory segments in the evolution of a system.
-    The trajectory segments run from points_initial to points_final.
-    
-    Parameters
-    ----------
-    LD : array_like, shape(n, )
-        previous cummulative values of the LD function.
-    
-    points_initial : array_like, shape(n, )
-        initial points in phase space in the evolution of trajectories.
-        
-    points_final : array_like, shape(n, )
-        points ahead of initial points in the evolution of their dynamics.
-        
-    LD_PARAMETERS : list made of a 3-tuple and a float
-        input parameters for LD computation
-        3-tuple contains floats t_initial, t_final, dt (timestep)
-        float is p-value of Lp-norm.
-
-    Returns
-    -------
-    LD_accum : array_like, shape(n, )
-        new cummulative values of the LD function from trajectory segment
-    """
-    t_initial, t_final, dt = LD_PARAMETERS[0]
-    p_norm = LD_PARAMETERS[1]
-    
-    F = dt**(1 - p_norm) # Scaling factor from discrete integration
-    points_difference = points_final - points_initial
-    
-    if p_norm <= 1: # p-norm LD
-        LD_accum = LD + F*np.sum( np.abs(points_difference)**p_norm, axis=1)
-    if p_norm == 2: # Arclength LD
-        LD_accum = LD + np.linalg.norm(points_difference, axis=1)
-    elif 1 < p_norm < 2: # Discrete arclength LD
-        LD_accum = LD + np.sum( (points_difference**p_norm)**(1/p_norm), axis=1)
-    
-    return LD_accum
-
-
-def extract_y_final(solution_object):
-    """
-    Returns the y-values from only at time `t + dt` from solution_object outputted by integrator.
-    
-    Parameters
-    ----------
-    solution_object: scipy.integrate.solve_ivp output object.
-    
-    Returns
-    -------
-    y_final: ndarray, shape (n, 2)
-        extracted y-values
-    """
-    y_final = solution_object.y.T[-1]
-    
-    return y_final
-
-
-def compute_lagrangian_descriptor(points_initial, vector_field, LD_PARAMETERS, box_BOUNDARIES = [(-np.infty, np.infty), (-np.infty, np.infty)]):
+def compute_lagrangian_descriptor(grid_parameters, vector_field, tau, p_value=0.5, box_boundaries = [(-np.infty, np.infty), (-np.infty, np.infty)]):
     """
     Returns the values of the LD function from integrated trajectories from initial conditions in phase-space.
     
     Parameters
     ----------
-    points_initial : ndarray, shape(n, )
-        initial conditions in phase-space.
+    grid_parameters : list of 3-tuples of floats
+        input parameters of limits and size of mesh per axis
     
     vector_field: function
         vector field over phase-space
         
-    LD_PARAMETERS : list made of a 3-tuple and a float
-        input parameters for LD computation
-        3-tuple contains floats t_initial, t_final, dt (timestep)
-        float is p-value of Lp-norm.
+    tau : float
+        Upper limit of integration.
+        
+    p_value : float, optional
+        Exponent in Lagrangian descriptor definition.
+        0 is the acton-based LD,
+        0 < p_value < 1 is the Lp quasinorm,
+        1 <= p_value < 2 is the Lp norm LD,
+        2 is the arclength LD.
+        The default is 0.5.
     
-    box_BOUNDARIES : list of 2-tuples, optional
-        box boundaries for escape condition of variable time integration
-        boundaries are infinite by default.
+    box_boundaries : list of 2-tuples, optional
+        Box boundaries for escape condition of variable time integration.
+        Boundaries are infinite by default.
     
     Returns
     -------
-    LD : 1d array, shape (n, )
-        array of computed LD values for all initial conditions.
+    LD : ndarray, shape (Nx, Ny)
+        Array of computed Lagrangian descriptor values for all initial conditions.
     """
-    f = vector_field_flat
     
-    t_initial, t_final, dt = LD_PARAMETERS[0]
-    p_norm = LD_PARAMETERS[1]
+    f = lambda x, y: vector_field_flat(x, y, vector_field, p_value, box_boundaries)
+    y0 = generate_points(grid_parameters)
     
-    if (t_final - t_initial)*dt < 0:
-        dt = -dt
-        
-    shape = points_initial.shape
-    LD = np.zeros(shape[0])  # Array to store forward LDs
-    for t in np.arange(t_initial, t_final - dt, dt):
-        ###################################
-        # Inputs for integrator
-        t_span = (t, t + dt)
-        y0 = points_initial.flatten()
-        ###################################
-        # Outputs from integration
-        solution_object = integrator(f, t_span, y0, args=(vector_field, box_BOUNDARIES))
-        points_final = extract_y_final(solution_object)
-        points_final = points_final.reshape(shape)
-        ###################################
-        # Compute LD
-        LD = accumulate_lagrangian_descriptor(LD, points_initial, points_final, LD_PARAMETERS)
-        ###################################
-        # For next iteration
-        points_initial = points_final
+    solution = solve_ivp(f, [0,tau], y0, t_eval=[tau], rtol=1.0e-4)
     
-    return LD
+    n=len(grid_parameters)
+    LD_values = solution.y[n::n+1] #values corresponding to LD
+    
+    Nx=grid_parameters[0][2]
+    Ny=grid_parameters[1][2]
+    LD=np.abs(LD_values).reshape((Nx,Ny)).T #reshape to 2D array
+    if p_value<=1:
+        return LD
+    else:
+        return LD**(1/p_value)
 
-
-__author__ = 'Broncio Aguilar-Sanjuan, Victor-Jose Garcia-Garrido'
+__author__ = 'Broncio Aguilar-Sanjuan, Victor-Jose Garcia-Garrido, Vladimir Krajnak'
 __status__ = 'Development'

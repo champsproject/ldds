@@ -4,7 +4,7 @@ PyLDs init
 __all__ = ['base', 'vector_fields', 'tools']
 
 __title__ = "pylds"
-__author__ = "Broncio Aguilar-Sanjuan, Victor-Jose Garcia-Garrido"
+__author__ = "Broncio Aguilar-Sanjuan, Victor-Jose Garcia-Garrido, Vladimir Krajnak"
 __copyright__ = "Copyright 2020, PyLDs contributors"
 __license__ = "MIT"
 __version__ = "0.0.0"
