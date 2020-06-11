@@ -195,7 +195,9 @@ def compute_lagrangian_descriptor(grid_parameters, vector_field, tau, p_value=0.
     n=len(grid_parameters)
     LD_values = solution.y[n::n+1] #values corresponding to LD
     
-    LD=np.abs(LD_values).reshape((grid_parameters[0][2],grid_parameters[1][2])).T #reshape to 2D array
+    Nx=grid_parameters[0][2]
+    Ny=grid_parameters[1][2]
+    LD=np.abs(LD_values).reshape((Nx,Ny)).T #reshape to 2D array
     if p_value<=1:
         return LD
     else:
