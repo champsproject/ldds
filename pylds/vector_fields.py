@@ -90,6 +90,35 @@ def Duffing1D(t, u, PARAMETERS = [None]):
     v = np.array([y, x - x**3]).T
     return v
 
+def Duffing1D_inverted(t, u, PARAMETERS = [None]):
+    """
+    Returns 1D vector field of the inverted Duffing oscillator at time t, for an array of points in phase space.
+    Number of model parameters: 0 . PARAMETERS = [None]
+    Functional form: v = (y, - x + x**3), with u = (x, y)
+    
+    Parameters
+    ----------
+    t : float
+        fixed time-point of vector field, for all points in phase space.
+        
+    u : array_like, shape(n,)
+        points in phase space to determine vector field at time t.
+        
+    PARAMETERS : list of floats
+        vector field parameters
+    
+    Returns
+    -------
+    v : array_like, shape(n,)
+        vector field corresponding to points u, in phase space at time t
+    """
+    x, y = u.T
+    # Hamiltonian Model Parameter
+    # perturbation = forcing(t, u, flag_pert, perturbation_params)
+    # v = np.array([y, - x + x**3 + perturbation]).T
+    v = np.array([y, - x + x**3]).T
+    return v
+
 def HamSN1D(t, u, PARAMETERS = [None]):
     """
     Returns 1D Hamilton-Saddle-Node vector field at time t, for an array of points in phase space.
@@ -117,39 +146,10 @@ def HamSN1D(t, u, PARAMETERS = [None]):
     v = np.array([ y, -x -x**2]).T
     return v
 
-def HamSN1D_inverted(t, u, PARAMETERS = [None]):
-    """
-    Returns 1D Inverted Hamilton-Duffing vector field at time t, for an array of points in phase space.
-    Number of model parameters: 0 . PARAMETERS = [None]
-    Functional form: v = (y, - x + x**3), with u = (x, y)
-    
-    Parameters
-    ----------
-    t : float
-        fixed time-point of vector field, for all points in phase space.
-        
-    u : array_like, shape(n,)
-        points in phase space to determine vector field at time t.
-        
-    PARAMETERS : list of floats
-        vector field parameters
-    
-    Returns
-    -------
-    v : array_like, shape(n,)
-        vector field corresponding to points u, in phase space at time t
-    """
-    x, y = u.T
-    # Hamiltonian Model Parameter
-    # perturbation = forcing(t, u, flag_pert, perturbation_params)
-    # v = np.array([y, - x + x**3 + perturbation]).T
-    v = np.array([y, - x + x**3]).T
-    return v
-
 def forcing(t, u, perturbation_params = [1, 0.15, 0.5]):
     """
-    Returns 1D Inverted Hamilton-Duffing vector field at time t, for an array of points in phase space.
-    Number of model parameters: 3. PARAMETERS = [perturbation_type, A, freq]
+    Returns vector field for a perturbation at time t, for an array of points in phase space.
+    Number of model parameters: 3. perturbation_params = [perturbation_type, amplitude, frequency]
     Functional form: v = (, ), with u = (x, y)
     
     Parameters
@@ -160,7 +160,7 @@ def forcing(t, u, perturbation_params = [1, 0.15, 0.5]):
     u : array_like, shape(n,)
         points in phase space to determine vector field at time t.
         
-    PARAMETERS : list of floats
+    perturbation_params : list of floats, [perturbation_type, amplitude, frequency]
         vector field parameters
     
     Returns
@@ -172,16 +172,14 @@ def forcing(t, u, perturbation_params = [1, 0.15, 0.5]):
     perturbation = np.zeros(u.shape)
     
     # Perturbation parameters
-    perturbation_type, A, freq = perturbation_params # Amplitude and Frequency
+    perturbation_type, amplitude, freq = perturbation_params
     
     if perturbation_type == 1:
-        perturbation = perturbation + np.array([0, A * np.sin(freq*t)])
+        perturbation = perturbation + np.array([0, amplitude * np.sin(freq*t)])
     elif perturbation_type == 2:
-        perturbation = perturbation + np.array([0, A * np.sech(t) * np.sin(freq*t)])
-    elif perturbation_type == None:
-        perturbation = perturbation
+        perturbation = perturbation + np.array([0, amplitude * np.sech(t) * np.sin(freq*t)])
     
     return perturbation
 
-__author__ = 'Broncio Aguilar-Sanjuan, Victor-Jose Garcia-Garrido'
+__author__ = 'Broncio Aguilar-Sanjuan, Victor-Jose Garcia-Garrido, Vladimir Krajnak'
 __status__ = 'Development'

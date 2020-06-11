@@ -79,7 +79,7 @@ def check_if_points_escape_box(u, box_boundaries):
     
     return u_indices
 
-def lag_des(u, v, p_value = 0.5):
+def lagrangian_descriptor(u, v, p_value = 0.5):
     """
     Vector field equation for Lagrangian descriptor.
 
@@ -88,8 +88,13 @@ def lag_des(u, v, p_value = 0.5):
     v : ndarray, shape(n,2)
         Vector field at given point.
             
-    p_value : float
+    p_value : float, optional
         Exponent in Lagrangian descriptor definition.
+        0 is the acton-based LD,
+        0 < p_value < 1 is the LDp desctiptor,
+        1 <= p_value < 2 is the Lp norm LD,
+        2 is the arclength LD.
+        The default is 0.5.
 
     Returns
     -------
@@ -118,8 +123,13 @@ def vector_field_flat(t, points, vector_field, p_value, box_boundaries):
     vector_field: function
         User defined vector field.
     
-    p_value : float
+    p_value : float, optional
         Exponent in Lagrangian descriptor definition.
+        0 is the acton-based LD,
+        0 < p_value < 1 is the LDp desctiptor,
+        1 <= p_value < 2 is the Lp norm LD,
+        2 is the arclength LD.
+        The default is 0.5.
     
     box_boundaries : list of 2-tuples, optional
         box boundaries for escape condition of variable time integration
@@ -139,7 +149,7 @@ def vector_field_flat(t, points, vector_field, p_value, box_boundaries):
     v[u_inbox == True] = vector_field(t, u[u_inbox == True])
     # Calculate LD vector field
     LD_vec = np.zeros(len(u))
-    LD_vec [u_inbox == True] = lag_des(u[u_inbox == True], v[u_inbox == True], p_value)
+    LD_vec [u_inbox == True] = lagrangian_descriptor(u[u_inbox == True], v[u_inbox == True], p_value)
     # Add LD
     v_out=np.column_stack((v, LD_vec))
     return v_out.flatten()
@@ -160,7 +170,12 @@ def compute_lagrangian_descriptor(grid_parameters, vector_field, tau, p_value=0.
         Upper limit of integration.
         
     p_value : float, optional
-        Exponent in Lagrangian descriptor definition. The default is 0.5.
+        Exponent in Lagrangian descriptor definition.
+        0 is the acton-based LD,
+        0 < p_value < 1 is the LDp desctiptor,
+        1 <= p_value < 2 is the Lp norm LD,
+        2 is the arclength LD.
+        The default is 0.5.
     
     box_boundaries : list of 2-tuples, optional
         Box boundaries for escape condition of variable time integration.
