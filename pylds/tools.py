@@ -46,12 +46,12 @@ def draw_lagrangian_descriptor(LD, LD_type, grid_parameters, tau, p_value, norm 
         LD = LD / LD.max()  # Scale LD output
     
     # Plot LDs
-    fig,ax = plt.subplots(1, 1, dpi = 100)
+    fig, (ax0, ax1) = plt.subplots(1, 2, figsize=(7.5,3), dpi=130)
     
     points_x = np.linspace(x_min, x_max, Nx)
     points_y = np.linspace(y_min, y_max, Ny)    
     
-    contour = plt.contourf(points_x,points_y,LD,cmap=colormap_name,levels=200)
+    con0 = ax0.contourf(points_x,points_y,LD,cmap=colormap_name,levels=200)
     
     # Customise appearance
     if p_value == 2:
@@ -74,12 +74,23 @@ def draw_lagrangian_descriptor(LD, LD_type, grid_parameters, tau, p_value, norm 
         string_title = ''
         print('Incorrect "LD_type". Valid options: forward, backward, total. Plot will appear without title')
     
-    ax.set_title(string_title, fontsize=12)
-    ax.set_xlabel('$x$', fontsize=18)
-    ax.set_ylabel('$y$', fontsize=18)
+    fig.suptitle(string_title, fontsize=14, y=1.04)
+    ax0.set_title('LD values')
+    ax0.set_xlabel('$x$')
+    ax0.set_ylabel('$y$')
     
-    fig.colorbar(contour)
-
+    fig.colorbar(con0, ax=ax0, ticks=np.linspace(np.nanmin(LD),np.nanmax(LD),11),format='%.2f')
+    
+    gx,gy = np.gradient(LD, 0.05, 0.05)
+    scalar = np.sqrt(gx**2 + gy**2)
+    Z = scalar/scalar.max()
+    
+    con1 = ax1.contourf(points_x,points_y,Z,cmap='RdBu_r',levels=200)
+    ax1.set_title('LD gradient magnitude')
+    ax1.set_xlabel('$x$')
+    ax1.label_outer()
+    fig.colorbar(con1, ax=ax1, ticks=np.linspace(np.nanmin(Z),np.nanmax(Z),11),format='%.2f')
+    
     plt.show()
     
 __author__ = 'Broncio Aguilar-Sanjuan, Victor-Jose Garcia-Garrido, Vladimir Krajnak'
