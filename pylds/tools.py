@@ -85,7 +85,7 @@ def draw_lagrangian_descriptor(LD, LD_type, grid_parameters, tau, p_value, norm 
     scalar = np.sqrt(gx**2 + gy**2)
     Z = scalar/scalar.max()
     
-    con1 = ax1.contourf(points_x,points_y,Z,cmap='RdBu_r',levels=200)
+    con1 = ax1.contourf(points_x,points_y,Z,cmap='Reds',levels=200)
     ax1.set_title('LD gradient magnitude')
     ax1.set_xlabel('$x$')
     ax1.label_outer()
