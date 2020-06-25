@@ -10,18 +10,18 @@ import matplotlib.pyplot as plt
 
 def draw_lagrangian_descriptor(LD, LD_type, grid_parameters, tau, p_value, norm = True, colormap_name='bone'):
     """
-    Returns ..
+    Draws a Lagrangian descriptor contour plot and a contour plot showing the magnitude of its gradient field.
 
     Parameters
     ----------
     LD : ndarray, shape(n, )
-        array of computed LD values for array of initial conditions
+        Array of Lagrangian Descriptor values.
     
     LD_type : str
-        type of LD to plot. Options: 'forward', 'backward', 'total'
+        Type of LD to plot. Options: 'forward', 'backward', 'total'.
     
     grid_parameters : list of 3-tuples of floats
-        input parameters of limits and size of mesh per axis
+        Limits and size of mesh per axis.
     
     tau : float
         Upper limit of integration.
@@ -30,28 +30,29 @@ def draw_lagrangian_descriptor(LD, LD_type, grid_parameters, tau, p_value, norm 
         Exponent in Lagrangian descriptor definition.
     
     norm : bool, optional
-        normalise LD values by maximum
+        True normalises LD values.
     
     colormap_name : str, optional
-        valid name of matplotlib color-map for plot
+        Name of matplotlib colormap for plot.
     
     Returns
     -------
-        scatter plot of LD function in phase-space 
+        Nothing.
     """
     x_min, x_max, Nx = grid_parameters[0]
     y_min, y_max, Ny = grid_parameters[1]
         
     if norm:
-        LD = LD / LD.max()  # Scale LD output
+        LD = LD - np.nanmin(LD)  # Scale LD output
+        LD = LD / np.nanmax(LD)  # Scale LD output
     
     # Plot LDs
-    fig,ax = plt.subplots(1, 1, dpi = 100)
+    fig, (ax0, ax1) = plt.subplots(1, 2, figsize=(7.5,3), dpi=130)
     
     points_x = np.linspace(x_min, x_max, Nx)
     points_y = np.linspace(y_min, y_max, Ny)    
     
-    contour = plt.contourf(points_x,points_y,LD,cmap=colormap_name,levels=200)
+    con0 = ax0.contourf(points_x, points_y, LD, cmap=colormap_name, levels=200)
     
     # Customise appearance
     if p_value == 2:
@@ -74,12 +75,26 @@ def draw_lagrangian_descriptor(LD, LD_type, grid_parameters, tau, p_value, norm 
         string_title = ''
         print('Incorrect "LD_type". Valid options: forward, backward, total. Plot will appear without title')
     
-    ax.set_title(string_title, fontsize=12)
-    ax.set_xlabel('$x$', fontsize=18)
-    ax.set_ylabel('$y$', fontsize=18)
+    fig.suptitle(string_title, fontsize=14, y=1.04)
+    ax0.set_title('LD values')
+    ax0.set_xlabel('$x$')
+    ax0.set_ylabel('$y$')
     
-    fig.colorbar(contour)
-
+    ticks_LD = np.linspace(np.nanmin(LD), np.nanmax(LD), 11)
+    fig.colorbar(con0, ax=ax0, ticks=ticks_LD, format='%.2f')
+    
+    gradient_x, gradient_y = np.gradient( LD, 0.05, 0.05)
+    gradient_magnitude = np.sqrt(gradient_x**2 + gradient_y**2)
+    gradient_magnitude = gradient_magnitude/gradient_magnitude.max()
+    
+    con1 = ax1.contourf(points_x, points_y, gradient_magnitude, cmap='Reds', levels=200)
+    ax1.set_title('LD gradient magnitude')
+    ax1.set_xlabel('$x$')
+    ax1.label_outer()
+    
+    ticks_gradient = np.linspace(np.nanmin(gradient_magnitude), np.nanmax(gradient_magnitude), 11)
+    fig.colorbar(con1, ax=ax1, ticks=ticks_gradient, format='%.2f')
+    
     plt.show()
     
 __author__ = 'Broncio Aguilar-Sanjuan, Victor-Jose Garcia-Garrido, Vladimir Krajnak'
