@@ -80,7 +80,7 @@ def draw_lagrangian_descriptor(LD, LD_type, grid_parameters, tau, p_value, norm 
     ax0.set_xlabel('$x$')
     ax0.set_ylabel('$y$')
     
-    ticks_LD = np.linspace(np.nanmin(LD), 1, 11)
+    ticks_LD = np.linspace(np.nanmin(LD), np.nanmax(LD), 11)
     fig.colorbar(con0, ax=ax0, ticks=ticks_LD, format='%.2f')
     
     gradient_x, gradient_y = np.gradient( LD, 0.05, 0.05)
@@ -92,7 +92,7 @@ def draw_lagrangian_descriptor(LD, LD_type, grid_parameters, tau, p_value, norm 
     ax1.set_xlabel('$x$')
     ax1.label_outer()
     
-    ticks_gradient = np.linspace(np.nanmin(gradient_magnitude), 1, 11)
+    ticks_gradient = np.linspace(np.nanmin(gradient_magnitude), np.nanmax(gradient_magnitude), 11)
     fig.colorbar(con1, ax=ax1, ticks=ticks_gradient, format='%.2f')
     
     plt.show()
