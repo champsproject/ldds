@@ -49,9 +49,11 @@ def draw_lagrangian_descriptor(LD, LD_type, grid_parameters, tau, p_value, norm 
     fig,ax = plt.subplots(1, 1, dpi = 100)
     
     points_x = np.linspace(x_min, x_max, Nx)
-    points_y = np.linspace(y_min, y_max, Ny)    
+    points_y = np.linspace(y_min, y_max, Ny)
+    X,Y = np.meshgrid(points_x, points_y)
     
-    contour = plt.contourf(points_x,points_y,LD,cmap=colormap_name,levels=200)
+    LD_min, LD_max = LD.min(), LD.max()
+    contour = plt.pcolormesh(X,Y,LD,cmap=colormap_name,vmin=LD_min,vmax=LD_max)
     
     # Customise appearance
     if p_value == 2:
