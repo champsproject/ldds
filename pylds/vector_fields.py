@@ -171,8 +171,8 @@ def forcing(t, u, PARAMETERS = [1, 0.15, 0.5]):
     x, y = u.T
     perturbation = np.zeros(u.shape)
     
-    # Perturbation parameters
-    A, freq = perturbation_params # Amplitude and Frequency
+    # Unpack parameters
+    perturbation_type, A, freq = PARAMETERS # Type, amplitude and Frequency
     
     if perturbation_type == 1:
         perturbation = perturbation + np.array([0, A * np.sin(freq*t)])
