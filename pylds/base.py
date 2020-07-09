@@ -84,7 +84,7 @@ def generate_points(grid_parameters):
         for i in range(N_dof):
             if dof_fixed[i] == 1:
                 phase_space_axes[i] = dof_fixed_axes[k] * \
-                    np.zeros(N_points_slice)
+                    np.ones(N_points_slice)
                 k += 1
 
         # Set axis to be determined by energy conservation
