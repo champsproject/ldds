@@ -184,8 +184,7 @@ def forcing(t, u, perturbation_params = [1, 0.15, 0.5]):
 def HenonHeiles_vector_field(t, u, PARAMETERS = None):
     """
     Returns 2D Henon-Heiles vector field at time t, for an array of points in phase space.
-    Number of model parameters: 0 . PARAMETERS = [wx, wy, delta]
-    Functional form: v = (x wx^2 + 2xy, y wy^2 + x^2 - delta y^2), with u = (x, y)
+    Functional form: v = (p_x, p_y, -x - 2*x*y, -x**2 -y + y**2), with u = (x, y, p_x, p_y)
     
     Parameters
     ----------
@@ -203,9 +202,9 @@ def HenonHeiles_vector_field(t, u, PARAMETERS = None):
     v : array_like, shape(n,)
         vector field corresponding to points u, in phase space at time t
     """
-    N_dof = u.shape[-1]
-    points_positions = u.T[:int(N_dof/2)]
-    points_momenta = u.T[int(N_dof/2):]
+    N_dim = u.shape[-1]
+    points_positions = u.T[:int(N_dim/2)]
+    points_momenta = u.T[int(N_dim/2):]
     x, y = points_positions
     p_x, p_y = points_momenta 
     
@@ -221,6 +220,24 @@ def HenonHeiles_vector_field(t, u, PARAMETERS = None):
     return v
 
 def HenonHeiles_potential(positions, PARAMETERS = None):
+    """
+    Potential Energy Function (PEF) of 2DoF Henon-Heiles system.
+
+    Parameters
+    ----------
+        
+    positions : array_like, shape(n,)
+        array of 2D points in configuration space.
+        
+    PARAMETERS : list of floats
+        vector field parameters
+    
+    Returns
+    -------
+    V : array_like, shape(n,)
+        potential energy corresponding to all positions
+    
+    """
     x, y = positions.T
     # Function parameters
     # None
@@ -228,11 +245,10 @@ def HenonHeiles_potential(positions, PARAMETERS = None):
     V = (1/2)*(x**2 + y**2) + (y * x**2) - (1/3)*y**3
     return V
 
-def SaddleNF_vector_field(t, u, PARAMETERS = None):
+def NFSaddle_vector_field(t, u, PARAMETERS = None):
     """
-    Returns 2D Henon-Heilles vector field at time t, for an array of points in phase space.
-    Number of model parameters: 0 . PARAMETERS = [wx, wy, delta]
-    Functional form: v = (x wx^2 + 2xy, y wy^2 + x^2 - delta y^2), with u = (x, y)
+    Returns 2D Index-1 Normal-Form Saddle vector field at time t, for an array of points in phase space.
+    Functional form: v = (p_x, p_y, x, -y), with u = (x, y, p_x, p_y)
     
     Parameters
     ----------
@@ -250,9 +266,9 @@ def SaddleNF_vector_field(t, u, PARAMETERS = None):
     v : array_like, shape(n,)
         vector field corresponding to points u, in phase space at time t
     """
-    N_dof = u.shape[-1]
-    points_positions = u.T[:int(N_dof/2)]
-    points_momenta = u.T[int(N_dof/2):]
+    N_dim = u.shape[-1]
+    points_positions = u.T[:int(N_dim/2)]
+    points_momenta = u.T[int(N_dim/2):]
     x, y = points_positions
     p_x, p_y = points_momenta 
     
@@ -267,10 +283,29 @@ def SaddleNF_vector_field(t, u, PARAMETERS = None):
     v = np.array([v_x, v_y, v_p_x, v_p_y]).T
     return v
 
-def SaddleNF_potential(positions, PARAMETERS = None):
+def NFSaddle_potential(positions, PARAMETERS = None):
+    """
+    Potential Energy Function (PEF) of 2DoF Index-1 Normal-Form Saddle system.
+
+    Parameters
+    ----------
+        
+    positions : array_like, shape(n,)
+        array of 2D points in configuration space.
+        
+    PARAMETERS : list of floats
+        vector field parameters
+    
+    Returns
+    -------
+    V : array_like, shape(n,)
+        potential energy corresponding to all positions
+    
+    """
     x, y = positions.T
     # Function parameters
     # None
+    
     # Potential energy function
     V = (1/2)*y**2 - (1/2)*x**2
     return V

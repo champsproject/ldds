@@ -14,9 +14,9 @@ from scipy.integrate import solve_ivp
 from functools import reduce
 
 def energy_conservation_condition(phase_space_axes, H0, potential_energy, momentum_sign):
-    N_dof = len(phase_space_axes)
-    phase_space_positions = np.transpose(phase_space_axes[:int(N_dof/2)])
-    phase_space_momenta = np.transpose(phase_space_axes[int(N_dof/2):])
+    N_dim = len(phase_space_axes)
+    phase_space_positions = np.transpose(phase_space_axes[:int(N_dim/2)])
+    phase_space_momenta = np.transpose(phase_space_axes[int(N_dim/2):])
     V = potential_energy(phase_space_positions)
     points_dof_remaining = momentum_sign * \
         np.sqrt(2*(H0 - V) - (phase_space_momenta**2).sum(axis=1))
@@ -46,9 +46,9 @@ def generate_points(grid_parameters):
         potential_energy = grid_parameters['potential_energy']
         H0 = grid_parameters['energy_level']
 
-        N_dof = len(dof_slice)  # Total number of DoF
+        N_dim = len(dof_slice)  # Total number of DoF
         # Check N DoF is even.
-        if N_dof % 2 != 0:
+        if N_dim % 2 != 0:
             error_mssg = ("ERROR: Number of DoF not even. ",
                           "Check your extra grid parameters")
             print(error_mssg)
@@ -76,23 +76,23 @@ def generate_points(grid_parameters):
 
         # Define and sort axes in phase space
         k = 0
-        for i in range(N_dof):
+        for i in range(N_dim):
             if dof_slice[i] == 1:
                 phase_space_axes[i] = dof_slice_axes[k]
                 k += 1
         k = 0
-        for i in range(N_dof):
+        for i in range(N_dim):
             if dof_fixed[i] == 1:
                 phase_space_axes[i] = dof_fixed_axes[k] * \
-                    np.ones(N_points_slice)
+                    np.zeros(N_points_slice)
                 k += 1
 
         # Set axis to be determined by energy conservation
-        idx_dof_H0 = list(set(range(N_dof))-set(phase_space_axes.keys()))[0]
+        idx_dof_H0 = list(set(range(N_dim))-set(phase_space_axes.keys()))[0]
         phase_space_axes[idx_dof_H0] = np.zeros(N_points_slice)
 
         # List of all phase space axes
-        phase_space_axes = [phase_space_axes[i] for i in range(int(N_dof))]
+        phase_space_axes = [phase_space_axes[i] for i in range(int(N_dim))]
 
         # Determine undefined axis via energy conservation
         phase_space_axes[idx_dof_H0] = energy_conservation_condition(
@@ -160,13 +160,12 @@ def check_if_points_escape_box(u, box_boundaries):
     u_indices : array_like, shape(n, )
         array of True/False bool values if points inside/outside the box
     """
-    N_dof = u.shape[-1]
-    points_positions = u.T[:int(N_dof/2)]
+    N_dim = u.shape[-1]
+    points_positions = u.T[:int(N_dim/2)]
     
     if len(points_positions) == len(box_boundaries):
-        isin_axis_limits = lambda x, box_axis_limits: (box_axis_limits[0]<=x)&(x<=box_axis_limits[1])
-        f = isin_axis_limits
-        positions_within_box = [f(points_positions[i], box_boundaries[i]) for i in range(int(N_dof/2))]
+        check = lambda x, box_axis_limits: (box_axis_limits[0]<=x)&(x<=box_axis_limits[1])
+        positions_within_box = [check(points_positions[i], box_boundaries[i]) for i in range(int(N_dim/2))]
         u_indices = reduce(lambda x, y: x&y, positions_within_box)
         return u_indices
     else:
@@ -290,15 +289,15 @@ def compute_lagrangian_descriptor(grid_parameters, vector_field, tau, p_value=0.
     if type(grid_parameters) == dict:
         #n-DoF systems
         slice_parameters = grid_parameters['slice_parameters'] # 2n-D grid
-        N_dof = len(grid_parameters['dof_slice'])
+        N_dim = len(grid_parameters['dof_slice'])
     else:
         #1-DoF systems
         slice_parameters = grid_parameters # 2-D grid
-        N_dof = len(slice_parameters)
+        N_dim = len(slice_parameters)
         
     #set boundaries for escape-box condition, if not defined
     if not box_boundaries:
-        box_boundaries = int(N_dof/2)*[[-np.infty, np.infty]] #restricted to configuration space
+        box_boundaries = int(N_dim/2)*[[-np.infty, np.infty]] #restricted to configuration space
     
     #solve initial value problem
     f = lambda t, y: vector_field_flat(t, y, vector_field, p_value, box_boundaries)
@@ -306,7 +305,7 @@ def compute_lagrangian_descriptor(grid_parameters, vector_field, tau, p_value=0.
     
     solution = solve_ivp(f, [0,tau], y0, t_eval=[tau], rtol=1.0e-4)
 
-    LD_values = solution.y[N_dof::N_dof+1] #values corresponding to LD
+    LD_values = solution.y[N_dim::N_dim+1] #values corresponding to LD
     
     N_points_slice_axes = list( map(itemgetter(-1), slice_parameters)) 
     LD = np.abs(LD_values).reshape(*N_points_slice_axes) #reshape to 2-D array    
