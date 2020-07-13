@@ -8,7 +8,7 @@ Publisher, Number(Volume No), pp.142-161.
 import numpy as np
 import matplotlib.pyplot as plt
 
-def draw_lagrangian_descriptor(LD, LD_type, grid_parameters, tau, p_value, norm = True, colormap_name='bone'):
+def draw_lagrangian_descriptor(LD, LD_type, grid_parameters, tau, p_value, norm = True, colormap_name='bone', colormap_mode=1):
     """
     Draws a Lagrangian descriptor contour plot and a contour plot showing the magnitude of its gradient field.
 
@@ -39,7 +39,6 @@ def draw_lagrangian_descriptor(LD, LD_type, grid_parameters, tau, p_value, norm 
     -------
         Nothing.
     """
-    ###################
     if type(grid_parameters) == dict:
         #n-DoF systems
         slice_parameters = grid_parameters['slice_parameters'] # 2n-D grid
@@ -64,8 +63,13 @@ def draw_lagrangian_descriptor(LD, LD_type, grid_parameters, tau, p_value, norm 
     points_ax1 = np.linspace(ax1_min, ax1_max, N1)
     points_ax2 = np.linspace(ax2_min, ax2_max, N2)
     
-    LD_min, LD_max = LD.min(), LD.max()
-    con0 = ax0.contourf(points_ax1, points_ax2, LD, cmap=colormap_name, levels=200)
+    if colormap_mode == 1:
+        vmin, vmax = LD.min(), LD.max()
+    elif colormap_mode == 2:
+        vmin = LD.mean()-LD.std()
+        vmax = LD.max()
+    
+    con0 = ax0.contourf(points_ax1, points_ax2, LD, cmap=colormap_name, vmin=vmin, vmax=vmax, levels=200)
 
     # Customise appearance
     if p_value == 2:
