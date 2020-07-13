@@ -39,8 +39,20 @@ def draw_lagrangian_descriptor(LD, LD_type, grid_parameters, tau, p_value, norm 
     -------
         Nothing.
     """
-    x_min, x_max, Nx = grid_parameters[0]
-    y_min, y_max, Ny = grid_parameters[1]
+    ###################
+    if type(grid_parameters) == dict:
+        #n-DoF systems
+        slice_parameters = grid_parameters['slice_parameters'] # 2n-D grid
+        dof_slice = np.array(grid_parameters['dof_slice'])
+        slice_axes_labels = np.array(['$x$','$y$','$p_x$','$p_y$'])
+        slice_axes_labels = slice_axes_labels[dof_slice==1]
+    else:
+        #1-DoF systems
+        slice_parameters = grid_parameters # 2-D grid
+        slice_axes_labels = ['$x$', '$p_x$']
+
+    ax1_min, ax1_max, N1 = slice_parameters[0]
+    ax2_min, ax2_max, N2 = slice_parameters[1]
         
     if norm:
         LD = LD - np.nanmin(LD)  # Scale LD output
@@ -49,15 +61,12 @@ def draw_lagrangian_descriptor(LD, LD_type, grid_parameters, tau, p_value, norm 
     # Plot LDs
     fig, (ax0, ax1) = plt.subplots(1, 2, figsize=(7.5,3), dpi=130)
     
-    points_x = np.linspace(x_min, x_max, Nx)
-    points_y = np.linspace(y_min, y_max, Ny)
-    X,Y = np.meshgrid(points_x, points_y)
+    points_ax1 = np.linspace(ax1_min, ax1_max, N1)
+    points_ax2 = np.linspace(ax2_min, ax2_max, N2)
     
-
     LD_min, LD_max = LD.min(), LD.max()
-    con0 = ax0.contourf(points_x, points_y, LD, cmap=colormap_name, levels=200)
+    con0 = ax0.contourf(points_ax1, points_ax2, LD, cmap=colormap_name, levels=200)
 
-    
     # Customise appearance
     if p_value == 2:
         str_method = 'arclength - '
@@ -81,8 +90,8 @@ def draw_lagrangian_descriptor(LD, LD_type, grid_parameters, tau, p_value, norm 
     
     fig.suptitle(string_title, fontsize=14, y=1.04)
     ax0.set_title('LD values')
-    ax0.set_xlabel('$x$')
-    ax0.set_ylabel('$y$')
+    ax0.set_xlabel(slice_axes_labels[0])
+    ax0.set_ylabel(slice_axes_labels[1])
     
     ticks_LD = np.linspace(np.nanmin(LD), np.nanmax(LD), 11)
     fig.colorbar(con0, ax=ax0, ticks=ticks_LD, format='%.2f')
@@ -91,9 +100,9 @@ def draw_lagrangian_descriptor(LD, LD_type, grid_parameters, tau, p_value, norm 
     gradient_magnitude = np.sqrt(gradient_x**2 + gradient_y**2)
     gradient_magnitude = gradient_magnitude/gradient_magnitude.max()
     
-    con1 = ax1.contourf(points_x, points_y, gradient_magnitude, cmap='Reds', levels=200)
+    con1 = ax1.contourf(points_ax1, points_ax2, gradient_magnitude, cmap='Reds', levels=200)
     ax1.set_title('LD gradient magnitude')
-    ax1.set_xlabel('$x$')
+    ax1.set_xlabel(slice_axes_labels[0])
     ax1.label_outer()
     
     ticks_gradient = np.linspace(np.nanmin(gradient_magnitude), np.nanmax(gradient_magnitude), 11)
