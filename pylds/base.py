@@ -29,7 +29,7 @@ def generate_points(grid_parameters):
 
     Parameters
     ----------
-    slice_parameters : list of 3-tuples of floats
+    grid_parameters : list of 3-tuples of floats
         input parameters of limits and size of mesh per axis
 
     Returns
@@ -68,9 +68,6 @@ def generate_points(grid_parameters):
         slice_mesh = np.meshgrid(*points_slice_axes)
         dof_slice_axes = [axis.flatten() for axis in slice_mesh]
 
-        # Axes of fixed DoF
-        dof_fixed_axes = dof_fixed_values
-
         N_points_slice = np.prod(list(map(itemgetter(-1), slice_parameters)))
         phase_space_axes = {}
 
@@ -83,7 +80,7 @@ def generate_points(grid_parameters):
         k = 0
         for i in range(N_dim):
             if dof_fixed[i] == 1:
-                phase_space_axes[i] = dof_fixed_axes[k] * \
+                phase_space_axes[i] = dof_fixed_values[k] * \
                     np.ones(N_points_slice)
                 k += 1
 
@@ -92,7 +89,7 @@ def generate_points(grid_parameters):
         phase_space_axes[idx_dof_H0] = np.zeros(N_points_slice)
 
         # List of all phase space axes
-        phase_space_axes = [phase_space_axes[i] for i in range(int(N_dim))]
+        phase_space_axes = [phase_space_axes[i] for i in range(N_dim)]
 
         # Determine undefined axis via energy conservation
         phase_space_axes[idx_dof_H0] = energy_conservation_condition(
@@ -303,13 +300,18 @@ def compute_lagrangian_descriptor(grid_parameters, vector_field, tau, p_value=0.
     f = lambda t, y: vector_field_flat(t, y, vector_field, p_value, box_boundaries)
     y0, mask = generate_points(grid_parameters)
     
+    #mask y0 values
+    if type(mask) == np.ndarray:
+        mask_y0 = np.transpose([mask for i in range(N_dim+1)]).flatten()
+        y0 = ma.masked_array(y0, mask=mask_y0)
+    
     solution = solve_ivp(f, [0,tau], y0, t_eval=[tau], rtol=1.0e-4)
 
     LD_values = solution.y[N_dim::N_dim+1] #values corresponding to LD
     
     N_points_slice_axes = list( map(itemgetter(-1), slice_parameters)) 
     LD = np.abs(LD_values).reshape(*N_points_slice_axes) #reshape to 2-D array    
-    LD = ma.masked_array(LD, mask=mask)
+    LD = ma.masked_array(LD, mask=mask) #mask LD values for slice 
     
     if p_value<=1:
         return LD
