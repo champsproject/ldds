@@ -29,9 +29,17 @@ def generate_points(grid_parameters):
 
     Parameters
     ----------
-    grid_parameters : list of 3-tuples of floats
-        input parameters of limits and size of mesh per axis
-
+    grid_parameters : list (1-DoF systems) or dict (n-DoF systems)
+        if 1-DoF, list should have two 3-tuples of floats
+        etries are input parameters of limits and size of mesh per axis
+        
+        if n-DoF, dict should have the following keys
+        * 'slice_parameters' : list, should have two 3-tuples of floats, for a 2D slice
+        * 'dof_slice' : list of 0 and 1, ones indicate slice axes
+        * 'dof_fixed' : list of 0 and 1, ones indicate fixed axes 
+        * 'momentum_sign' : int, -1 / 1, for negative/positive momentum for remaining axis
+        * 'potential_energy' : func used by energy conservation condition to determine remaining momentum axis 
+        * 'energy_level' : float, energy value for energy conservation condition
     Returns
     -------
     mesh : 1d numpy array
