@@ -42,9 +42,9 @@ def draw_lagrangian_descriptor(LD, LD_type, grid_parameters, tau, p_value, norm 
     if type(grid_parameters) == dict:
         #n-DoF systems
         slice_parameters = grid_parameters['slice_parameters'] # 2n-D grid
-        dof_slice = np.array(grid_parameters['dof_slice'])
+        dims_slice = np.array(grid_parameters['dims_slice'])
         slice_axes_labels = np.array(['$x$','$y$','$p_x$','$p_y$'])
-        slice_axes_labels = slice_axes_labels[dof_slice==1]
+        slice_axes_labels = slice_axes_labels[dims_slice==1]
     else:
         #1-DoF systems
         slice_parameters = grid_parameters # 2-D grid
