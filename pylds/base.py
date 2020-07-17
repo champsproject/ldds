@@ -18,9 +18,9 @@ def energy_conservation_condition(phase_space_axes, H0, potential_energy, moment
     phase_space_positions = np.transpose(phase_space_axes[:int(N_dim/2)])
     phase_space_momenta = np.transpose(phase_space_axes[int(N_dim/2):])
     V = potential_energy(phase_space_positions)
-    points_dof_remaining = momentum_sign * \
+    points_dims_remaining = momentum_sign * \
         np.sqrt(2*(H0 - V) - (phase_space_momenta**2).sum(axis=1))
-    return points_dof_remaining
+    return points_dims_remaining
 
 def generate_points(grid_parameters):
     """
@@ -35,8 +35,8 @@ def generate_points(grid_parameters):
         
         if n-DoF, dict should have the following keys
         * 'slice_parameters' : list, should have two 3-tuples of floats, for a 2D slice
-        * 'dof_slice' : list of 0 and 1, ones indicate slice axes
-        * 'dof_fixed' : list of 0 and 1, ones indicate fixed axes 
+        * 'dims_slice' : list of 0 and 1, ones indicate slice axes
+        * 'dims_fixed' : list of 0 and 1, ones indicate fixed axes 
         * 'momentum_sign' : int, -1 / 1, for negative/positive momentum for remaining axis
         * 'potential_energy' : func used by energy conservation condition to determine remaining momentum axis 
         * 'energy_level' : float, energy value for energy conservation condition
@@ -48,24 +48,24 @@ def generate_points(grid_parameters):
     if type(grid_parameters) == dict:
         # Unpack extra grid parameters
         slice_parameters = grid_parameters['slice_parameters']
-        dof_slice = grid_parameters['dof_slice']
-        dof_fixed, dof_fixed_values = grid_parameters['dof_fixed']
+        dims_slice = grid_parameters['dims_slice']
+        dims_fixed, dims_fixed_values = grid_parameters['dims_fixed']
         momentum_sign = grid_parameters['momentum_sign']
         potential_energy = grid_parameters['potential_energy']
         H0 = grid_parameters['energy_level']
 
-        N_dim = len(dof_slice)  # Total number of DoF
+        N_dim = len(dims_slice)  # Phase-space dimensions
         # Check N DoF is even.
         if N_dim % 2 != 0:
-            error_mssg = ("ERROR: Number of DoF not even. ",
+            error_mssg = ("ERROR: Number of phase-space dimensions not even. ",
                           "Check your extra grid parameters")
             print(error_mssg)
             sys.exit()
-        # Determine number of DoF for Energy conservation.
+        # Determine number of dimensions for Energy conservation.
         # There must be only one.
-        dof_remaining = 1 - (np.array(dof_fixed) + np.array(dof_slice))
-        if list(dof_remaining).count(1) > 1:
-            error_mssg = ("ERROR: More than one remaing DoF. ",
+        dims_remaining = 1 - (np.array(dims_fixed) + np.array(dims_slice))
+        if list(dims_remaining).count(1) > 1:
+            error_mssg = ("ERROR: More than one remaing dimension. ",
                           "Cannot use Energy conservation to define high-dim grid.")
             print(error_mssg)
             sys.exit()
@@ -74,7 +74,7 @@ def generate_points(grid_parameters):
         def pass_axis_parameters(parameters): return np.linspace(*parameters)
         points_slice_axes = list(map(pass_axis_parameters, slice_parameters))
         slice_mesh = np.meshgrid(*points_slice_axes)
-        dof_slice_axes = [axis.flatten() for axis in slice_mesh]
+        dims_slice_axes = [axis.flatten() for axis in slice_mesh]
 
         N_points_slice = np.prod(list(map(itemgetter(-1), slice_parameters)))
         phase_space_axes = {}
@@ -82,29 +82,29 @@ def generate_points(grid_parameters):
         # Define and sort axes in phase space
         k = 0
         for i in range(N_dim):
-            if dof_slice[i] == 1:
-                phase_space_axes[i] = dof_slice_axes[k]
+            if dims_slice[i] == 1:
+                phase_space_axes[i] = dims_slice_axes[k]
                 k += 1
         k = 0
         for i in range(N_dim):
-            if dof_fixed[i] == 1:
-                phase_space_axes[i] = dof_fixed_values[k] * \
+            if dims_fixed[i] == 1:
+                phase_space_axes[i] = dims_fixed_values[k] * \
                     np.ones(N_points_slice)
                 k += 1
 
         # Set axis to be determined by energy conservation
-        idx_dof_H0 = list(set(range(N_dim))-set(phase_space_axes.keys()))[0]
-        phase_space_axes[idx_dof_H0] = np.zeros(N_points_slice)
+        idx_dims_H0 = list(set(range(N_dim))-set(phase_space_axes.keys()))[0]
+        phase_space_axes[idx_dims_H0] = np.zeros(N_points_slice)
 
         # List of all phase space axes
         phase_space_axes = [phase_space_axes[i] for i in range(N_dim)]
 
         # Determine undefined axis via energy conservation
-        phase_space_axes[idx_dof_H0] = energy_conservation_condition(
+        phase_space_axes[idx_dims_H0] = energy_conservation_condition(
             phase_space_axes, H0, potential_energy, momentum_sign)
         
-        mask = np.isnan(phase_space_axes[idx_dof_H0]) # Mask grid points
-        phase_space_axes[idx_dof_H0] = np.nan_to_num(phase_space_axes[idx_dof_H0])
+        mask = np.isnan(phase_space_axes[idx_dims_H0]) # Mask grid points
+        phase_space_axes[idx_dims_H0] = np.nan_to_num(phase_space_axes[idx_dims_H0])
         
         # Return array of mesh points for integrator
         lagrangian_descriptor_axis = [np.zeros(N_points_slice)]
@@ -294,7 +294,7 @@ def compute_lagrangian_descriptor(grid_parameters, vector_field, tau, p_value=0.
     if type(grid_parameters) == dict:
         #n-DoF systems
         slice_parameters = grid_parameters['slice_parameters'] # 2n-D grid
-        N_dim = len(grid_parameters['dof_slice'])
+        N_dim = len(grid_parameters['dims_slice'])
     else:
         #1-DoF systems
         slice_parameters = grid_parameters # 2-D grid
