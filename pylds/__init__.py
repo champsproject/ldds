@@ -12,7 +12,6 @@ __mail__ = 'ba13026@my.bristol.ac.uk'
 __maintainer__ = __author__
 __status__ = "Development"
 
-
 from .base import *
 from .vector_fields import *
 from .tools import *
