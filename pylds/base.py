@@ -26,12 +26,13 @@ def generate_points(grid_parameters):
     """
     Returns a 1D array of all points from a on a uniform grid with dimensions and size defined by list of input parameters.
     An additional dimension initiallised with zeros is added for the calculation of Lagrangian Descriptors.
-
+    NOTE: For n-DoF systems, currently energy conservation is only used to determine momenta dimensions.
+    
     Parameters
     ----------
     grid_parameters : list (1-DoF systems) or dict (n-DoF systems)
         if 1-DoF, list should have two 3-tuples of floats
-        etries are input parameters of limits and size of mesh per axis
+        entries are input parameters of limits and size of mesh per axis
         
         if n-DoF, dict should have the following keys
         * 'slice_parameters' : list, should have two 3-tuples of floats, for a 2D slice
@@ -55,12 +56,14 @@ def generate_points(grid_parameters):
         H0 = grid_parameters['energy_level']
 
         N_dim = len(dims_slice)  # Phase-space dimensions
+
         # Check N DoF is even.
         if N_dim % 2 != 0:
             error_mssg = ("ERROR: Number of phase-space dimensions not even. ",
                           "Check your extra grid parameters")
             print(error_mssg)
             sys.exit()
+            
         # Determine number of dimensions for Energy conservation.
         # There must be only one.
         dims_remaining = 1 - (np.array(dims_fixed) + np.array(dims_slice))
@@ -94,6 +97,14 @@ def generate_points(grid_parameters):
 
         # Set axis to be determined by energy conservation
         idx_dims_H0 = list(set(range(N_dim))-set(phase_space_axes.keys()))[0]
+        
+        # Check if remaining dimension falls in configuration space
+        if idx_dims_H0 <= int(N_dims/2):
+            error_mssg = ("ERROR: The remaining dimension fall in configuration space.",
+                          "Currently, cannot use Energy conservation to define high-dim grid.")
+            print(error_mssg)
+            sys.exit()
+        
         phase_space_axes[idx_dims_H0] = np.zeros(N_points_slice)
 
         # List of all phase space axes
