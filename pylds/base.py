@@ -99,7 +99,7 @@ def generate_points(grid_parameters):
         idx_dims_H0 = list(set(range(N_dim))-set(phase_space_axes.keys()))[0]
         
         # Check if remaining dimension falls in configuration space
-        if idx_dims_H0 <= int(N_dims/2):
+        if idx_dims_H0 < int(N_dims/2):
             error_mssg = ("ERROR: The remaining dimension fall in configuration space.",
                           "Currently, cannot use Energy conservation to define high-dim grid.")
             print(error_mssg)
