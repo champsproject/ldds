@@ -8,86 +8,111 @@ Publisher, Number(Volume No), pp.142-161.
 import numpy as np
 import matplotlib.pyplot as plt
 
-def draw_lagrangian_descriptor(LD, LD_type, GRID_PARAMETERS, LD_PARAMETERS, norm = True, colormap_name='bone'):
+def draw_lagrangian_descriptor(LD, LD_type, grid_parameters, tau, p_value, norm = True, colormap_name='bone', colormap_mode=1):
     """
-    Returns ..
+    Draws a Lagrangian descriptor contour plot and a contour plot showing the magnitude of its gradient field.
 
     Parameters
     ----------
     LD : ndarray, shape(n, )
-        array of computed LD values for array of initial conditions
+        Array of Lagrangian Descriptor values.
     
     LD_type : str
-        type of LD to plot. Options: 'forward', 'backward', 'total'
+        Type of LD to plot. Options: 'forward', 'backward', 'total'.
     
-    GRID_PARAMETERS : list of 3-tuples of floats
-        input parameters of limits and size of mesh per axis
+    grid_parameters : list of 3-tuples of floats
+        Limits and size of mesh per axis.
     
-    LD_PARAMETERS : list made of a 3-tuple and a float
-        input parameters for LD computation
-        3-tuple contains floats t_initial, t_final, dt (timestep)
-        float is p-value of Lp-norm
+    tau : float
+        Upper limit of integration.
+        
+    p_value : float
+        Exponent in Lagrangian descriptor definition.
     
     norm : bool, optional
-        normalise LD values by maximum
+        True normalises LD values.
     
     colormap_name : str, optional
-        valid name of matplotlib color-map for plot
+        Name of matplotlib colormap for plot.
     
     Returns
     -------
-        scatter plot of LD function in phase-space 
+        Nothing.
     """
-    x_min, x_max, Nx = GRID_PARAMETERS[0]
-    y_min, y_max, Ny = GRID_PARAMETERS[1]
-    
-    t_initial, t_final, dt = LD_PARAMETERS[0]
-    p_norm = LD_PARAMETERS[1]
-    
-    tau = t_final - t_initial
-    
-    LD = LD.reshape(Nx, Ny).T # Reshape 1D array
-    if norm:
-        LD = LD / LD.max()  # Scale LD output
-    ################################### 
-    # Plot LDs
-    resolution = 100 # in dpi
-    fig,ax = plt.subplots(1, 1, dpi = resolution)
-    
-    points_x = np.linspace(x_min, x_max, Nx)
-    points_y = np.linspace(y_min, y_max, Ny)    
-    X, Y = np.meshgrid(points_x, points_y)  # Grid in phase-space
-    
-#     scatter = plt.scatter(X, Y, c = LD, cmap = colormap_name)
-    contour = plt.contourf(X,Y,LD,cmap=colormap_name,levels=200)
-    ###################################
-    # Customise appearance
-    if p_norm != 2:
-        str_meth = ' '.join(['p-norm (p=',str(p_norm),') - '])
+    if type(grid_parameters) == dict:
+        #n-DoF systems
+        slice_parameters = grid_parameters['slice_parameters'] # 2n-D grid
+        dims_slice = np.array(grid_parameters['dims_slice'])
+        slice_axes_labels = np.array(['$x$','$y$','$p_x$','$p_y$'])
+        slice_axes_labels = slice_axes_labels[dims_slice==1]
     else:
-        str_meth = 'arclength - '
+        #1-DoF systems
+        slice_parameters = grid_parameters # 2-D grid
+        slice_axes_labels = ['$x$', '$p_x$']
+
+    ax1_min, ax1_max, N1 = slice_parameters[0]
+    ax2_min, ax2_max, N2 = slice_parameters[1]
+        
+    if norm:
+        LD = LD - np.nanmin(LD)  # Scale LD output
+        LD = LD / np.nanmax(LD)  # Scale LD output
     
+    # Plot LDs
+    fig, (ax0, ax1) = plt.subplots(1, 2, figsize=(7.5,3), dpi=130)
+    
+    points_ax1 = np.linspace(ax1_min, ax1_max, N1)
+    points_ax2 = np.linspace(ax2_min, ax2_max, N2)
+    
+    if colormap_mode == 1:
+        vmin, vmax = LD.min(), LD.max()
+    elif colormap_mode == 2:
+        vmin = LD.mean()-LD.std()
+        vmax = LD.max()
+    
+    con0 = ax0.contourf(points_ax1, points_ax2, LD, cmap=colormap_name, vmin=vmin, vmax=vmax, levels=200)
+
+    # Customise appearance
+    if p_value == 2:
+        str_method = 'arclength - '
+    elif p_value >= 1:
+        str_method = r'p-norm $(p={})$'.format(p_value)
+    elif p_value == 0:        
+        str_method = 'action-based'
+    elif p_value < 1:
+        str_method = r'LD$_p$ $(p={})$'.format(p_value)
+    
+    t_final=abs(tau)
     if LD_type == 'forward':
-        string_title = ['Forward LD ', str_meth, '(','$\\tau=$ ',str(tau),' , ','$t_0=$',str(t_initial),')']
+        string_title = r'Forward LD {}, $\tau={}$'.format(str_method,t_final)
     elif LD_type == 'backward':
-        string_title = ['Backward LD ', str_meth, '(','$\\tau=$ ',str(tau),' , ','$t_0=$',str(t_initial),')']
+        string_title = r'Backward LD {}, $\tau={}$'.format(str_method,t_final)
     elif LD_type == 'total':
-        string_title = ['Total LD ', str_meth, '(','$\\tau=$ ',str(tau),' , ','$t_0=$',str(t_initial),')']
+        string_title = r'Total LD {}, $\tau={}$'.format(str_method,t_final)
     else: 
-        string_title = ['']
+        string_title = ''
         print('Incorrect "LD_type". Valid options: forward, backward, total. Plot will appear without title')
-    string_title = ' '.join(string_title)
     
-    ax.set_title(string_title, fontsize=12)
-    ax.set_xlabel('$x$', fontsize=18)
-    ax.set_ylabel('$y$', fontsize=18)
-    ax.set_aspect('auto')
+    fig.suptitle(string_title, fontsize=14, y=1.04)
+    ax0.set_title('LD values')
+    ax0.set_xlabel(slice_axes_labels[0])
+    ax0.set_ylabel(slice_axes_labels[1])
     
-    fig.colorbar(contour)
-
-#     fig.colorbar(scatter) # Add color bar
-
+    ticks_LD = np.linspace(np.nanmin(LD), np.nanmax(LD), 11)
+    fig.colorbar(con0, ax=ax0, ticks=ticks_LD, format='%.2f')
+    
+    gradient_x, gradient_y = np.gradient( LD, 0.05, 0.05)
+    gradient_magnitude = np.sqrt(gradient_x**2 + gradient_y**2)
+    gradient_magnitude = gradient_magnitude/gradient_magnitude.max()
+    
+    con1 = ax1.contourf(points_ax1, points_ax2, gradient_magnitude, cmap='Reds', levels=200)
+    ax1.set_title('LD gradient magnitude')
+    ax1.set_xlabel(slice_axes_labels[0])
+    ax1.label_outer()
+    
+    ticks_gradient = np.linspace(np.nanmin(gradient_magnitude), np.nanmax(gradient_magnitude), 11)
+    fig.colorbar(con1, ax=ax1, ticks=ticks_gradient, format='%.2f')
+    
     plt.show()
     
-__author__ = 'Broncio Aguilar-Sanjuan, Victor-Jose Garcia-Garrido'
+__author__ = 'Broncio Aguilar-Sanjuan, Victor-Jose Garcia-Garrido, Vladimir Krajnak'
 __status__ = 'Development'
