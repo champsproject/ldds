@@ -110,15 +110,13 @@ def draw_lagrangian_descriptor(LD, LD_type, grid_parameters, tau, p_value, color
     gradient_magnitude = gradient_magnitude - np.nanmin(gradient_magnitude)
     gradient_magnitude = gradient_magnitude / np.nanmax(gradient_magnitude)
     
+    con1 = ax1.contourf(points_ax1, points_ax2, gradient_magnitude, cmap='Reds', levels=100)
     
     if interactive:
         @widgets.interact(grad_minimum=(0, .99, .01))
         def update(grad_minimum=0.0):
-            ax1.clear()    
-            con1 = ax1.contourf(points_ax1, points_ax2, gradient_magnitude, cmap='Reds', levels=np.linspace(grad_minimum,1,100))
-            ax1.set_yticks([])
-            ax1.set_xlabel(slice_axes_labels[0])
-    con1 = ax1.contourf(points_ax1, points_ax2, gradient_magnitude, cmap='Reds', levels=np.linspace(0,1,100))
+            con1.set_clim(grad_minimum,1)
+            
     ticks_gradient = np.linspace(0,1, 11)
     fig.colorbar(con1, ax=ax1, ticks=ticks_gradient, format='%.1f')
     ax1.set_title('LD gradient magnitude')
