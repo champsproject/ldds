@@ -105,7 +105,7 @@ def draw_lagrangian_descriptor(LD, LD_type, grid_parameters, tau, p_value, color
     ticks_LD = np.linspace(0, 1, 11)
     fig.colorbar(con0, ax=ax0, ticks=ticks_LD, format='%.1f')
     
-    gradient_x, gradient_y = np.gradient( LD, 0.05, 0.05)
+    gradient_x, gradient_y = np.gradient(LD)
     gradient_magnitude = np.sqrt(gradient_x**2 + gradient_y**2)
     gradient_magnitude = gradient_magnitude - np.nanmin(gradient_magnitude)
     gradient_magnitude = gradient_magnitude / np.nanmax(gradient_magnitude)
