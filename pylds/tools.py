@@ -113,9 +113,10 @@ def draw_lagrangian_descriptor(LD, LD_type, grid_parameters, tau, p_value, color
     con1 = ax1.contourf(points_ax1, points_ax2, gradient_magnitude, cmap='Reds', levels=100)
     
     if interactive:
-        @widgets.interact(grad_minimum=(0, .99, .01))
-        def update(grad_minimum=0.0):
-            con1.set_clim(grad_minimum,1)
+        @widgets.interact(grad_minimum=(0, .99, .01),grad_maximum=(0.01, 1.0, .01))
+        def update(grad_minimum=0.0,grad_maximum=1.0):
+            grad_max = max(grad_minimum+0.01, grad_maximum)
+            con1.set_clim(grad_minimum,grad_max)
             
     ticks_gradient = np.linspace(0,1, 11)
     fig.colorbar(con1, ax=ax1, ticks=ticks_gradient, format='%.1f')
