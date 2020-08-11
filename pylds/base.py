@@ -324,7 +324,7 @@ def compute_lagrangian_descriptor(grid_parameters, vector_field, tau, p_value=0.
         mask_y0 = np.transpose([mask for i in range(N_dim+1)]).flatten()
         y0 = ma.masked_array(y0, mask=mask_y0)
     
-    solution = solve_ivp(f, [0,tau], y0, t_eval=[tau], rtol=1.0e-4)
+    solution = solve_ivp(f, [0,tau], y0, t_eval=[tau], rtol=2.0e-4)
 
     LD_values = solution.y[N_dim::N_dim+1] #values corresponding to LD
     
