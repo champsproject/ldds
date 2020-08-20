@@ -32,7 +32,7 @@ def HamCenter1D(t, u, PARAMETERS = [1]):
     x, y = u.T
     # Hamiltonian Model Parameter
     omega, = PARAMETERS
-    v = np.c_[ omega * y, - omega * x]
+    v = np.column_stack([ omega * y, - omega * x])
     return v
 
 def HamSaddle1D(t, u, PARAMETERS = [1]):
@@ -60,7 +60,7 @@ def HamSaddle1D(t, u, PARAMETERS = [1]):
     x, y = u.T
     # Hamiltonian Model Parameter
     lamda, = PARAMETERS
-    v = np.c_[ lamda * y, lamda * x]
+    v = np.column_stack([ lamda * y, lamda * x])
     return v
 
 def Duffing1D(t, u, PARAMETERS = [None]):
@@ -87,7 +87,7 @@ def Duffing1D(t, u, PARAMETERS = [None]):
     """
     x, y = u.T
     # Hamiltonian Model Parameter
-    v = np.c_[y, x - x**3]
+    v = np.column_stack([y, x - x**3])
     return v
 
 def Duffing1D_inverted(t, u, PARAMETERS = [None]):
@@ -116,7 +116,7 @@ def Duffing1D_inverted(t, u, PARAMETERS = [None]):
     # Hamiltonian Model Parameter
     # perturbation = forcing(t, u, flag_pert, perturbation_params)
     # v = np.array([y, - x + x**3 + perturbation]).T
-    v = np.c_[y, - x + x**3]
+    v = np.column_stack([y, - x + x**3])
     return v
 
 def HamSN1D(t, u, PARAMETERS = [None]):
@@ -143,7 +143,7 @@ def HamSN1D(t, u, PARAMETERS = [None]):
     """
     x, y = u.T
     # Hamiltonian Model Parameter
-    v = np.c_[ y, -x -x**2]
+    v = np.column_stack([ y, -x -x**2])
     return v
 
 def forcing(t, u, perturbation_params = [1, 0.15, 0.5]):
@@ -216,7 +216,7 @@ def HenonHeiles_vector_field(t, u, PARAMETERS = None):
     v_y   =  p_y
     v_p_x = -x - 2*x*y
     v_p_y = -x**2 -y + y**2
-    v = np.c_[v_x, v_y, v_p_x, v_p_y]
+    v = np.column_stack([v_x, v_y, v_p_x, v_p_y])
     return v
 
 def HenonHeiles_potential(positions, PARAMETERS = None):
@@ -280,7 +280,7 @@ def NFSaddle_vector_field(t, u, PARAMETERS = None):
     v_y   =  p_y
     v_p_x = x
     v_p_y = -y
-    v = np.c_[v_x, v_y, v_p_x, v_p_y]
+    v = np.column_stack([v_x, v_y, v_p_x, v_p_y])
     return v
 
 def NFSaddle_potential(positions, PARAMETERS = None):
