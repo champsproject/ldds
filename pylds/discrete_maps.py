@@ -29,7 +29,7 @@ def StandardMap(u_initial, PARAMETERS=[0.3]):
     y_next = y_initial - (K/(2*np.pi))*np.sin(2*np.pi*x_initial)
     
     # Map next iteration
-    u_next = np.array([ x_next, y_next]).T
+    u_next = np.column_stack([ x_next, y_next])
 
     return u_next
 
@@ -61,7 +61,7 @@ def StandardMap_inverse(u_initial, PARAMETERS=[0.3]):
     y_next = y_initial + (K/(2*np.pi))*np.sin(2*np.pi*(x_initial - y_initial))
     
     # Map next iteration
-    u_next = np.array([ x_next, y_next]).T
+    u_next = np.column_stack([ x_next, y_next])
 
     return u_next
 
@@ -93,7 +93,7 @@ def HenonMap(u_initial, PARAMETERS=[0.298, 1]):
     y_next = x_initial
     
     # Map next iteration
-    u_next = np.array([ x_next, y_next]).T
+    u_next = np.column_stack([ x_next, y_next])
     
     return u_next
 
@@ -125,6 +125,6 @@ def HenonMap_inverse(u_initial, PARAMETERS=[0.298, 1]):
     y_next = (x_initial - a + y_initial**2)/b
     
     # Map next iteration
-    u_next = np.array([ x_next, y_next]).T
+    u_next = np.column_stack([ x_next, y_next])
     
     return u_next
