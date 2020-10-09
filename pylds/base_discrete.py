@@ -29,7 +29,7 @@ def compute_lagrangian_descriptor(grid_parameters, discrete_map, N_iterations, p
         LD_values = LD_values + lagrangian_descriptor(y0, y-y0, p_value)        
         y0 = y
 
-    N_points_slice_axes = list( map(itemgetter(-1), grid_parameters)) #take number of points
+    N_points_slice_axes = [x[-1] for x in grid_parameters] #take number of points
     LD = LD_values.reshape(*N_points_slice_axes) #reshape to 2-D array  
 
     if p_value<=1:
