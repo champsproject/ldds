@@ -8,7 +8,21 @@ Welcome to pyLD's documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Introduction
+
+   introduction
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Theory and examples
+
+   theory-examples
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contributing and reporting
+
+   contributing
 
 
 
