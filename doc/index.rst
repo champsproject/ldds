@@ -1,5 +1,5 @@
 .. pyLD documentation master file, created by
-   sphinx-quickstart on Fri Oct  9 14:48:18 2020.
+   sphinx-quickstart on Fri Oct  9 15:13:24 2020.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
