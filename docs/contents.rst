@@ -3,17 +3,17 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+==================================
 Welcome to documentation for pyLD!
 ==================================
 
 .. toctree::
    :maxdepth: 2
 
-   introduction
-
-.. toctree::
-   :maxdepth: 2
-
+   tutorial
+   getting_started
+   user_guide
+   glossary
    examples
 
 
