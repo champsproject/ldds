@@ -1,4 +1,13 @@
 
 *.pyc
 
+.ipynb_checkpoints/*
+
+#Docs build files
+docs/.Rhistory
+docs/_build/*
+docs/.vscode/
+docs/_static/*
+docs/source/*
+
 pylds/.ipynb_checkpoints/__init__-checkpoint.py

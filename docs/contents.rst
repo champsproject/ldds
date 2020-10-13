@@ -3,9 +3,15 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+.. Places global toc into the sidebar
 
-Welcome to documentation for pyLD!
-==================================
+:globalsidebartoc: True
+
+=================================
+Welcome to documentation for pyLD
+=================================
+
+.. Define an order for the Table of Contents
 
 .. toctree::
    :maxdepth: 2
