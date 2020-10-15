@@ -30,6 +30,7 @@ def StandardMap(u_initial, PARAMETERS=[0.3]):
     
     # Map next iteration
     u_next = np.column_stack([ x_next, y_next])
+    u_next = np.mod(u_next, 1)
 
     return u_next
 
