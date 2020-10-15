@@ -55,21 +55,21 @@ def generate_points(grid_parameters):
         potential_energy = grid_parameters['potential_energy']
         H0 = grid_parameters['energy_level']
 
-        N_dim = len(dims_slice)  # Phase-space dimensions
+        N_dim = len(dims_slice)  # Phase space dimensions
 
         # Check N DoF is even.
         if N_dim % 2 != 0:
-            error_mssg = ("ERROR: Number of phase-space dimensions not even. ",
+            error_mssg = ("ERROR: Number of phase space dimensions not even. ",
                           "Check your extra grid parameters")
             print(error_mssg)
             sys.exit()
 
-        # Determine number of dimensions for Energy conservation.
+        # Determine number of dimensions for energy conservation.
         # There must be only one.
         dims_remaining = 1 - (np.array(dims_fixed) + np.array(dims_slice))
         if list(dims_remaining).count(1) > 1:
             error_mssg = ("ERROR: More than one remaing dimension. ",
-                          "Cannot use Energy conservation to define high-dim grid.")
+                          "Cannot use energy conservation to define high-dim grid.")
             print(error_mssg)
             sys.exit()
 
@@ -101,7 +101,7 @@ def generate_points(grid_parameters):
         # Check if remaining dimension falls in configuration space
         if idx_dims_H0 < int(N_dim/2):
             error_mssg = ("ERROR: The remaining dimension fall in configuration space.",
-                          "Currently, cannot use Energy conservation to define high-dim grid.")
+                          "Currently, cannot use energy conservation to define high-dim grid.")
             print(error_mssg)
             sys.exit()
 
@@ -132,7 +132,7 @@ def generate_points(grid_parameters):
             y_min, y_max, Ny = grid_parameters[1]
             points_x = np.linspace(x_min, x_max, Nx)
             points_y = np.linspace(y_min, y_max, Ny)
-            X, Y = np.meshgrid(points_x, points_y)  # Grid in phase-space
+            X, Y = np.meshgrid(points_x, points_y)  # Grid in phase space
             # 2D grid + a zero column for LDs
             mesh = np.transpose([X.flatten(), Y.flatten(), np.zeros(Nx*Ny)])
             mask = False
@@ -161,12 +161,12 @@ def perturb_field(vector_field, perturbation):
 
 def check_if_points_escape_box(u, box_boundaries):
     """
-    Determine if points in phase-space u have scaped box with user-defined defined dimensions
+    Determine if points in phase space u have scaped box with user-defined defined dimensions
 
     Parameters
     ----------
     u : array_like, shape(n, )
-        points in phase-space to check if outside box boundaries
+        points in phase space to check if outside box boundaries
 
     box_boundaries : list of 2-tuples of floats
         box lower and upper limits along X and Y axes
@@ -271,7 +271,7 @@ def vector_field_flat(t, points, vector_field, p_value, box_boundaries):
 
 def compute_lagrangian_descriptor(grid_parameters, vector_field, tau, p_value=0.5, box_boundaries=False):
     """
-    Returns the values of the LD function from integrated trajectories from initial conditions in phase-space.
+    Returns the values of the LD function from integrated trajectories from initial conditions in phase space.
 
     Parameters
     ----------
@@ -279,7 +279,7 @@ def compute_lagrangian_descriptor(grid_parameters, vector_field, tau, p_value=0.
         input parameters of limits and size of mesh per axis
 
     vector_field: function
-        vector field over phase-space
+        vector field over phase space
 
     tau : float
         Upper limit of integration.
