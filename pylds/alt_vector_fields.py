@@ -134,7 +134,7 @@ def HamSN1(t, u):
     dudt[1] = - u[0] - u[0]**2
     return dudt
 
-def forcing1(t, u, vector_field, perturbation_params = [1, 0.15, 0.5], *args):
+def forcing1(vector_field, perturbation_params = [1, 0.15, 0.5], *args):
     """
     Returns perturbed 1DoF vector field at (t,u).
     Number of model parameters: 3. perturbation_params = [perturbation_type, amplitude, frequency].
@@ -165,13 +165,13 @@ def forcing1(t, u, vector_field, perturbation_params = [1, 0.15, 0.5], *args):
     perturbation_type, amplitude, freq = perturbation_params
 
     if perturbation_type == 1:
-        perturbation = np.array([0, amplitude * np.sin(freq*t)])
+        perturbation = lambda t: np.array([0, amplitude * np.sin(freq*t)])
     elif perturbation_type == 2:
-        perturbation = np.array([0, amplitude * np.sech(t) * np.sin(freq*t)])
+        perturbation = lambda t: np.array([0, amplitude * np.sech(t) * np.sin(freq*t)])
     else:
-        perturbation = np.array([0,0])
+        perturbation = lambda t: np.array([0,0])
 
-    return vector_field(t, u, *args) + perturbation
+    return lambda t, u :vector_field(t, u, *args) + perturbation(t)
 
 def HenonHeiles_vector_field(t, u):
     """
