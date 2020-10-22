@@ -20,6 +20,7 @@ def StandardMap(u_initial, PARAMETERS=[0.3]):
     v : array_like, shape(n,)
         vector field corresponding to points u, in phase space at time t
     """
+    u_initial = np.mod(u_initial, 1)
     x_initial, y_initial = u_initial.T
     # Hamiltonian Model Parameter
     K, = PARAMETERS
@@ -30,8 +31,6 @@ def StandardMap(u_initial, PARAMETERS=[0.3]):
     
     # Map next iteration
     u_next = np.column_stack([ x_next, y_next])
-    u_next = np.mod(u_next, 1)
-
     return u_next
 
 def StandardMap_inverse(u_initial, PARAMETERS=[0.3]):
