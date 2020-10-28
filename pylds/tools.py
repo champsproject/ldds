@@ -91,6 +91,26 @@ def ld_plot(LD, LD_gradient, grid_parameters, colormap, interactive, string_titl
 
     plt.show()
 
+def get_gradient_magnitude(LD):
+    """
+    Calculates magnitude of the gradient of input array LD.
+
+    Parameters
+    ----------
+    LD : ndarray, shape(n, )
+        Array of input values.
+
+    Returns
+    -------
+    gradient_magnitude : ndarray, shape(n, )
+        Magnitude of the gradient of input array LD.
+    """
+    gradient_x, gradient_y = np.gradient(LD)
+    gradient_magnitude = np.sqrt(gradient_x**2 + gradient_y**2)
+    gradient_magnitude = gradient_magnitude - np.nanmin(gradient_magnitude)
+    gradient_magnitude = gradient_magnitude / np.nanmax(gradient_magnitude)
+    return gradient_magnitude
+
 def draw_all_lds(LD_forward, LD_backward, grid_parameters, tau, p_value, colormap='bone', interactive=False):
     """
     Draws the forward, backward and total Lagrangian descriptor contour plots and a contour plots showing the magnitude of its gradient field.
@@ -137,29 +157,21 @@ def draw_all_lds(LD_forward, LD_backward, grid_parameters, tau, p_value, colorma
         str_method = r'LD$_p$ $(p={})$'.format(p_value)
     t_final=abs(tau)
 
-    # Prepare LD arrays
-    def norm_and_grad(LD):
-        gradient_x, gradient_y = np.gradient(LD)
-        gradient_magnitude = np.sqrt(gradient_x**2 + gradient_y**2)
-        gradient_magnitude = gradient_magnitude - np.nanmin(gradient_magnitude)
-        gradient_magnitude = gradient_magnitude / np.nanmax(gradient_magnitude)
-        return gradient_magnitude
-
     # Plot LDs
 
     if len(LD_forward)>0:
         string_title = r'Forward {}, $\tau={}$'.format(str_method,t_final)
-        LD_forward_gradient = -norm_and_grad(LD_forward)
-        ld_plot(LD_forward, LD_forward_gradient, grid_parameters, colormap, interactive, string_title, colormap_gradient='Blues_r')
+        LD_forward_gradient = get_gradient_magnitude(LD_forward)
+        ld_plot(LD_forward, LD_forward_gradient, grid_parameters, colormap, interactive, string_title, colormap_gradient='Reds')
 
     if len(LD_backward)>0:
         string_title = r'Backward {}, $\tau={}$'.format(str_method,t_final)
-        LD_backward_gradient = norm_and_grad(LD_backward)
-        ld_plot(LD_backward, LD_backward_gradient, grid_parameters, colormap, interactive, string_title, colormap_gradient='Reds')
+        LD_backward_gradient = -get_gradient_magnitude(LD_backward)
+        ld_plot(LD_backward, LD_backward_gradient, grid_parameters, colormap, interactive, string_title, colormap_gradient='Blues_r')
 
     if len(LD_forward)>0 and len(LD_backward)>0:
         string_title = r'Total {}, $\tau={}$'.format(str_method,t_final)
-        ld_plot(LD_forward+LD_backward, LD_forward_gradient+LD_backward_gradient, grid_parameters, colormap, interactive, string_title, colormap_gradient='RdBu')
+        ld_plot(LD_forward+LD_backward, LD_forward_gradient+LD_backward_gradient, grid_parameters, colormap, interactive, string_title, colormap_gradient='RdBu_r')
 
 __author__ = 'Broncio Aguilar-Sanjuan, Victor-Jose Garcia-Garrido, Vladimir Krajnak'
 __status__ = 'Development'
