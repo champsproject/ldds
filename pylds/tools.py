@@ -149,17 +149,17 @@ def draw_all_lds(LD_forward, LD_backward, grid_parameters, tau, p_value, colorma
 
     if len(LD_forward)>0:
         string_title = r'Forward {}, $\tau={}$'.format(str_method,t_final)
-        LD_forward_gradient = norm_and_grad(LD_forward)
-        ld_plot(LD_forward, LD_forward_gradient, grid_parameters, colormap, interactive, string_title, colormap_gradient='Reds')
+        LD_forward_gradient = -norm_and_grad(LD_forward)
+        ld_plot(LD_forward, LD_forward_gradient, grid_parameters, colormap, interactive, string_title, colormap_gradient='Blues_r')
 
     if len(LD_backward)>0:
         string_title = r'Backward {}, $\tau={}$'.format(str_method,t_final)
-        LD_backward_gradient = -norm_and_grad(LD_backward)
-        ld_plot(LD_backward, LD_backward_gradient, grid_parameters, colormap, interactive, string_title, colormap_gradient='Blues_r')
+        LD_backward_gradient = norm_and_grad(LD_backward)
+        ld_plot(LD_backward, LD_backward_gradient, grid_parameters, colormap, interactive, string_title, colormap_gradient='Reds')
 
     if len(LD_forward)>0 and len(LD_backward)>0:
         string_title = r'Total {}, $\tau={}$'.format(str_method,t_final)
-        ld_plot(LD_forward+LD_backward, LD_forward_gradient+LD_backward_gradient, grid_parameters, colormap, interactive, string_title, colormap_gradient='RdBu_r')
+        ld_plot(LD_forward+LD_backward, LD_forward_gradient+LD_backward_gradient, grid_parameters, colormap, interactive, string_title, colormap_gradient='RdBu')
 
 __author__ = 'Broncio Aguilar-Sanjuan, Victor-Jose Garcia-Garrido, Vladimir Krajnak'
 __status__ = 'Development'
