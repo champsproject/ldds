@@ -3,26 +3,32 @@ import numpy as np
 
 def StandardMap(u_initial, PARAMETERS=[0.3]):
     """
-    Returns 1D Hamilton-Centre vector field at time t, for an array of points in phase space.
-    Number of model parameters: 1 . PARAMETERS = [omega]
-    Functional form: v = (omega*y, - omega*x), with u = (x, y)
+    2D Standard map for initial conditions in a unit square, centred at the origin (James Meiss).
+    The map will return unwrapped trajectories for iterations of initial conditions, unlike when using PBCs.
+    For computation of the Lagrangian Descriptor relative displacements are only needed. 
+    
+    Number of model parameters: 1 . PARAMETERS = [K]
+    Functional form: 
+    x_next  = x_initial + y_initial - (K/(2*np.pi))*np.sin(2*np.pi*x_initial
+    y_next  = y_initial - (K/(2*np.pi))*np.sin(2*np.pi*x_initial))
+    
+    where u_initial = (x_initial, y_initial) 
     
     Parameters
     ----------
-    u : array_like, shape(n,)
-        points in phase space to determine vector field at time t
+    u_initial : array_like, shape(n,)
+        initial points in unit square to determine their next iteration under the map
     
     PARAMETERS : list of floats
-        vector field parameters
+        map parameters
     
     Returns
     -------
-    v : array_like, shape(n,)
-        vector field corresponding to points u, in phase space at time t
+    u_next : array_like, shape(n,)
+        points u_next, in the 2D plane (not in the unit square necessarily).
     """
-    u_initial = np.mod(u_initial, 1)
     x_initial, y_initial = u_initial.T
-    # Hamiltonian Model Parameter
+    # Map parameters
     K, = PARAMETERS
     
     # Map components 
@@ -35,25 +41,32 @@ def StandardMap(u_initial, PARAMETERS=[0.3]):
 
 def StandardMap_inverse(u_initial, PARAMETERS=[0.3]):
     """
-    Returns 1D Hamilton-Centre vector field at time t, for an array of points in phase space.
-    Number of model parameters: 1 . PARAMETERS = [omega]
-    Functional form: v = (omega*y, - omega*x), with u = (x, y)
+    Inverse of 2D Standard map for initial conditions in a unit square, centred at the origin (James Meiss).
+    The map will return unwrapped trajectories for iterations of initial conditions, unlike when using PBCs.
+    For computation of the Lagrangian Descriptor relative displacements are only needed. 
+    
+    Number of model parameters: 1 . PARAMETERS = [K]
+    Functional form: 
+    x_next = x_initial - y_initial
+    y_next = y_initial + (K/(2*np.pi))*np.sin(2*np.pi*(x_initial - y_initial))
+    
+    where u_initial = (x_initial, y_initial) 
     
     Parameters
     ----------
-    u : array_like, shape(n,)
-        points in phase space to determine vector field at time t
+    u_initial : array_like, shape(n,)
+        initial points in unit square to determine their next iteration under the map
     
     PARAMETERS : list of floats
-        vector field parameters
+        map parameters
     
     Returns
     -------
-    v : array_like, shape(n,)
-        vector field corresponding to points u, in phase space at time t
+    u_next : array_like, shape(n,)
+        points u_next, in the 2D plane.
     """
     x_initial, y_initial = u_initial.T
-    # Hamiltonian Model Parameter
+    # Map parameters
     K, = PARAMETERS
     
     # Map components 
@@ -67,25 +80,30 @@ def StandardMap_inverse(u_initial, PARAMETERS=[0.3]):
 
 def HenonMap(u_initial, PARAMETERS=[0.298, 1]):
     """
-    Returns 1D Hamilton-Centre vector field at time t, for an array of points in phase space.
-    Number of model parameters: 1 . PARAMETERS = [omega]
-    Functional form: v = (omega*y, - omega*x), with u = (x, y)
+    2D Henon map. 
+    
+    Number of model parameters: 2 . PARAMETERS = [a, b]
+    Functional form: 
+    x_next = a - x_initial^2 + b*y_initial
+    y_next = x_initial
+    
+    where u_initial = (x_initial, y_initial) 
     
     Parameters
     ----------
-    u : array_like, shape(n,)
-        points in phase space to determine vector field at time t
+    u_initial : array_like, shape(n,)
+        initial points in unit square to determine their next iteration under the map
     
     PARAMETERS : list of floats
-        vector field parameters
+        map parameters
     
     Returns
     -------
-    v : array_like, shape(n,)
-        vector field corresponding to points u, in phase space at time t
+    u_next : array_like, shape(n,)
+        points u_next, in the 2D plane.
     """
     x_initial, y_initial = u_initial.T
-    # Hamiltonian Model Parameter
+    # Map parameters
     a, b = PARAMETERS
     
     # Map components
@@ -99,25 +117,30 @@ def HenonMap(u_initial, PARAMETERS=[0.298, 1]):
 
 def HenonMap_inverse(u_initial, PARAMETERS=[0.298, 1]):
     """
-    Returns 1D Hamilton-Centre vector field at time t, for an array of points in phase space.
-    Number of model parameters: 1 . PARAMETERS = [omega]
-    Functional form: v = (omega*y, - omega*x), with u = (x, y)
+    Inverse of 2D Henon map.
+    
+    Number of model parameters: 2 . PARAMETERS = [a, b]
+    Functional form: 
+    x_next = y_initial
+    y_next = (x_initial - a + y_initial^2)/b
+    
+    where u_initial = (x_initial, y_initial) 
     
     Parameters
     ----------
-    u : array_like, shape(n,)
-        points in phase space to determine vector field at time t
+    u_initial : array_like, shape(n,)
+        initial points in unit square to determine their next iteration under the map
     
     PARAMETERS : list of floats
-        vector field parameters
+        map parameters
     
     Returns
     -------
-    v : array_like, shape(n,)
-        vector field corresponding to points u, in phase space at time t
+    u_next : array_like, shape(n,)
+        points u_next, in the 2D plane (not in the unit square necessarily)
     """
     x_initial, y_initial = u_initial.T
-    # Hamiltonian Model Parameter
+    # Map parameters
     a, b = PARAMETERS
     
     # Map components

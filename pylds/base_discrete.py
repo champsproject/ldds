@@ -3,6 +3,22 @@ from operator import itemgetter
 from pylds.base import generate_points, lagrangian_descriptor
 
 def check_if_points_escape_box(u, box_boundaries):
+    """
+    Determine if points in 2D plane, u, have escaped box with user-defined dimensions.
+    
+    Parameters
+    ----------
+    u : array_like, shape(n, )
+        points in plane to check if outside box boundaries
+    
+    box_boundaries : list of 2-tuples of floats
+        box lower and upper limits along X and Y axes
+        
+    Returns
+    -------
+    u_indices : array_like, shape(n, )
+        array of True/False bool values if points inside/outside the box
+    """
     x, y = u.T
     # Escape condition
     box_x_min, box_x_max = box_boundaries[0]
@@ -11,6 +27,37 @@ def check_if_points_escape_box(u, box_boundaries):
     return u_indices
 
 def compute_lagrangian_descriptor(grid_parameters, discrete_map, N_iterations, p_value=0.5, box_boundaries=False):
+    """
+    Returns the values of the LD function from trajectories from iterated initial conditions in plane by a map.
+    
+    Parameters
+    ----------
+    grid_parameters : list of 3-tuples of floats
+        input parameters of limits and size of mesh per axis.
+    
+    discrete_map: function
+        map of discrete 2D dynamical system.
+        
+    tau : float
+        Upper limit of integration.
+        
+    p_value : float, optional
+        Exponent in Lagrangian descriptor definition.
+        0 is the acton-based LD,
+        0 < p_value < 1 is the Lp quasinorm,
+        1 <= p_value < 2 is the Lp norm LD,
+        2 is the arclength LD.
+        The default is 0.5.
+    
+    box_boundaries : list of 2-tuples, optional
+        Box boundaries for escape condition of variable time integration.
+        Boundaries are infinite by default.
+    
+    Returns
+    -------
+    LD : ndarray, shape (Nx, Ny)
+        Array of computed Lagrangian descriptor values for all initial conditions.
+    """
     N_mesh_axes = len(grid_parameters)+1
     y0, mask = generate_points(grid_parameters)
     y0 = y0.reshape(-1,N_mesh_axes)
@@ -23,7 +70,6 @@ def compute_lagrangian_descriptor(grid_parameters, discrete_map, N_iterations, p
         y = f(y0)
         if box_boundaries:
             y_inbox = check_if_points_escape_box(y, box_boundaries)
-            y[y_inbox == True]  = f(y0[y_inbox])
             y[y_inbox == False] = y0[y_inbox == False]
 
         LD_values = LD_values + lagrangian_descriptor(y0, y-y0, p_value)        
