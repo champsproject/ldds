@@ -66,7 +66,9 @@ def ld_plot(LD, LD_gradient, grid_parameters, colormap, interactive, string_titl
     plt.subplots_adjust(bottom=0.13, top=0.85)
 
     # LD plot
-    con0 = ax0.contourf(points_ax1, points_ax2, LD, cmap=colormap, vmin=0, vmax=1, levels=100)
+    n_levels = 100
+    interact_step = 1/n_levels
+    con0 = ax0.contourf(points_ax1, points_ax2, LD, cmap=colormap, vmin=0, vmax=1, levels=n_levels)
     ax0.set_title('LD values')
     ax0.set_xlabel(slice_axes_labels[0])
     ax0.set_ylabel(slice_axes_labels[1])
@@ -76,11 +78,11 @@ def ld_plot(LD, LD_gradient, grid_parameters, colormap, interactive, string_titl
     #gradient plot
     vmin = np.nanmin(LD_gradient)
     vmax = np.nanmax(LD_gradient)
-    con1 = ax1.contourf(points_ax1, points_ax2, LD_gradient, cmap=colormap_gradient, levels=100)
+    con1 = ax1.contourf(points_ax1, points_ax2, LD_gradient, cmap=colormap_gradient, levels=n_levels)
     if interactive:
-        @widgets.interact(grad_min=(vmin, vmax-0.01, .01),grad_max=(vmin+0.01, vmax, .01))
+        @widgets.interact(grad_min=(vmin, vmax-interact_step, interact_step),grad_max=(vmin+interact_step, vmax, interact_step))
         def update(grad_min=vmin,grad_max=vmax):
-            grad_max = max(grad_min+0.01, grad_max)
+            grad_max = max(grad_min+interact_step, grad_max)
             con1.set_clim(grad_min,grad_max)
 
     ticks_gradient = np.linspace(vmin,vmax, 11)
