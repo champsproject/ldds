@@ -1,4 +1,3 @@
-
 import numpy as np
 
 def StandardMap(u_initial, PARAMETERS=[0.3]):
