@@ -26,7 +26,7 @@ def check_if_points_escape_box(u, box_boundaries):
     u_indices = (x >= box_x_min) & (x <= box_x_max) & (y >= box_y_min) & (y <= box_y_max)
     return u_indices
 
-def compute_lagrangian_descriptor(grid_parameters, discrete_map, N_iterations, p_value=0.5, box_boundaries=False):
+def compute_lagrangian_descriptor(grid_parameters, discrete_map, N_iterations, p_value=0.5, box_boundaries=False, periodic_boundaries=False):
     """
     Returns the values of the LD function from trajectories from iterated initial conditions in plane by a map.
     
@@ -68,11 +68,19 @@ def compute_lagrangian_descriptor(grid_parameters, discrete_map, N_iterations, p
     LD_values = np.zeros(len(y0))
     for i in range(N_iterations):
         y = f(y0)
+        # Escape box condition
         if box_boundaries:
             y_inbox = check_if_points_escape_box(y, box_boundaries)
             y[y_inbox == False] = y0[y_inbox == False]
-
-        LD_values = LD_values + lagrangian_descriptor(y0, y-y0, p_value)        
+        
+        # Periodic Boundary conditions
+        dy = y-y0
+        if periodic_boundaries:
+            nint = lambda x: np.round(x).astype(int) #nearest integer
+            L = np.asarray(periodic_boundaries)
+            dy = dy - nint(dy/L) #minimum image criterion
+        
+        LD_values = LD_values + lagrangian_descriptor(y0, dy, p_value)        
         y0 = y
 
     N_points_slice_axes = [x[-1] for x in grid_parameters] #take number of points
