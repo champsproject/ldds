@@ -7,40 +7,38 @@ Publisher, Number(Volume No), pp.142-161.
 """
 import numpy as np
 import matplotlib.pyplot as plt
+from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 import ipywidgets as widgets
 
-def ld_plot(LD, LD_gradient, grid_parameters, colormap, interactive, string_title, colormap_gradient):
+def draw_ld(fig, axis, LD, grid_parameters, subplot_title, interactive, cmap='viridis'):
     """
     Draws a Lagrangian descriptor contour plot and a contour plot showing the magnitude of its gradient field.
 
     Parameters
     ----------
-    LD : ndarray, shape(n, )
-        Array of Lagrangian Descriptor values.
+    fig : matplotlib.figure.Figure
+        Figure where contour plot will be drawn.
 
-    LD_gradient : ndarray, shape(n, )
-        Array of Lagrangian Descriptor gradient values.
+    axis : matplotlib.axes._subplots.AxesSubplot
+        Axis handle of subplot in figure.
+
+    LD : ndarray, shape(n, )
+        Array to be plotted.
 
     grid_parameters : list of 3-tuples of floats
         Limits and size of mesh per axis.
 
-    colormap : str, optional
-        Name of matplotlib colormap for contouor plot.
+    subplot_title : string
+        Subplot title.
 
     interactive : bool
         True allows interactively adjusting the gradient contouor plot minimum and maximum.
 
-    string_title : string
-        Plot title.
-
-    colormap_gradient : string
-        Name of matplotlib colormap for gradient contouor plot.
-
-    Returns
-    -------
-        Nothing.
+    cmap: string
+        Name of matplotlib colormap for plot.
     """
 
+    #axes
     if type(grid_parameters) == dict:
         #n-DoF systems
         slice_parameters = grid_parameters['slice_parameters'] # 2n-D grid
@@ -58,40 +56,85 @@ def ld_plot(LD, LD_gradient, grid_parameters, colormap, interactive, string_titl
     points_ax1 = np.linspace(ax1_min, ax1_max, N1)
     points_ax2 = np.linspace(ax2_min, ax2_max, N2)
 
-    LD = LD - np.nanmin(LD)
-    LD = LD / np.nanmax(LD)
-
-    fig, (ax0, ax1) = plt.subplots(1, 2, figsize=(7.5,3), dpi=130, sharex=True, sharey=True)
-    fig.suptitle(string_title, fontsize=14, y=1.00)
-    plt.subplots_adjust(bottom=0.13, top=0.85)
-
-    # LD plot
+    # plot
     n_levels = 100
-    interact_step = 1/n_levels
-    con0 = ax0.contourf(points_ax1, points_ax2, LD, cmap=colormap, vmin=0, vmax=1, levels=n_levels)
-    ax0.set_title('LD values')
-    ax0.set_xlabel(slice_axes_labels[0])
-    ax0.set_ylabel(slice_axes_labels[1])
-    ticks_LD = np.linspace(0, 1, 11)
-    fig.colorbar(con0, ax=ax0, ticks=ticks_LD, format='%.1f')
+    vmin = np.nanmin(LD)
+    vmax = np.nanmax(LD)
+    interact_step = (vmax-vmin)/n_levels
 
-    #gradient plot
-    vmin = np.nanmin(LD_gradient)
-    vmax = np.nanmax(LD_gradient)
-    con1 = ax1.contourf(points_ax1, points_ax2, LD_gradient, cmap=colormap_gradient, levels=n_levels)
+    con1 = axis.contourf(points_ax1, points_ax2, LD, cmap=cmap, levels=n_levels)
     if interactive:
-        @widgets.interact(grad_min=(vmin, vmax-interact_step, interact_step),grad_max=(vmin+interact_step, vmax, interact_step))
-        def update(grad_min=vmin,grad_max=vmax):
-            grad_max = max(grad_min+interact_step, grad_max)
-            con1.set_clim(grad_min,grad_max)
+        @widgets.interact(clim_min=(vmin, vmax-interact_step, interact_step),clim_max=(vmin+interact_step, vmax, interact_step))
+        def update(clim_min=vmin,clim_max=vmax):
+            clim_max = max(clim_min+interact_step, clim_max)
+            con1.set_clim(clim_min,clim_max)
 
+    axins = inset_axes(axis,
+               width="5%",
+               height="100%",
+               loc='lower left',
+               bbox_to_anchor=(1.025, 0., 1, 1),
+               bbox_transform=axis.transAxes,
+               borderpad=0
+               )
     ticks_gradient = np.linspace(vmin,vmax, 11)
-    fig.colorbar(con1, ax=ax1, ticks=ticks_gradient, format='%.1f')
-    ax1.set_title('LD gradient magnitude')
-    ax1.set_xlabel(slice_axes_labels[0])
-    ax1.label_outer()
+    fig.colorbar(con1, cax=axins, ticks=ticks_gradient, format='%.1f', orientation='vertical')
 
-    plt.show()
+    axis.set_title(subplot_title)
+    axis.set_xlabel(slice_axes_labels[0])
+    axis.set_ylabel(slice_axes_labels[1])
+
+def draw_ld_pair(LD, LD_gradient, grid_parameters, plot_title, interactive, cmap_gradient):
+    """
+    Lagrangian descriptor plot wrapper.
+
+    Parameters
+    ----------
+    LD : ndarray, shape(n, )
+        Array of Lagrangian Descriptor values.
+
+    LD_gradient : ndarray, shape(n, )
+        Array of Lagrangian Descriptor gradient values.
+
+    grid_parameters : list of 3-tuples of floats
+        Limits and size of mesh per axis.
+
+    plot_title : string
+        Plot title.
+
+    interactive : bool
+        True allows interactively adjusting the gradient contouor plot minimum and maximum.
+
+    cmap_gradient : string
+        Name of matplotlib colormap for gradient contour plot.
+
+    Returns
+    -------
+       `.axes.SubplotBase`, or another subclass of `~.axes.Axes`
+    """
+    fig, ax = plt.subplots(1, 2, figsize=(7.5,3), dpi=130, sharex=True, sharey=True)
+    plt.subplots_adjust(top=0.85, bottom=0.13, wspace=0.34)  #margins to accommodate boundary of interactive figure environment
+    plt.suptitle(plot_title)
+
+    draw_ld(fig, ax[0], normalise(LD), grid_parameters, 'LD values', interactive=False)
+    draw_ld(fig, ax[1], LD_gradient, grid_parameters, 'LD gradient magnitude', interactive, cmap=cmap_gradient)
+
+    return fig, ax
+
+def normalise(A):
+    """
+    Normalises an array.
+
+    Parameters
+    ----------
+    A : ndarray, shape(n, )
+        Array of input values.
+
+    Returns
+    -------
+    Normalised array : ndarray, shape(n, ).
+    """
+    return (A - np.nanmin(A)) / (np.nanmax(A) - np.nanmin(A))
 
 def get_gradient_magnitude(LD):
     """
@@ -109,11 +152,9 @@ def get_gradient_magnitude(LD):
     """
     gradient_x, gradient_y = np.gradient(LD)
     gradient_magnitude = np.sqrt(gradient_x**2 + gradient_y**2)
-    gradient_magnitude = gradient_magnitude - np.nanmin(gradient_magnitude)
-    gradient_magnitude = gradient_magnitude / np.nanmax(gradient_magnitude)
-    return gradient_magnitude
+    return normalise(gradient_magnitude)
 
-def draw_all_lds(LD_forward, LD_backward, grid_parameters, tau, p_value, colormap='bone', interactive=False):
+def draw_all_lds(LD_forward, LD_backward, grid_parameters, tau, p_value, interactive=False):
     """
     Draws the forward, backward and total Lagrangian descriptor contour plots and a contour plots showing the magnitude of its gradient field.
 
@@ -145,35 +186,46 @@ def draw_all_lds(LD_forward, LD_backward, grid_parameters, tau, p_value, colorma
 
     Returns
     -------
-        Nothing.
+        List of tuples of the form (fig, ax).
     """
 
     # Prepare method name
     if p_value == 2:
-        str_method = 'arclength LD'
+        str_method = 'Arclength LD'
     elif p_value >= 1:
-        str_method = r'p-norm LD$(p={})$'.format(p_value)
+        str_method = r'p-norm LD$(p={'+str(p_value)+'r})$'
     elif p_value == 0:
-        str_method = 'action-based LD'
+        str_method = 'Action-based LD'
     elif p_value < 1:
-        str_method = r'LD$_p$ $(p={})$'.format(p_value)
+        str_method = r'LD$_{'+str(p_value)+r'}$'
+    else:
+        str_method = ''
     t_final=abs(tau)
 
     # Plot LDs
+    plot_handles=[]
 
     if len(LD_forward)>0:
-        string_title = r'Forward {}, $\tau={}$'.format(str_method,t_final)
+        plot_title = r'Forward {}, $\tau={}$'.format(str_method,t_final)
         LD_forward_gradient = get_gradient_magnitude(LD_forward)
-        ld_plot(LD_forward, LD_forward_gradient, grid_parameters, colormap, interactive, string_title, colormap_gradient='Reds')
+        plot_tuple = draw_ld_pair(LD_forward, LD_forward_gradient, grid_parameters, plot_title, interactive, 'Reds')
+        plot_handles.append(plot_tuple)
 
     if len(LD_backward)>0:
-        string_title = r'Backward {}, $\tau={}$'.format(str_method,t_final)
+        plot_title = r'Backward {}, $\tau={}$'.format(str_method,t_final)
         LD_backward_gradient = -get_gradient_magnitude(LD_backward)
-        ld_plot(LD_backward, LD_backward_gradient, grid_parameters, colormap, interactive, string_title, colormap_gradient='Blues_r')
+        plot_tuple = draw_ld_pair(LD_backward, LD_backward_gradient, grid_parameters, plot_title, interactive, 'Blues_r')
+        plot_handles.append(plot_tuple)
 
     if len(LD_forward)>0 and len(LD_backward)>0:
-        string_title = r'Total {}, $\tau={}$'.format(str_method,t_final)
-        ld_plot(LD_forward+LD_backward, LD_forward_gradient+LD_backward_gradient, grid_parameters, colormap, interactive, string_title, colormap_gradient='RdBu_r')
+        plot_title = r'Total {}, $\tau={}$'.format(str_method,t_final)
+        LD_backward_gradient = -get_gradient_magnitude(LD_backward)
+        plot_tuple = draw_ld_pair(LD_backward+LD_forward, LD_forward_gradient+LD_backward_gradient, grid_parameters, plot_title, interactive, 'Blues_r')
+        plot_handles.append(plot_tuple)
+
+    plt.show()
+
+    return plot_handles
 
 __author__ = 'Broncio Aguilar-Sanjuan, Victor-Jose Garcia-Garrido, Vladimir Krajnak'
 __status__ = 'Development'
