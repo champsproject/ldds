@@ -8,7 +8,7 @@ Publisher, Number(Volume No), pp.142-161.
 import numpy as np
 import matplotlib.pyplot as plt
 
-def draw_lagrangian_descriptor(LD, LD_type, grid_parameters, tau, p_value, norm = True, colormap_name='bone', colormap_mode=1):
+def draw_lagrangian_descriptor(LD, LD_type, grid_parameters, tau, p_value, norm = True, colormap_name='viridis', colormap_mode=1):
     """
     Draws a Lagrangian descriptor contour plot and a contour plot showing the magnitude of its gradient field.
 
