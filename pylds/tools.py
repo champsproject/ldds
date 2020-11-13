@@ -110,7 +110,9 @@ def draw_ld_pair(LD, LD_gradient, grid_parameters, plot_title, interactive, cmap
 
     Returns
     -------
-       `.axes.SubplotBase`, or another subclass of `~.axes.Axes`
+       fig : `~.figure.Figure`
+
+       ax : `.axes.Axes` or array of Axes
     """
     fig, ax = plt.subplots(1, 2, figsize=(7.5,3), dpi=130, sharex=True, sharey=True)
     plt.subplots_adjust(top=0.85, bottom=0.13, wspace=0.34)  #margins to accommodate boundary of interactive figure environment
