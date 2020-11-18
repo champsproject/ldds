@@ -74,8 +74,8 @@ def compute_lagrangian_descriptor(grid_parameters, discrete_map, N_iterations, p
             y[y_inbox == False] = y0[y_inbox == False]
         
         # Periodic Boundary conditions
-        dy = y-y0
         if periodic_boundaries:
+            dy = y-y0
             nint = lambda x: np.round(x).astype(int) #nearest integer
             L = np.asarray(periodic_boundaries)
             if not L==0:
