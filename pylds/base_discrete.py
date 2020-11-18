@@ -76,9 +76,8 @@ def compute_lagrangian_descriptor(grid_parameters, discrete_map, N_iterations, p
         # Periodic Boundary conditions
         dy = y-y0
         if periodic_boundaries:
-            nint = lambda x: np.round(x).astype(int) #nearest integer
             L = np.asarray(periodic_boundaries)
-            dy = dy - nint(dy/L) #minimum image criterion
+            dy = dy - int(dy/L) #minimum image criterion
         
         LD_values = LD_values + lagrangian_descriptor(y0, dy, p_value)        
         y0 = y
