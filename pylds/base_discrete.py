@@ -1,6 +1,7 @@
 import numpy as np
 from operator import itemgetter
 from pylds.base import generate_points, lagrangian_descriptor
+from pylds.tools import draw_lagrangian_descriptor
 
 def check_if_points_escape_box(u, box_boundaries):
     """
@@ -25,6 +26,69 @@ def check_if_points_escape_box(u, box_boundaries):
     box_y_min, box_y_max = box_boundaries[1]
     u_indices = (x >= box_x_min) & (x <= box_x_max) & (y >= box_y_min) & (y <= box_y_max)
     return u_indices
+
+def correct_axis_by_pbc(x, origin, box_length):
+    """
+    Correct coordinate in a single axis by Periodic Boundary Conditions (PBCs).
+
+    Parameters
+    ----------
+    x : array_like, shape(n, )
+        points in axis to correct by PBCs
+    
+    origin : array
+        
+    box_length : array
+        
+    Returns
+    -------
+    u_pbc : array_like, shape(n, )
+        array of corrected points for periodic box
+    """
+    #cell's origin and lengths
+    x0 = origin
+    L = box_length
+    
+    if not isinstance(x0, bool) or not isinstance(L, bool):
+        if x0 == 0:
+            #origin at cell's centre
+            x = x + L/2 #shift origin to lower-left cell's corner
+            x = np.mod(x + 2*L, L) #apply PBC correction
+            x_pbc = x - L/2 #shift origin back to cell's centre
+            return x_pbc
+        else:
+            #origin at lower-left cell's corner
+            x_pbc = np.mod(x + 2*L, L)
+        return x_pbc
+    else:
+        return x
+
+def correct_by_pbc(u, periodic_boundaries):
+    """
+    Correct coordinates in 2D plane by Periodic Boundary Conditions (PBCs).
+
+    Parameters
+    ----------
+    u : array_like, shape(n, )
+        points in plane to correct by PBCs
+    
+    periodic_boundaries : list of 2-tuples of floats
+        periodic box lower and upper limits along X and Y axes
+        
+    Returns
+    -------
+    u_pbc : array_like, shape(n, )
+        array of corrected points for periodic box
+    """
+    #workout cell's origin and lengths
+    (origin_x, box_length_x),(origin_y, box_length_y) = periodic_boundaries
+    
+    x, y = u.T
+    x_pbc = correct_axis_by_pbc(x, origin_x, box_length_x)
+    y_pbc = correct_axis_by_pbc(y, origin_y, box_length_y)
+    
+    u_pbc = np.column_stack([x_pbc, y_pbc])
+    return u_pbc
 
 def compute_lagrangian_descriptor(grid_parameters, discrete_map, N_iterations, p_value=0.5, box_boundaries=False, periodic_boundaries=False):
     """
@@ -52,7 +116,10 @@ def compute_lagrangian_descriptor(grid_parameters, discrete_map, N_iterations, p
     box_boundaries : list of 2-tuples, optional
         Box boundaries for escape condition of variable time integration.
         Boundaries are infinite by default.
-    
+        
+    perodic_boundaries: list of floats
+        Lenght values of periodic box axes (2D default).
+        PBC are False by default.
     Returns
     -------
     LD : ndarray, shape (Nx, Ny)
@@ -67,6 +134,7 @@ def compute_lagrangian_descriptor(grid_parameters, discrete_map, N_iterations, p
 
     LD_values = np.zeros(len(y0))
     for i in range(N_iterations):
+        y0_next = y0
         y = f(y0)
         # Escape box condition
         if box_boundaries:
@@ -76,12 +144,19 @@ def compute_lagrangian_descriptor(grid_parameters, discrete_map, N_iterations, p
         # Periodic Boundary conditions
         dy = y-y0
         if periodic_boundaries:
+            (origin_x, box_length_x),(origin_y, box_length_y) = periodic_boundaries
+            L = np.abs(np.array([box_length_x, box_length_y]))
+            
             nint = lambda x: np.round(x).astype(int) #nearest integer
-            L = np.abs(np.asarray(periodic_boundaries))
+#             L = np.abs(np.asarray(periodic_boundaries))
             if not np.any(L==np.zeros(len(L))):
                 dy = dy - nint(dy/L) #minimum image criterion
-        
-        LD_values = LD_values + lagrangian_descriptor(y0, dy, p_value)        
+                
+            y0_pbc = y0 - np.floor(y0 + 1/2)
+#             y0_pbc = correct_by_pbc(y0, periodic_boundaries)
+            y0_next = y0_pbc
+            
+        LD_values = LD_values + lagrangian_descriptor(y0_next, dy, p_value)
         y0 = y
 
     N_points_slice_axes = [x[-1] for x in grid_parameters] #take number of points
