@@ -27,7 +27,7 @@ def check_if_points_escape_box(u, box_boundaries):
     u_indices = (x >= box_x_min) & (x <= box_x_max) & (y >= box_y_min) & (y <= box_y_max)
     return u_indices
 
-def correct_axis_by_pbc(x, box_length):
+def correct_axis_by_pbc(x, box_origin, box_length):
     """
     Correct coordinate in a single axis by Periodic Boundary Conditions (PBCs).
 
@@ -45,10 +45,16 @@ def correct_axis_by_pbc(x, box_length):
     u_pbc : array_like, shape(n, )
         array of corrected points for periodic box
     """
-    L = abs(box_length)
-    if not isinstance(L, bool):
-        x = np.mod(x + 2*L, L)
-    return x
+    x0 = box_origin
+    L = box_length
+    if not isinstance(x0, bool) or not isinstance(L, bool):
+        #apply PBC correction
+        x = x + L/2 - x0
+        x = np.mod(x + 2*L, L) 
+        x_pbc = x - L/2 + x0
+        return x_pbc
+    else:
+        return x
 
 def correct_by_pbc(u, periodic_boundaries):
     """
@@ -68,12 +74,11 @@ def correct_by_pbc(u, periodic_boundaries):
         array of corrected points for periodic box
     """
     #workout cell's origin and lengths
-    
-    box_length_x, box_length_y = periodic_boundaries
+    (box_origin_x, box_length_x),(box_origin_y, box_length_y) = periodic_boundaries
     
     x, y = u.T
-    x_pbc = correct_axis_by_pbc(x, box_length_x)
-    y_pbc = correct_axis_by_pbc(y, box_length_y)
+    x_pbc = correct_axis_by_pbc(x, box_origin_x, box_length_x)
+    y_pbc = correct_axis_by_pbc(y, box_origin_y, box_length_y)
     
     u_pbc = np.column_stack([x_pbc, y_pbc])
     return u_pbc
@@ -131,13 +136,15 @@ def compute_lagrangian_descriptor(grid_parameters, discrete_map, N_iterations, p
         
         # Periodic Boundary conditions
         dy = y-y0
-        if periodic_boundaries:        
+        if periodic_boundaries:
+            (origin_x, box_length_x),(origin_y, box_length_y) = periodic_boundaries
             nint = lambda x: np.round(x).astype(int) #nearest integer
-            L = np.abs(np.asarray(periodic_boundaries))
+            L = np.abs(np.array([box_length_x, box_length_y]))
+#             L = np.abs(np.asarray(periodic_boundaries))
             if not np.any(L==np.zeros(len(L))):
                 dy = dy - nint(dy/L) #minimum image criterion
             
-            #y0_next = y0 - np.floor(y0 + 1/2) #James Miss' def
+            #y0_next = y0 - np.floor(y0 + 1/2) #James Miss' mod function
             y0_next = correct_by_pbc(y0, periodic_boundaries)
             
         LD_values = LD_values + lagrangian_descriptor(y0_next, dy, p_value)
