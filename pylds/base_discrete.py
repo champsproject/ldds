@@ -98,8 +98,9 @@ def pbc_correction_distances_single_axis(dx, box_length):
         array of corrected distances for periodic box
     """
     dx_pbc = dx
-    L = abs(box_length)
-    if not isinstance(L, bool) and L > 0:
+    L = box_length
+    if not isinstance(L, bool):
+        L = abs(L)
         nint = lambda x: np.round(x).astype(int) #nearest integer
         dx_pbc = dx - nint(dx/L) #minimum image criterion
     
