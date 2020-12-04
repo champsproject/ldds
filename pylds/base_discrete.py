@@ -27,7 +27,7 @@ def check_if_points_escape_box(u, box_boundaries):
     u_indices = (x >= box_x_min) & (x <= box_x_max) & (y >= box_y_min) & (y <= box_y_max)
     return u_indices
 
-def correct_axis_by_pbc(x, box_origin, box_length):
+def pbc_correction_coords_single_axis(x, box_origin, box_length):
     """
     Correct coordinate in a single axis by Periodic Boundary Conditions (PBCs).
 
@@ -42,9 +42,10 @@ def correct_axis_by_pbc(x, box_origin, box_length):
         
     Returns
     -------
-    u_pbc : array_like, shape(n, )
+    x_pbc : array_like, shape(n, )
         array of corrected points for periodic box
     """
+    x_pbc = x
     x0 = box_origin
     L = box_length
     if not isinstance(x0, bool) or not isinstance(L, bool):
@@ -52,11 +53,10 @@ def correct_axis_by_pbc(x, box_origin, box_length):
         x = x + L/2 - x0
         x = np.mod(x + 2*L, L) 
         x_pbc = x - L/2 + x0
-        return x_pbc
-    else:
-        return x
+        
+    return x_pbc
 
-def correct_by_pbc(u, periodic_boundaries):
+def pbc_correction_coords(u, periodic_boundaries):
     """
     Correct coordinates in 2D plane by Periodic Boundary Conditions (PBCs).
 
@@ -73,11 +73,61 @@ def correct_by_pbc(u, periodic_boundaries):
     u_pbc : array_like, shape(n, )
         array of corrected points for periodic box
     """
-    N_dims = len(u.T)
+    N_dims = len(periodic_boundaries)
     pbc = periodic_boundaries
-    u_pbc = [correct_axis_by_pbc(u.T[i], *pbc[i]) for i in range(N_dims)]
+    f = pbc_correction_coords_single_axis
+    u_pbc = [f(u.T[i], *pbc[i]) for i in range(N_dims)]
+    
     return np.column_stack(u_pbc)
 
+def pbc_correction_distances_single_axis(dx, box_length):
+    """
+    Correct distances in a single axis by Periodic Boundary Conditions (PBCs).
+
+    Parameters
+    ----------
+    dx : array_like, shape(n, )
+        distances in axis to correct by PBCs
+        
+    box_length : float or bool
+        if no PBCs, this must be False (bool)
+        
+    Returns
+    -------
+    dx_pbc : array_like, shape(n, )
+        array of corrected distances for periodic box
+    """
+    dx_pbc = dx
+    L = abs(box_length)
+    if not isinstance(L, bool) and L > 0:
+        nint = lambda x: np.round(x).astype(int) #nearest integer
+        dx_pbc = dx - nint(dx/L) #minimum image criterion
+    
+    return dx_pbc
+    
+def pbc_correction_distances(du, periodic_boundaries):
+    """
+    Correct distances in 2D plane by Periodic Boundary Conditions (PBCs).
+
+    Parameters
+    ----------
+    du : array_like, shape(n, )
+        distances in plane to correct by PBCs
+    
+    periodic_boundaries : list of 2-tuples of floats
+        periodic box lower and upper limits along X and Y axes
+        
+    Returns
+    -------
+    du_pbc : array_like, shape(n, )
+        array of corrected distances for periodic box
+    """
+    N_dims = len(periodic_boundaries)
+    pbc = periodic_boundaries
+    f = pbc_correction_distances_single_axis
+    du_pbc = [f(du.T[i], pbc[i][-1]) for i in range(N_dims)]
+    
+    return np.column_stack(du_pbc)
 
 def compute_lagrangian_descriptor(grid_parameters, discrete_map, N_iterations, p_value=0.5, box_boundaries=False, periodic_boundaries=False):
     """
@@ -132,15 +182,10 @@ def compute_lagrangian_descriptor(grid_parameters, discrete_map, N_iterations, p
         # Periodic Boundary conditions
         dy = y-y0
         if periodic_boundaries:
-            (origin_x, box_length_x),(origin_y, box_length_y) = periodic_boundaries
-            nint = lambda x: np.round(x).astype(int) #nearest integer
-            L = np.abs(np.array([box_length_x, box_length_y]))
-            if not np.any(L==np.zeros(len(L))):
-                dy = dy - nint(dy/L) #minimum image criterion
-                #y0_next = y0 - np.floor(y0 + 1/2) #James Miss' mod function
-                
-            y0 = correct_by_pbc(y0, periodic_boundaries)
-            y  = correct_by_pbc(y , periodic_boundaries)
+            dy = pbc_correction_distances(dy, periodic_boundaries)
+            #y0 = y0 - np.floor(y0 + 1/2) #James Miss' mod function
+            y0 = pbc_correction_coords(y0, periodic_boundaries)
+            y  = pbc_correction_coords(y , periodic_boundaries)
                 
         LD_values = LD_values + lagrangian_descriptor(y0, dy, p_value)
         y0 = y
