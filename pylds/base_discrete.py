@@ -73,15 +73,10 @@ def correct_by_pbc(u, periodic_boundaries):
     u_pbc : array_like, shape(n, )
         array of corrected points for periodic box
     """
-    #workout cell's origin and lengths
-    (box_origin_x, box_length_x),(box_origin_y, box_length_y) = periodic_boundaries
-    
-    x, y = u.T
-    x_pbc = correct_axis_by_pbc(x, box_origin_x, box_length_x)
-    y_pbc = correct_axis_by_pbc(y, box_origin_y, box_length_y)
-    
-    u_pbc = np.column_stack([x_pbc, y_pbc])
-    return u_pbc
+    N_dims = len(u.T)
+    pbc = periodic_boundaries
+    u_pbc = [correct_axis_by_pbc(u.T[i], *pbc[i]) for i in range(N_dims)]
+    return np.column_stack(u_pbc)
 
 
 def compute_lagrangian_descriptor(grid_parameters, discrete_map, N_iterations, p_value=0.5, box_boundaries=False, periodic_boundaries=False):
