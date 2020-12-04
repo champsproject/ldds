@@ -83,6 +83,7 @@ def correct_by_pbc(u, periodic_boundaries):
     u_pbc = np.column_stack([x_pbc, y_pbc])
     return u_pbc
 
+
 def compute_lagrangian_descriptor(grid_parameters, discrete_map, N_iterations, p_value=0.5, box_boundaries=False, periodic_boundaries=False):
     """
     Returns the values of the LD function from trajectories from iterated initial conditions in plane by a map.
@@ -127,7 +128,6 @@ def compute_lagrangian_descriptor(grid_parameters, discrete_map, N_iterations, p
 
     LD_values = np.zeros(len(y0))
     for i in range(N_iterations):
-        y0_next = y0
         y = f(y0)
         # Escape box condition
         if box_boundaries:
@@ -140,14 +140,14 @@ def compute_lagrangian_descriptor(grid_parameters, discrete_map, N_iterations, p
             (origin_x, box_length_x),(origin_y, box_length_y) = periodic_boundaries
             nint = lambda x: np.round(x).astype(int) #nearest integer
             L = np.abs(np.array([box_length_x, box_length_y]))
-#             L = np.abs(np.asarray(periodic_boundaries))
             if not np.any(L==np.zeros(len(L))):
                 dy = dy - nint(dy/L) #minimum image criterion
-            
-            #y0_next = y0 - np.floor(y0 + 1/2) #James Miss' mod function
-            y0_next = correct_by_pbc(y0, periodic_boundaries)
-            
-        LD_values = LD_values + lagrangian_descriptor(y0_next, dy, p_value)
+                #y0_next = y0 - np.floor(y0 + 1/2) #James Miss' mod function
+                
+            y0 = correct_by_pbc(y0, periodic_boundaries)
+            y  = correct_by_pbc(y , periodic_boundaries)
+                
+        LD_values = LD_values + lagrangian_descriptor(y0, dy, p_value)
         y0 = y
 
     N_points_slice_axes = [x[-1] for x in grid_parameters] #take number of points
