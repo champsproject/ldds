@@ -12,6 +12,7 @@ import numpy.ma as ma
 from operator import itemgetter
 from scipy.integrate import solve_ivp
 from functools import reduce
+from scipy.interpolate import RectBivariateSpline, CubicSpline
 
 def energy_conservation_condition(phase_space_axes, H0, potential_energy, momentum_sign):
     N_dim = len(phase_space_axes)
@@ -268,6 +269,56 @@ def vector_field_flat(t, points, vector_field, p_value, box_boundaries):
     # Add LD
     v_out=np.column_stack((v, LD_vec))
     return v_out.flatten()
+
+
+def fit_surface(coords, pot, clip_max = False):
+    """
+    Returns a 1- or 2-dimensional spline function (potential energy surface) fitted to input data.
+
+    Parameters
+    ----------
+    coords : list of ndarrays
+        [x] or [x,y] contain coordinates.
+
+    pot : ndarray, shape(len(x)) or shape(len(y),len(x))
+        pot is an array of potential values.
+
+    clip_max : float
+        Limit for clipping potential values that are not of interest.
+        The default is False.
+
+    Returns
+    -------
+    fspline : function
+        fspline returns the potential at (x0) or (x0,y0).
+    """
+
+    if clip_max:
+        pot=np.clip(pot, a_min=-np.inf, a_max=clip_max)
+
+    if len(coords) == 1:
+        spline = CubicSpline(coords, pot)
+
+        def fspline(positions):
+            potential = np.array(list(map(spline,positions)))
+            return potential
+
+    elif len(coords) == 2:
+        x, y = coords
+        spline = RectBivariateSpline(x,y,pot.T)
+
+        def spline_wrap(v):
+            return spline(v[0],v[1]).squeeze()
+
+        def fspline(positions):
+            potential = np.array(list(map(spline_wrap,positions)))
+            return potential
+    else:
+        print('splines in +3D are not implemented yet')
+        fspline = np.nan
+
+    return fspline
+
 
 def compute_lagrangian_descriptor(grid_parameters, vector_field, tau, p_value=0.5, box_boundaries=False):
     """
