@@ -226,8 +226,6 @@ def draw_all_lds(LD_forward, LD_backward, grid_parameters, tau, p_value, interac
         plot_handles.append(plot_tuple)
 
     plt.show()
-
     return plot_handles
-
 __author__ = 'Broncio Aguilar-Sanjuan, Victor-Jose Garcia-Garrido, Vladimir Krajnak'
 __status__ = 'Development'
