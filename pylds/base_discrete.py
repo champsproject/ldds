@@ -5,19 +5,19 @@ from pylds.tools import draw_lagrangian_descriptor
 
 def check_if_points_escape_box(u, box_boundaries):
     """
-    Determine if points in 2D plane, u, have escaped box with user-defined dimensions.
+    Determine if points, u, in 2D plane have escaped box with user-defined dimensions.
     
     Parameters
     ----------
-    u : array_like, shape(n, )
-        points in plane to check if outside box boundaries
+    u : array_like, shape(n, 2)
+        Points in plane to check if outside box boundaries
     
     box_boundaries : list of 2-tuples of floats
-        box lower and upper limits along X and Y axes
+        Box lower and upper limits along X and Y axes
         
     Returns
     -------
-    u_indices : array_like, shape(n, )
+    u_indices : array_like, shape(n, 2)
         array of True/False bool values if points inside/outside the box
     """
     x, y = u.T
@@ -29,21 +29,23 @@ def check_if_points_escape_box(u, box_boundaries):
 
 def pbc_correction_coords_single_axis(x, box_origin, box_length):
     """
-    Correct coordinate in a single axis by Periodic Boundary Conditions (PBCs).
+    Correct single-axis coordinates by Periodic Boundary Conditions (PBCs).
 
     Parameters
     ----------
-    x : array_like, shape(n, )
-        points in axis to correct by PBCs
+    x : array
+        Points in axis to correct by PBCs
     
-    origin : array
+    box_origin : float or False(bool)
+        If False, no PBC-correction applied
         
-    box_length : array
+    box_length : float or False(bool)
+        If False, no PBC-correction applied
         
     Returns
     -------
-    x_pbc : array_like, shape(n, )
-        array of corrected points for periodic box
+    x_pbc : array
+        1D array of PBC-corrected coordinates
     """
     x_pbc = x
     x0 = box_origin
@@ -59,19 +61,24 @@ def pbc_correction_coords_single_axis(x, box_origin, box_length):
 def pbc_correction_coords(u, periodic_boundaries):
     """
     Correct coordinates in 2D plane by Periodic Boundary Conditions (PBCs).
-
+    The periodic box can be a rectangle (torus) or an infinite band (cylinder) in the plane.
+    
     Parameters
     ----------
-    u : array_like, shape(n, )
-        points in plane to correct by PBCs
+    u : array_like, shape(n, 2)
+        Points in 2D plane to correct by PBCs.
     
-    periodic_boundaries : list of 2-tuples of floats
-        periodic box lower and upper limits along X and Y axes
+    periodic_boundaries : list of 2-tuples of floats or False (bools)
+        The first tuple must be the box origin coordinates in the plane.
+        The second tuple must be the lengths of the box edges.
+        For a torus PBC, both tuples entries must be floats.
+        For a cylinder PBC, tuple entries for the non-periodic axis must be False.
+        If no PBCs, this must be a False (single bool).
         
     Returns
     -------
-    u_pbc : array_like, shape(n, )
-        array of corrected points for periodic box
+    u_pbc : array_like, shape(n, 2)
+        array of PBC-corrected points for periodic box.
     """
     N_dims = len(periodic_boundaries)
     pbc = periodic_boundaries
@@ -87,15 +94,15 @@ def pbc_correction_distances_single_axis(dx, box_length):
     Parameters
     ----------
     dx : array_like, shape(n, )
-        distances in axis to correct by PBCs
+        Distances in axis to correct by PBCs.
         
     box_length : float or bool
-        if no PBCs, this must be False (bool)
+        If no PBCs, this must be False (bool).
         
     Returns
     -------
     dx_pbc : array_like, shape(n, )
-        array of corrected distances for periodic box
+        array of corrected distances for periodic box.
     """
     dx_pbc = dx
     L = box_length
@@ -109,19 +116,24 @@ def pbc_correction_distances_single_axis(dx, box_length):
 def pbc_correction_distances(du, periodic_boundaries):
     """
     Correct distances in 2D plane by Periodic Boundary Conditions (PBCs).
+    The periodic box can be a rectangle (torus) or an infinite band (cylinder) in the plane.
 
     Parameters
     ----------
-    du : array_like, shape(n, )
-        distances in plane to correct by PBCs
+    du : array_like, shape(n, 2)
+        Distances in plane to correct by PBCs.
     
-    periodic_boundaries : list of 2-tuples of floats
-        periodic box lower and upper limits along X and Y axes
+    periodic_boundaries : list of 2-tuples of floats or False (bools)
+        The first tuple must be the box origin coordinates in the plane.
+        The second tuple must be the lengths of the box edges.
+        For a torus PBC, both tuples entries must be floats.
+        For a cylinder PBC, tuple entries for the non-periodic axis must be False.
+        If no PBCs, this must be a False (single bool).
         
     Returns
     -------
-    du_pbc : array_like, shape(n, )
-        array of corrected distances for periodic box
+    du_pbc : array_like, shape(n, 2)
+        array of PB-corrected distances for periodic box.
     """
     N_dims = len(periodic_boundaries)
     pbc = periodic_boundaries
@@ -137,10 +149,10 @@ def compute_lagrangian_descriptor(grid_parameters, discrete_map, N_iterations, p
     Parameters
     ----------
     grid_parameters : list of 3-tuples of floats
-        input parameters of limits and size of mesh per axis.
+        Input parameters of limits and size of mesh per axis.
     
     discrete_map: function
-        map of discrete 2D dynamical system.
+        Map of discrete 2D dynamical system.
         
     tau : float
         Upper limit of integration.
@@ -157,13 +169,14 @@ def compute_lagrangian_descriptor(grid_parameters, discrete_map, N_iterations, p
         Box boundaries for escape condition of variable time integration.
         Boundaries are infinite by default.
         
-    perodic_boundaries: list of floats
+    perodic_boundaries: list of floats, optional
         Lenght values of periodic box axes (2D default).
         PBC are False by default.
+    
     Returns
     -------
     LD : ndarray, shape (Nx, Ny)
-        Array of computed Lagrangian descriptor values for all initial conditions.
+        array of computed Lagrangian descriptor values for all initial conditions.
     """
     N_mesh_axes = len(grid_parameters)+1
     y0, mask = generate_points(grid_parameters)
@@ -184,7 +197,6 @@ def compute_lagrangian_descriptor(grid_parameters, discrete_map, N_iterations, p
         dy = y-y0
         if periodic_boundaries:
             dy = pbc_correction_distances(dy, periodic_boundaries)
-            #y0 = y0 - np.floor(y0 + 1/2) #James Miss' mod function
             y0 = pbc_correction_coords(y0, periodic_boundaries)
             y  = pbc_correction_coords(y , periodic_boundaries)
                 
