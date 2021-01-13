@@ -27,19 +27,19 @@ def generate_points(grid_parameters):
     Returns a 1D array of all points from a on a uniform grid with dimensions and size defined by list of input parameters.
     An additional dimension initiallised with zeros is added for the calculation of Lagrangian Descriptors.
     NOTE: For n-DoF systems, currently energy conservation is only used to determine momenta dimensions.
-    
+
     Parameters
     ----------
     grid_parameters : list (1-DoF systems) or dict (n-DoF systems)
         if 1-DoF, list should have two 3-tuples of floats
         entries are input parameters of limits and size of mesh per axis
-        
+
         if n-DoF, dict should have the following keys
         * 'slice_parameters' : list, should have two 3-tuples of floats, for a 2D slice
         * 'dims_slice' : list of 0 and 1, ones indicate slice axes
-        * 'dims_fixed' : list of 0 and 1, ones indicate fixed axes 
+        * 'dims_fixed' : list of 0 and 1, ones indicate fixed axes
         * 'momentum_sign' : int, -1 / 1, for negative/positive momentum for remaining axis
-        * 'potential_energy' : func used by energy conservation condition to determine remaining momentum axis 
+        * 'potential_energy' : func used by energy conservation condition to determine remaining momentum axis
         * 'energy_level' : float, energy value for energy conservation condition
     Returns
     -------
@@ -55,21 +55,21 @@ def generate_points(grid_parameters):
         potential_energy = grid_parameters['potential_energy']
         H0 = grid_parameters['energy_level']
 
-        N_dim = len(dims_slice)  # Phase-space dimensions
+        N_dim = len(dims_slice)  # Phase space dimensions
 
         # Check N DoF is even.
         if N_dim % 2 != 0:
-            error_mssg = ("ERROR: Number of phase-space dimensions not even. ",
+            error_mssg = ("ERROR: Number of phase space dimensions not even. ",
                           "Check your extra grid parameters")
             print(error_mssg)
             sys.exit()
-            
-        # Determine number of dimensions for Energy conservation.
+
+        # Determine number of dimensions for energy conservation.
         # There must be only one.
         dims_remaining = 1 - (np.array(dims_fixed) + np.array(dims_slice))
         if list(dims_remaining).count(1) > 1:
             error_mssg = ("ERROR: More than one remaing dimension. ",
-                          "Cannot use Energy conservation to define high-dim grid.")
+                          "Cannot use energy conservation to define high-dim grid.")
             print(error_mssg)
             sys.exit()
 
@@ -97,14 +97,14 @@ def generate_points(grid_parameters):
 
         # Set axis to be determined by energy conservation
         idx_dims_H0 = list(set(range(N_dim))-set(phase_space_axes.keys()))[0]
-        
+
         # Check if remaining dimension falls in configuration space
         if idx_dims_H0 < int(N_dim/2):
             error_mssg = ("ERROR: The remaining dimension fall in configuration space.",
-                          "Currently, cannot use Energy conservation to define high-dim grid.")
+                          "Currently, cannot use energy conservation to define high-dim grid.")
             print(error_mssg)
             sys.exit()
-        
+
         phase_space_axes[idx_dims_H0] = np.zeros(N_points_slice)
 
         # List of all phase space axes
@@ -113,16 +113,16 @@ def generate_points(grid_parameters):
         # Determine undefined axis via energy conservation
         phase_space_axes[idx_dims_H0] = energy_conservation_condition(
             phase_space_axes, H0, potential_energy, momentum_sign)
-        
+
         mask = np.isnan(phase_space_axes[idx_dims_H0]) # Mask grid points
         phase_space_axes[idx_dims_H0] = np.nan_to_num(phase_space_axes[idx_dims_H0])
-        
+
         # Return array of mesh points for integrator
         lagrangian_descriptor_axis = [np.zeros(N_points_slice)]
         mesh = np.transpose(phase_space_axes + lagrangian_descriptor_axis)
 
         return mesh.flatten(), mask
-    
+
     else:
         if len(grid_parameters) > 2:
             error_mssg = ("ERROR: grid_parameters must be a list for 2D slices for 1DoF systems. ",
@@ -132,11 +132,11 @@ def generate_points(grid_parameters):
             y_min, y_max, Ny = grid_parameters[1]
             points_x = np.linspace(x_min, x_max, Nx)
             points_y = np.linspace(y_min, y_max, Ny)
-            X, Y = np.meshgrid(points_x, points_y)  # Grid in phase-space
+            X, Y = np.meshgrid(points_x, points_y)  # Grid in phase space
             # 2D grid + a zero column for LDs
             mesh = np.transpose([X.flatten(), Y.flatten(), np.zeros(Nx*Ny)])
             mask = False
-            
+
             return mesh.flatten(), mask
 
 def perturb_field(vector_field, perturbation):
@@ -144,15 +144,15 @@ def perturb_field(vector_field, perturbation):
     Returns the vector field function with a linearly added pertubation
     Both input function should input (t, u), with t: float, and u: ndarray
     Also, the output of these funcs must be ndarrays of the same shape
-    
+
     Parameters
     ----------
         vector_field: function
             unperturbed vector field
-    
+
         perturbation: function
             forcing added to the vector field
-    
+
     Returns
     -------
         perturbed function
@@ -161,16 +161,16 @@ def perturb_field(vector_field, perturbation):
 
 def check_if_points_escape_box(u, box_boundaries):
     """
-    Determine if points in phase-space u have scaped box with user-defined defined dimensions
-    
+    Determine if points in phase space u have scaped box with user-defined defined dimensions
+
     Parameters
     ----------
     u : array_like, shape(n, )
-        points in phase-space to check if outside box boundaries
-    
+        points in phase space to check if outside box boundaries
+
     box_boundaries : list of 2-tuples of floats
         box lower and upper limits along X and Y axes
-        
+
     Returns
     -------
     u_indices : array_like, shape(n, )
@@ -178,7 +178,7 @@ def check_if_points_escape_box(u, box_boundaries):
     """
     N_dim = u.shape[-1]
     points_positions = u.T[:int(N_dim/2)]
-    
+
     if len(points_positions) == len(box_boundaries):
         check = lambda x, box_axis_limits: (box_axis_limits[0]<=x)&(x<=box_axis_limits[1])
         positions_within_box = [check(points_positions[i], box_boundaries[i]) for i in range(int(N_dim/2))]
@@ -197,7 +197,7 @@ def lagrangian_descriptor(u, v, p_value = 0.5):
     ----------
     v : ndarray, shape(n,2)
         Vector field at given point.
-            
+
     p_value : float, optional
         Exponent in Lagrangian descriptor definition.
         0 is the acton-based LD,
@@ -222,17 +222,17 @@ def lagrangian_descriptor(u, v, p_value = 0.5):
 def vector_field_flat(t, points, vector_field, p_value, box_boundaries):
     """
     Returns vector field values for integration of flattened input array.
-    
+
     Parameters
     ----------
     t : float
         time
-    
+
     points : ndarray, shape(n,3)
-    
+
     vector_field: function
         User defined vector field.
-    
+
     p_value : float, optional
         Exponent in Lagrangian descriptor definition.
         0 is the acton-based LD,
@@ -240,50 +240,50 @@ def vector_field_flat(t, points, vector_field, p_value, box_boundaries):
         1 <= p_value < 2 is the Lp norm LD,
         2 is the arclength LD.
         The default is 0.5.
-    
+
     box_boundaries : list of 2-tuples, optional
         box boundaries for escape condition of variable time integration
         boundaries are infinite by default.
-        
+
     Returns
-    ------- 
+    -------
     1d array
-        y0 values for integrator 
+        y0 values for integrator
     """
     N_mesh_axes = 2*len(box_boundaries)+1
     u = points.reshape((-1,N_mesh_axes))
     u = u[:,:-1] #remove LD-values axis
-    
+
     # Apply Escape condition
     u_inbox = check_if_points_escape_box(u, box_boundaries)
-    
+
     # Define output vector field in combination with escape condition
     v = np.zeros(u.shape)
     v[u_inbox == True] = vector_field(t, u[u_inbox == True])
-    
+
     # Calculate LD vector field
     LD_vec = np.zeros(len(u))
     LD_vec [u_inbox == True] = lagrangian_descriptor(u[u_inbox == True], v[u_inbox == True], p_value)
-    
+
     # Add LD
     v_out=np.column_stack((v, LD_vec))
     return v_out.flatten()
 
 def compute_lagrangian_descriptor(grid_parameters, vector_field, tau, p_value=0.5, box_boundaries=False):
     """
-    Returns the values of the LD function from integrated trajectories from initial conditions in phase-space.
-    
+    Returns the values of the LD function from integrated trajectories from initial conditions in phase space.
+
     Parameters
     ----------
     grid_parameters : list of 3-tuples of floats
         input parameters of limits and size of mesh per axis
-    
+
     vector_field: function
-        vector field over phase-space
-        
+        vector field over phase space
+
     tau : float
         Upper limit of integration.
-        
+
     p_value : float, optional
         Exponent in Lagrangian descriptor definition.
         0 is the acton-based LD,
@@ -291,11 +291,11 @@ def compute_lagrangian_descriptor(grid_parameters, vector_field, tau, p_value=0.
         1 <= p_value < 2 is the Lp norm LD,
         2 is the arclength LD.
         The default is 0.5.
-    
+
     box_boundaries : list of 2-tuples, optional
         Box boundaries for escape condition of variable time integration.
         Boundaries are infinite by default.
-    
+
     Returns
     -------
     LD : ndarray, shape (Nx, Ny)
@@ -310,28 +310,28 @@ def compute_lagrangian_descriptor(grid_parameters, vector_field, tau, p_value=0.
         #1-DoF systems
         slice_parameters = grid_parameters # 2-D grid
         N_dim = len(slice_parameters)
-        
+
     #set boundaries for escape-box condition, if not defined
     if not box_boundaries:
         box_boundaries = int(N_dim/2)*[[-np.infty, np.infty]] #restricted to configuration space
-    
+
     #solve initial value problem
     f = lambda t, y: vector_field_flat(t, y, vector_field, p_value, box_boundaries)
     y0, mask = generate_points(grid_parameters)
-    
+
     #mask y0 values
     if type(mask) == np.ndarray:
         mask_y0 = np.transpose([mask for i in range(N_dim+1)]).flatten()
         y0 = ma.masked_array(y0, mask=mask_y0)
-    
-    solution = solve_ivp(f, [0,tau], y0, t_eval=[tau], rtol=1.0e-4)
+
+    solution = solve_ivp(f, [0,tau], y0, t_eval=[tau], rtol=2.0e-4)
 
     LD_values = solution.y[N_dim::N_dim+1] #values corresponding to LD
-    
-    N_points_slice_axes = list( map(itemgetter(-1), slice_parameters)) 
-    LD = np.abs(LD_values).reshape(*N_points_slice_axes) #reshape to 2-D array    
-    LD = ma.masked_array(LD, mask=mask) #mask LD values for slice 
-    
+
+    N_points_slice_axes = list( map(itemgetter(-1), slice_parameters))
+    LD = np.abs(LD_values).reshape(*N_points_slice_axes) #reshape to 2-D array
+    LD = ma.masked_array(LD, mask=mask) #mask LD values for slice
+
     if p_value<=1:
         return LD
     else:
