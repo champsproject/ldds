@@ -5,6 +5,7 @@ Created on Thu Feb 13 12:36:43 2020
 
 @author: vk17590
 """
+import os
 import numpy as np
 import matplotlib.pyplot as plt
 import h5py
@@ -12,7 +13,7 @@ from pylds.base import fit_pes
 
 def discretise_potential(coords, potential):
     """
-    Returns a 1- or 2-dimensional array of function (potential energy surface) values on a grid of points .
+    Returns a 1- or 2-dimensional array of function (potential energy surface) values on a grid of points.
 
     Parameters
     ----------
@@ -44,7 +45,7 @@ def discretise_potential(coords, potential):
 
 def generate_pes_data(coords, potential, filename):
     """
-    Saves 1- or 2-dimensional array of function (potential energy surface) values on a grid of points to pylds/pes_files/filename.hdf5.
+    Saves 1- or 2-dimensional array of function (potential energy surface) values on a grid of points to pylds/pes_files/filename.hdf5. File format fixed to HDF5 by default.
 
     Parameters
     ----------
@@ -59,8 +60,10 @@ def generate_pes_data(coords, potential, filename):
     """
 
     pes_data = discretise_potential(coords, potential)
-
-    hf = h5py.File('pylds/pes_files/'+filename+'.hdf5','w')
+    
+    dirname = 'pylds/pes_files'
+    filepath = os.path.join(dirname, filename+'.hdf5')
+    hf = h5py.File(filepath,'w')
     hf.create_dataset('coords', data=np.array(coords).astype('float64'))
     hf.create_dataset('pes_data', data=pes_data.astype('float64'))
     hf.close()
