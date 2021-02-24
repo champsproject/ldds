@@ -148,8 +148,7 @@ def perturb_field(vector_field, perturbation):
     Parameters
     ----------
         vector_field: function
-            unperturbed vector field
-    
+            unperturbed vector field    
         perturbation: function
             forcing added to the vector field
     
@@ -221,8 +220,8 @@ def lagrangian_descriptor(u, v, p_value = 0.5):
 
 def vector_field_flat(t, points, vector_field, p_value, box_boundaries):
     """
-    Returns vector field values for integration of flattened input array.
-    
+    Returns vector field values for integration of flattened input array.    
+
     Parameters
     ----------
     t : float
