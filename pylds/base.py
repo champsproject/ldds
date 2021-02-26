@@ -9,9 +9,11 @@ Publisher, Number(Volume No), pp.142-161.
 import sys
 import numpy as np
 import numpy.ma as ma
+import h5py
 from operator import itemgetter
 from scipy.integrate import solve_ivp
 from functools import reduce
+from scipy.interpolate import RectBivariateSpline, CubicSpline
 
 def energy_conservation_condition(phase_space_axes, H0, potential_energy, momentum_sign):
     N_dim = len(phase_space_axes)
@@ -268,6 +270,62 @@ def vector_field_flat(t, points, vector_field, p_value, box_boundaries):
     # Add LD
     v_out=np.column_stack((v, LD_vec))
     return v_out.flatten()
+
+
+def fit_pes(filename, clip_max = False):
+    """
+    Returns a 1- or 2-dimensional spline function (potential energy surface) fitted to data located in pylds/pes_files/filename.hdf5.
+
+    Parameters
+    ----------
+    filename : string
+        Name of file containing data:
+            coords : list of ndarrays
+                [x] or [x,y] contain coordinates.
+            pes_data : ndarray, shape(len(x)) or shape(len(y),len(x))
+                Array of potential energy values.
+
+    clip_max : float
+        Limit for clipping potential values that are not of interest.
+        The default is False.
+
+    Returns
+    -------
+    fspline : function
+        fspline returns the potential at (x0) or (x0,y0).
+    """
+
+    hf = h5py.File('pylds/pes_files/'+filename+'.hdf5','r')
+    coords = np.array(hf.get('coords'))
+    pes_data = np.array(hf.get('pes_data'))
+    hf.close()
+
+    if clip_max:
+        pes_data=np.clip(pes_data, a_min=-np.inf, a_max=clip_max)
+
+    if len(coords) == 1:
+        spline = CubicSpline(coords, pes_data)
+
+        def fspline(positions):
+            potential = np.array(list(map(spline,positions)))
+            return potential
+
+    elif len(coords) == 2:
+        x, y = coords
+        spline = RectBivariateSpline(x,y,pes_data.T)
+
+        def spline_wrap(v):
+            return spline(v[0],v[1]).squeeze()
+
+        def fspline(positions):
+            potential = np.array(list(map(spline_wrap,positions)))
+            return potential
+    else:
+        print('splines in +3D are not implemented yet')
+        fspline = np.nan
+
+    return fspline
+
 
 def compute_lagrangian_descriptor(grid_parameters, vector_field, tau, p_value=0.5, box_boundaries=False):
     """
