@@ -19,7 +19,7 @@ from scipy.optimize import brentq
 def remaining_coordinate_quadratic(phase_space_axes, H0, Hamiltonian, momentum_sign):
     # phase_space_axes[:, ind_remaining] initialised at minimum: 0
 
-    energy = H0-Hamiltonian(phase_space_axes)
+    energy = H0-Hamiltonian(0, phase_space_axes)
     masked_energy = np.copy(energy)
     masked_energy[np.argwhere(energy<0)]=np.nan
     points_dims_remaining = momentum_sign * np.sqrt(2*masked_energy)
@@ -29,7 +29,7 @@ def remaining_coordinate_value(u, ind_remaining, remaining_coordinate_bounds, H0
 
     def remaining_energy(guess):
         u[ind_remaining] = guess
-        return H0 - Hamiltonian(u)
+        return H0 - Hamiltonian(0, u)
     try:
         points_dims_remaining = brentq(remaining_energy, remaining_coordinate_bounds[0], remaining_coordinate_bounds[1])
         return points_dims_remaining
