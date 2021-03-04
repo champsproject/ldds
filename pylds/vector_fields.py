@@ -181,7 +181,7 @@ def forcing(t, u, perturbation_params = [1, 0.15, 0.5]):
 
     return perturbation
 
-def HenonHeiles_vector_field(t, u, PARAMETERS = None):
+def HenonHeiles_vector_field(t, u):
     """
     Returns 2D Henon-Heiles vector field at time t, for an array of points in phase space.
     Functional form: v = (p_x, p_y, -x - 2*x*y, -x**2 -y + y**2), with u = (x, y, p_x, p_y)
@@ -194,22 +194,15 @@ def HenonHeiles_vector_field(t, u, PARAMETERS = None):
     u : array_like, shape(n,)
         points in phase space to determine vector field at time t.
 
-    PARAMETERS : list of floats
-        vector field parameters
-
     Returns
     -------
     v : array_like, shape(n,)
         vector field corresponding to points u, in phase space at time t
     """
-    N_dim = u.shape[-1]
-    points_positions = u.T[:int(N_dim/2)]
-    points_momenta = u.T[int(N_dim/2):]
+    points_positions = u.T[:2]
+    points_momenta = u.T[2:4]
     x, y = points_positions
     p_x, p_y = points_momenta
-
-    # Hamiltonian Model Parameter
-    # None
 
     # Vector field defintion
     v_x   =  p_x
@@ -219,7 +212,7 @@ def HenonHeiles_vector_field(t, u, PARAMETERS = None):
     v = np.column_stack([v_x, v_y, v_p_x, v_p_y])
     return v
 
-def HenonHeiles_potential(positions, PARAMETERS = None):
+def HenonHeiles_potential(positions):
     """
     Potential Energy Function (PEF) of 2DoF Henon-Heiles system.
 
@@ -229,9 +222,6 @@ def HenonHeiles_potential(positions, PARAMETERS = None):
     positions : array_like, shape(n,)
         array of 2D points in configuration space.
 
-    PARAMETERS : list of floats
-        vector field parameters
-
     Returns
     -------
     V : array_like, shape(n,)
@@ -239,11 +229,33 @@ def HenonHeiles_potential(positions, PARAMETERS = None):
 
     """
     x, y = positions.T
-    # Function parameters
-    # None
     # Potential energy function
-    V = (1/2)*(x**2 + y**2) + (y * x**2) - (1/3)*y**3
+    V = 0.5*(x**2 + y**2) + (y * x**2) - (1/3)*y**3
     return V
+
+def HenonHeiles_Hamiltonian(u):
+    """
+    Hamiltonian of 2DoF Henon-Heiles system.
+
+    Parameters
+    ----------
+
+    u : array_like, shape(n,)
+        points in phase space to determine vector field at time t.
+
+    Returns
+    -------
+    H : array_like, shape(n,)
+        array of total energy values.
+
+    """
+    points_positions = u.T[:2]
+    points_momenta = u.T[2:4]
+    x, y = points_positions
+    p_x, p_y = points_momenta
+    # Potential energy function
+    H = 0.5*(x**2 + y**2) + (y * x**2) - (1/3)*y**3 + 0.5*(p_x**2 + p_y**2)
+    return H
 
 def NFSaddle_vector_field(t, u, PARAMETERS = None):
     """
