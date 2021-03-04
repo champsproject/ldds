@@ -10,11 +10,11 @@ import sys
 import numpy as np
 import numpy.ma as ma
 import h5py
-from operator import itemgetter
 from scipy.integrate import solve_ivp
 from functools import reduce
 from scipy.interpolate import RectBivariateSpline, CubicSpline
 from scipy.optimize import brentq
+from pylds.hamiltonians import Hamiltonian_from_potential
 
 def remaining_coordinate_quadratic(phase_space_axes, H0, Hamiltonian, momentum_sign):
     # phase_space_axes[:, ind_remaining] initialised at minimum: 0
@@ -71,8 +71,13 @@ def generate_points(grid_parameters):
         dims_slice = np.array(grid_parameters['dims_slice'])
         dims_fixed = np.array(grid_parameters['dims_fixed'])
         dims_fixed_values = np.array(grid_parameters['dims_fixed_values'])
-        Hamiltonian = grid_parameters['Hamiltonian']
         H0 = grid_parameters['energy_level']
+
+        try:
+            Hamiltonian = grid_parameters['Hamiltonian']
+        except:
+            potential_energy = grid_parameters['potential_energy']
+            Hamiltonian = Hamiltonian_from_potential(potential_energy)
 
 
         N_dim = len(dims_slice)  # Phase space dimensions
@@ -139,6 +144,7 @@ def generate_points(grid_parameters):
                             map(f_remaining_coordinate_value, phase_space_axes)))
 
         mask = np.isnan(phase_space_axes[:,ind_remaining]) # Mask grid points
+        phase_space_axes[:,ind_remaining] = np.nan_to_num(phase_space_axes[:,ind_remaining])
 
         # Return array of mesh points for integrator
         lagrangian_descriptor_axis = np.zeros((N_points_slice,1))
@@ -387,7 +393,7 @@ def compute_lagrangian_descriptor(grid_parameters, vector_field, tau, p_value=0.
         N_dim = len(grid_parameters['dims_slice'])
     else:
         #1-DoF systems
-        slice_parameters = grid_parameters # 2-D grid
+        slice_parameters = np.array(grid_parameters) # 2-D grid
         N_dim = len(slice_parameters)
 
     #set boundaries for escape-box condition, if not defined
@@ -407,7 +413,7 @@ def compute_lagrangian_descriptor(grid_parameters, vector_field, tau, p_value=0.
 
     LD_values = solution.y[N_dim::N_dim+1] #values corresponding to LD
 
-    N_points_slice_axes = slice_parameters[:,-1]
+    N_points_slice_axes = slice_parameters[:,-1].astype('int')
     LD = np.abs(LD_values).reshape(*N_points_slice_axes) #reshape to 2-D array
     LD = ma.masked_array(LD, mask=mask) #mask LD values for slice
 

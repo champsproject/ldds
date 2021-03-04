@@ -19,7 +19,7 @@ def HamCenter1D_Hamiltonian(t, u, PARAMETERS = [1]):
         Time. (This Hamiltonian is independent of time.)
 
     u : array_like, shape(n,)
-        points in phase space to determine vector field at time t
+        Points in phase space
 
     PARAMETERS : list of floats
         vector field parameters
@@ -46,7 +46,7 @@ def HamSaddle1D_Hamiltonian(t, u, PARAMETERS = [1]):
         Time. (This Hamiltonian is independent of time.)
 
     u : array_like, shape(n,)
-        points in phase space to determine vector field at time t.
+        Points in phase space.
 
     PARAMETERS : list of floats
         vector field parameters
@@ -93,7 +93,7 @@ def Duffing1D_inverted_Hamiltonian(t, u):
         Time. (This Hamiltonian is independent of time.)
 
     u : array_like, shape(n,)
-        points in phase space to determine vector field at time t.
+        Points in phase space.
 
     Returns
     -------
@@ -114,7 +114,7 @@ def HamSN1D_Hamiltonian(t, u):
         Time. (This Hamiltonian is independent of time.)
 
     u : array_like, shape(n,)
-        points in phase space to determine vector field at time t.
+        Points in phase space.
 
     Returns
     -------
@@ -126,7 +126,7 @@ def HamSN1D_Hamiltonian(t, u):
 
 def HenonHeiles_Hamiltonian(t, u):
     """
-    Hamiltonian of 2DoF Henon-Heiles system.
+    Hamiltonian for 2DoF Henon-Heiles system.
     Functional form: H = 1/2(p_x**2 + p_y**2) + 1/2(x**2 + y**2) + yx**2 - y**3/3, with u = (x, y, p_x, p_y).
 
     Parameters
@@ -135,7 +135,7 @@ def HenonHeiles_Hamiltonian(t, u):
         Time. (This Hamiltonian is independent of time.)
 
     u : array_like, shape(n,)
-        points in phase space to determine vector field at time t.
+        Points in phase space.
 
     Returns
     -------
@@ -151,6 +151,26 @@ def HenonHeiles_Hamiltonian(t, u):
     H = 0.5*(x**2 + y**2) + (y * x**2) - (1/3)*y**3 + 0.5*(p_x**2 + p_y**2)
     return H
 
+def HenonHeiles_potential(positions, PARAMETERS = None):
+    """
+    Potential energy function for 2DoF Henon-Heiles system.
+    Functional form: V = 1/2(x**2 + y**2) + yx**2 - y**3/3, with positions = (x, y).
+
+    Parameters
+    ----------
+    positions : array_like, shape(n,)
+        Points in phase space.
+
+    Returns
+    -------
+    V : array_like, shape(n,)
+        Potential energy at points u.
+
+    """
+    x, y = positions.T
+    V = (1/2)*(x**2 + y**2) + (y * x**2) - (1/3)*y**3
+    return V
+
 def NFSaddle_Hamiltonian(t, u):
     """
     Hamiltonian for a 2DoF Saddle.
@@ -162,7 +182,7 @@ def NFSaddle_Hamiltonian(t, u):
         Time. (This Hamiltonian is independent of time.)
 
     u : array_like, shape(n,)
-        points in phase space to determine vector field at time t.
+        Points in phase space.
 
     Returns
     -------
@@ -176,6 +196,64 @@ def NFSaddle_Hamiltonian(t, u):
     p_x, p_y = points_momenta
     H = 0.5*(p_x**2 + p_y**2 + y**2 - x**2)
     return H
+
+def NFSaddle_potential(positions, PARAMETERS = None):
+    """
+    Potential energy function for a 2DoF Saddle.
+    Functional form: V = 1/2(y**2 - x**2), with positions = (x, y).
+    ----------
+    positions : array_like, shape(n,)
+        Points in phase space.
+
+    Returns
+    -------
+    V : array_like, shape(n,)
+        Potential energy at points u.
+    """
+    x, y = positions.T
+    V = 0.5*(y*y - x*x)
+    return V
+
+def kinetic_squares(t,u):
+    """
+    Kinetic energy of the form sum of squares.
+
+    Parameters
+    ----------
+    t : float
+        Time. (This Hamiltonian is independent of time.)
+
+    u : array_like, shape(n,)
+        Points in phase space.
+
+    Returns
+    -------
+    T : array_like, shape(n,)
+        Kinetic energy at points u, in phase space at time t
+
+    """
+    N_dim = np.floor(u.shape[1]/2).astype('int')
+    points_momenta = u.T[N_dim:2*N_dim]
+    return 0.5* np.sum(points_momenta**2, axis=0)
+
+def Hamiltonian_from_potential(potential):
+    """
+    Forms a Hamiltonian by combining input potential function with kinetic energy 'kinetic_squares'.
+
+    Parameters
+    ----------
+    potential : function
+
+    Returns
+    -------
+    Hamiltonian : function
+        Sum of 'potential' and 'kinetic_squares'.
+
+    """
+    def Hamiltonian(t,u):
+        return potential(u) + kinetic_squares(t,u)
+    return Hamiltonian
+
 
 __author__ = 'Broncio Aguilar-Sanjuan, Victor-Jose Garcia-Garrido, Vladimir Krajnak, Shibabrat Naik'
 __status__ = 'Development'
