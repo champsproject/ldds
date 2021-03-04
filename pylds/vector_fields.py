@@ -9,7 +9,7 @@ import numpy as np
 
 def HamCenter1D(t, u, PARAMETERS = [1]):
     """
-    Returns 1D Hamilton-Centre vector field at time t, for an array of points in phase space.
+    Returns vector field for a 1DoF centre at time t, for an array of points in phase space.
     Number of model parameters: 1 . PARAMETERS = [omega]
     Functional form: v = (omega*y, - omega*x), with u = (x, y)
 
@@ -37,7 +37,7 @@ def HamCenter1D(t, u, PARAMETERS = [1]):
 
 def HamSaddle1D(t, u, PARAMETERS = [1]):
     """
-    Returns 1D Hamilton-Saddle vector field at time t, for an array of points in phase space.
+    Returns vector field for a 1DoF saddle at time t, for an array of points in phase space.
     Number of model parameters: 1 . PARAMETERS = [lamda]
     Functional form: v = (lamda*y, - lamda*x), with u = (x, y)
 
@@ -65,7 +65,7 @@ def HamSaddle1D(t, u, PARAMETERS = [1]):
 
 def Duffing1D(t, u, PARAMETERS = [None]):
     """
-    Returns 1D vector field of the Duffing oscillator, for an array of points in phase space.
+    Returns 1DoF vector field of the Duffing oscillator, for an array of points in phase space.
     Number of model parameters: 0 . PARAMETERS = [None]
     Functional form: v = (y, x - x**3), with u = (x, y)
 
@@ -92,7 +92,7 @@ def Duffing1D(t, u, PARAMETERS = [None]):
 
 def Duffing1D_inverted(t, u, PARAMETERS = [None]):
     """
-    Returns 1D vector field of the inverted Duffing oscillator at time t, for an array of points in phase space.
+    Returns 1DoF vector field of the inverted Duffing oscillator at time t, for an array of points in phase space.
     Number of model parameters: 0 . PARAMETERS = [None]
     Functional form: v = (y, - x + x**3), with u = (x, y)
 
@@ -121,7 +121,7 @@ def Duffing1D_inverted(t, u, PARAMETERS = [None]):
 
 def HamSN1D(t, u, PARAMETERS = [None]):
     """
-    Returns 1D Hamilton-Saddle-Node vector field at time t, for an array of points in phase space.
+    Returns 1DoF saddle-node vector field at time t, for an array of points in phase space.
     Number of model parameters: 0 . PARAMETERS = [None]
     Functional form: v = (y, -x -x**2), with u = (x, y)
 
@@ -212,54 +212,9 @@ def HenonHeiles_vector_field(t, u):
     v = np.column_stack([v_x, v_y, v_p_x, v_p_y])
     return v
 
-def HenonHeiles_potential(positions):
-    """
-    Potential Energy Function (PEF) of 2DoF Henon-Heiles system.
-
-    Parameters
-    ----------
-
-    positions : array_like, shape(n,)
-        array of 2D points in configuration space.
-
-    Returns
-    -------
-    V : array_like, shape(n,)
-        potential energy corresponding to all positions
-
-    """
-    x, y = positions.T
-    # Potential energy function
-    V = 0.5*(x**2 + y**2) + (y * x**2) - (1/3)*y**3
-    return V
-
-def HenonHeiles_Hamiltonian(u):
-    """
-    Hamiltonian of 2DoF Henon-Heiles system.
-
-    Parameters
-    ----------
-
-    u : array_like, shape(n,)
-        points in phase space to determine vector field at time t.
-
-    Returns
-    -------
-    H : array_like, shape(n,)
-        array of total energy values.
-
-    """
-    points_positions = u.T[:2]
-    points_momenta = u.T[2:4]
-    x, y = points_positions
-    p_x, p_y = points_momenta
-    # Potential energy function
-    H = 0.5*(x**2 + y**2) + (y * x**2) - (1/3)*y**3 + 0.5*(p_x**2 + p_y**2)
-    return H
-
 def NFSaddle_vector_field(t, u, PARAMETERS = None):
     """
-    Returns 2D Index-1 Normal-Form Saddle vector field at time t, for an array of points in phase space.
+    Returns vector field for a 2D index-1 saddle at time t, for an array of points in phase space.
     Functional form: v = (p_x, p_y, x, -y), with u = (x, y, p_x, p_y)
 
     Parameters
@@ -295,32 +250,6 @@ def NFSaddle_vector_field(t, u, PARAMETERS = None):
     v = np.column_stack([v_x, v_y, v_p_x, v_p_y])
     return v
 
-def NFSaddle_potential(positions, PARAMETERS = None):
-    """
-    Potential Energy Function (PEF) of 2DoF Index-1 Normal-Form Saddle system.
 
-    Parameters
-    ----------
-
-    positions : array_like, shape(n,)
-        array of 2D points in configuration space.
-
-    PARAMETERS : list of floats
-        vector field parameters
-
-    Returns
-    -------
-    V : array_like, shape(n,)
-        potential energy corresponding to all positions
-
-    """
-    x, y = positions.T
-    # Function parameters
-    # None
-
-    # Potential energy function
-    V = (1/2)*y**2 - (1/2)*x**2
-    return V
-
-__author__ = 'Broncio Aguilar-Sanjuan, Victor-Jose Garcia-Garrido, Vladimir Krajnak'
+__author__ = 'Broncio Aguilar-Sanjuan, Victor-Jose Garcia-Garrido, Vladimir Krajnak, Shibabrat Naik'
 __status__ = 'Development'
