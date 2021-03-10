@@ -1,3 +1,5 @@
+# Moved to https://github.com/champsproject/ldds
+
 Repository hosting work in progress towards the construction of a Python package for Computation of Lagrangian Descriptors for Nonlinear Dynamical Systems.
 
 
