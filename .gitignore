@@ -2,3 +2,5 @@
 *.pyc
 
 pylds/.ipynb_checkpoints/__init__-checkpoint.py
+
+.ipynb_checkpoints/
