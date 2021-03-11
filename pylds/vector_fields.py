@@ -35,6 +35,34 @@ def HamCenter1D(t, u, PARAMETERS = [1]):
     v = np.column_stack([ omega * y, - omega * x])
     return v
 
+def Saddle1D(t, u, PARAMETERS = [1, 1]):
+    """
+    Returns 1D Hamilton-Saddle vector field at time t, for an array of points in phase space.
+    Number of model parameters: 2 .PARAMETERS = [a1, a2]
+    Functional form: v = (a1*x, -a2*y), with u = (x, y)
+
+    Parameters
+    ----------
+    t : float
+        fixed time-point of vector field, for all points in phase space.
+
+    u : array_like, shape(n,)
+        points in phase space to determine vector field at time t.
+
+    PARAMETERS : list of floats
+        vector field parameters
+
+    Returns
+    -------
+    v : array_like, shape(n,)
+        vector field corresponding to points u, in phase space at time t
+    """
+    x, y = u.T
+    # Hamiltonian Model Parameter
+    a1, a2 = PARAMETERS
+    v = np.column_stack([ a1*x, -a2*y])
+    return v
+
 def HamSaddle1D(t, u, PARAMETERS = [1]):
     """
     Returns 1D Hamilton-Saddle vector field at time t, for an array of points in phase space.
@@ -63,11 +91,11 @@ def HamSaddle1D(t, u, PARAMETERS = [1]):
     v = np.column_stack([ lamda * y, lamda * x])
     return v
 
-def Duffing1D(t, u, PARAMETERS = [None]):
+def Duffing1D(t, u, PARAMETERS = [1, 1, -1]):
     """
     Returns 1D vector field of the Duffing oscillator, for an array of points in phase space.
-    Number of model parameters: 0 . PARAMETERS = [None]
-    Functional form: v = (y, x - x**3), with u = (x, y)
+    Number of model parameters: 3 .PARAMETERS = [alpha, beta, gamma]
+    Functional form: v = (alpha*y, beta*x + gamma*x**3), with u = (x, y)
 
     Parameters
     ----------
@@ -87,7 +115,8 @@ def Duffing1D(t, u, PARAMETERS = [None]):
     """
     x, y = u.T
     # Hamiltonian Model Parameter
-    v = np.column_stack([y, x - x**3])
+    alpha, beta, gamma = PARAMETERS
+    v = np.column_stack([ alpha*y, beta*x + gamma*x**3])
     return v
 
 def Duffing1D_inverted(t, u, PARAMETERS = [None]):
@@ -310,5 +339,47 @@ def NFSaddle_potential(positions, PARAMETERS = None):
     V = (1/2)*y**2 - (1/2)*x**2
     return V
 
-__author__ = 'Broncio Aguilar-Sanjuan, Victor-Jose Garcia-Garrido, Vladimir Krajnak'
+def DoubleGyre(t, u, PARAMETERS = [0.25, 2*np.pi, 0, 0, 1, 0.25]):
+    """
+    Returns 2D Double Gyre vector field at time t, for an array of points in phase space.
+    Number of model parameters: 6 . PARAMETERS = [A, phi, psi, mu, s, epsilon]
+    Functional form: 
+    
+    vx = -pi*A*sin(pi*f(t, x)/s)*cos(pi*y/s) - mu*x
+    vy =  pi*A*cos(pi*f(t, x)/s)*sin(pi*y/s)*df(t,x)/dx - mu*y
+    
+    with
+    
+    f(t, x)    = epsilon*sin(phi*t + psi)*x**2 + (1 - 2*epsilon*sin(phi*t + psi))*x
+    df/dx(t,x) = 2*epsilon*sin(phi*t + psi)*x + (1 - 2*epsilon*sin(phi*t + psi))
+    u = (x, y)
+
+    Parameters
+    ----------
+    t : float
+        fixed time-point of vector field, for all points in phase space.
+
+    u : array_like, shape(n,)
+        points in phase space to determine vector field at time t.
+
+    PARAMETERS : list of floats
+        vector field parameters
+
+    Returns
+    -------
+    v : array_like, shape(n,)
+        vector field corresponding to points u, in phase space at time t
+    """
+    x, y = u.T
+    # model parameter
+    A, phi, psi, mu, s, epsilon = PARAMETERS
+    # vector field components
+    def f(t, x): return epsilon*np.sin(phi*t + psi)*x**2 + (1-2*epsilon*np.sin(phi*t + psi))*x
+    def df_dx(t,x): return 2*epsilon*np.sin(phi*t + psi)*x + (1-2*epsilon*np.sin(phi*t + psi))
+    v_x = -np.pi*A*np.sin(np.pi*f(t, x)/s)*np.cos(np.pi*y/s) - mu*x
+    v_y =  np.pi*A*np.cos(np.pi*f(t, x)/s)*np.sin(np.pi*y/s)*df_dx(t,x) - mu*y
+    v   = np.column_stack([v_x, v_y])
+    return v
+
+__author__ = 'Broncio Aguilar-Sanjuan, Victor-Jose Garcia-Garrido, Vladimir Krajnak, Shibabrat Naik'
 __status__ = 'Development'
