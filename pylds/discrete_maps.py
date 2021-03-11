@@ -6,8 +6,10 @@ def StandardMap(t_initial, u_initial, PARAMETERS=[0.3, 1]):
     The map will return unwrapped trajectories for iterations of initial conditions, unlike when using PBCs.
     For computation of the Lagrangian Descriptor relative displacements are only needed. 
     
-    Number of model parameters: 1 . PARAMETERS = [K]
-    Functional form: 
+    Number of model parameters: 1 . PARAMETERS = [K, time_step]
+    Functional form:
+    
+    t_next = t_initial + time_step
     x_next  = x_initial + y_initial - (K/(2*np.pi))*np.sin(2*np.pi*x_initial
     y_next  = y_initial - (K/(2*np.pi))*np.sin(2*np.pi*x_initial))
     
@@ -15,6 +17,9 @@ def StandardMap(t_initial, u_initial, PARAMETERS=[0.3, 1]):
     
     Parameters
     ----------
+    t_initial : float
+        time of initial iteration for u_initial points
+    
     u_initial : array_like, shape(n,)
         initial points in unit square to determine their next iteration under the map
     
@@ -23,6 +28,9 @@ def StandardMap(t_initial, u_initial, PARAMETERS=[0.3, 1]):
     
     Returns
     -------
+    t_next : float
+        time of next iteration with a default time_step equal to 1
+        
     u_next : array_like, shape(n,)
         points u_next, in the 2D plane (not in the unit square necessarily).
     """
@@ -39,14 +47,16 @@ def StandardMap(t_initial, u_initial, PARAMETERS=[0.3, 1]):
     u_next = np.column_stack([ x_next, y_next])
     return t_next, u_next
 
-def StandardMap_inverse(u_initial, PARAMETERS=[0.3, 1]):
+def StandardMap_inverse(t_initial, u_initial, PARAMETERS=[0.3, 1]):
     """
     Inverse of 2D Standard map for initial conditions in a unit square, centred at the origin (James Meiss).
     The map will return unwrapped trajectories for iterations of initial conditions, unlike when using PBCs.
     For computation of the Lagrangian Descriptor relative displacements are only needed. 
     
-    Number of model parameters: 1 . PARAMETERS = [K]
+    Number of model parameters: 1 . PARAMETERS = [K, time_step]
     Functional form: 
+    
+    t_next = t_initial - time_step
     x_next = x_initial - y_initial
     y_next = y_initial + (K/(2*np.pi))*np.sin(2*np.pi*(x_initial - y_initial))
     
@@ -54,6 +64,9 @@ def StandardMap_inverse(u_initial, PARAMETERS=[0.3, 1]):
     
     Parameters
     ----------
+    t_initial : float
+        time of initial iteration for u_initial points
+        
     u_initial : array_like, shape(n,)
         initial points in unit square to determine their next iteration under the map
     
@@ -62,6 +75,9 @@ def StandardMap_inverse(u_initial, PARAMETERS=[0.3, 1]):
     
     Returns
     -------
+    t_next : float
+        time of next iteration with a default time_step equal to 1
+        
     u_next : array_like, shape(n,)
         points u_next, in the 2D plane.
     """
@@ -83,8 +99,10 @@ def HenonMap(t_initial, u_initial, PARAMETERS=[0.298, 1, 1]):
     """
     2D Henon map. 
     
-    Number of model parameters: 2 . PARAMETERS = [a, b]
+    Number of model parameters: 2 . PARAMETERS = [a, b, time_step]
     Functional form: 
+    
+    t_next = t_initial + time_step
     x_next = a - x_initial^2 + b*y_initial
     y_next = x_initial
     
@@ -92,6 +110,9 @@ def HenonMap(t_initial, u_initial, PARAMETERS=[0.298, 1, 1]):
     
     Parameters
     ----------
+    t_initial : float
+        time of initial iteration for u_initial points
+    
     u_initial : array_like, shape(n,)
         initial points in unit square to determine their next iteration under the map
     
@@ -100,6 +121,9 @@ def HenonMap(t_initial, u_initial, PARAMETERS=[0.298, 1, 1]):
     
     Returns
     -------
+    t_next : float
+        time of next iteration with a default time_step equal to 1
+    
     u_next : array_like, shape(n,)
         points u_next, in the 2D plane.
     """
@@ -121,8 +145,10 @@ def HenonMap_inverse(t_initial, u_initial, PARAMETERS=[0.298, 1, 1]):
     """
     Inverse of 2D Henon map.
     
-    Number of model parameters: 2 . PARAMETERS = [a, b]
+    Number of model parameters: 2 . PARAMETERS = [a, b, time_step]
     Functional form: 
+    
+    t_next = t_initial - time_step
     x_next = y_initial
     y_next = (x_initial - a + y_initial^2)/b
     
@@ -130,6 +156,9 @@ def HenonMap_inverse(t_initial, u_initial, PARAMETERS=[0.298, 1, 1]):
     
     Parameters
     ----------
+    t_initial : float
+        time of initial iteration for u_initial points
+    
     u_initial : array_like, shape(n,)
         initial points in unit square to determine their next iteration under the map
     
@@ -138,6 +167,9 @@ def HenonMap_inverse(t_initial, u_initial, PARAMETERS=[0.298, 1, 1]):
     
     Returns
     -------
+    t_next : float
+        time of next iteration with a default time_step equal to 1
+        
     u_next : array_like, shape(n,)
         points u_next, in the 2D plane (not in the unit square necessarily)
     """
