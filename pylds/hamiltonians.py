@@ -232,7 +232,7 @@ def kinetic_squares(t,u):
         Kinetic energy at points u, in phase space at time t
 
     """
-    N_dim = np.floor(u.shape[1]/2).astype('int')
+    N_dim = int(u.shape[1]/2)
     points_momenta = u.T[N_dim:2*N_dim]
     return 0.5* np.sum(points_momenta**2, axis=0)
 
