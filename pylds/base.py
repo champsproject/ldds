@@ -17,7 +17,30 @@ from scipy.optimize import brentq
 from pylds.hamiltonians import Hamiltonian_from_potential
 
 def remaining_coordinate_quadratic(phase_space_axes, H0, Hamiltonian, momentum_sign):
-    # phase_space_axes[:, ind_remaining] initialised at minimum: 0
+    """
+    Returns a 1D array of values for the remaining momentum coordinate, assuming the kinetic energy
+    is a sum-of-squares function of the momenta (0.5*px**2+0.5*py**2+...). The sign of the  returned
+    values is given by `momentum_sing`.
+
+    Parameters
+    ----------
+        phase_space_axes: ndarray,
+            Array of coordinate values, where the remaining momentum is 0.
+
+        H0: float,
+            Value of energy.
+
+        Hamiltonian: function,
+            Function of (t,y) that returns the value of the Hamiltonian at time t and point y.
+
+        momentum_sign: int,
+            +1 returns positive momentum values, -1 negative.
+
+    Returns
+    -------
+        points_dims_remaining: ndarray,
+            Array of remaining momentum values.
+    """
 
     energy = H0-Hamiltonian(0, phase_space_axes)
     masked_energy = np.copy(energy)
@@ -26,13 +49,36 @@ def remaining_coordinate_quadratic(phase_space_axes, H0, Hamiltonian, momentum_s
     return points_dims_remaining
 
 def remaining_coordinate_value(u, ind_remaining, remaining_coordinate_bounds, H0, Hamiltonian):
+    """
+    Returns a 1D array of values for the remaining coordinate (not necessarily momentum) using
+    Brent’s method in the bracketing interval `remaining_coordinate_bounds`.
+
+    Parameters
+    ----------
+        u: ndarray, shape(n,)
+            Coordinate values of a single point, where the remaining momentum .
+
+        remaining_coordinate_bounds: ndarray, shape(2,)
+            Bracketing interval for root-finding method.
+
+        H0: float,
+            Value of energy.
+
+        Hamiltonian: function,
+            Function of (t,y) that returns the value of the Hamiltonian at time t and point y.
+
+    Returns
+    -------
+        point_dim_remaining: float,
+            Value of coordinate or, if root-finding is unsuccessfull, np.nan.
+    """
 
     def remaining_energy(guess):
         u[ind_remaining] = guess
         return H0 - Hamiltonian(0, u)
     try:
-        points_dims_remaining = brentq(remaining_energy, remaining_coordinate_bounds[0], remaining_coordinate_bounds[1])
-        return points_dims_remaining
+        point_dim_remaining = brentq(remaining_energy, remaining_coordinate_bounds[0], remaining_coordinate_bounds[1])
+        return point_dim_remaining
     except:
         return np.nan
 
@@ -53,16 +99,18 @@ def generate_points(grid_parameters):
         * 'dims_slice' : ndarray or list of 0 and 1, ones indicate slice axes
         * 'dims_fixed' : ndarray or list of 0 and 1, ones indicate fixed axes
         * 'dims_fixed_values' : ndarray or list of values on fixed axes
-        * 'Hamiltonian' : function used to determine value along the remaining axis
         * 'energy_level' : float, energy value for energy conservation condition
         and either one of
+        * 'Hamiltonian' : function for the Hamiltonian
+        * 'potential_energy' : potential energy function, sum-of-squares kinetic energy will be assumed
+        and either one of
         * 'momentum_sign' : int, -1 / 1, for negative/positive momentum for remaining axis
-        * 'remaining_coordinate_bounds' : ndarray or list of values that bracket the values on the remaining axis
+        * 'remaining_coordinate_bounds' : ndarray or list of values that bracket the values of the remaining coordinate (not necessarily momentum coordinate)
     Returns
     -------
-    mesh : 1d numpy array
+    mesh : ndarray,
         Flattened array of initial conditions.
-    mask : 1d boolean numpy array
+    mask : ndarray,
         Masks Nan values in further calculations.
     """
     if type(grid_parameters) == dict:
@@ -73,6 +121,8 @@ def generate_points(grid_parameters):
         dims_fixed_values = np.array(grid_parameters['dims_fixed_values'])
         H0 = grid_parameters['energy_level']
 
+        # If Hamiltonian is provided, use Hamiltonian, otherwise define Hamiltonian
+        # from provided potential and sum-of-squares kinetic energy.
         try:
             Hamiltonian = grid_parameters['Hamiltonian']
         except:
@@ -131,12 +181,15 @@ def generate_points(grid_parameters):
             print(error_mssg)
             sys.exit()
 
+        # If momentum sign is provided, determine remaining momentum values. This assumes
+        # sum-of-squares kinetic energy.
+        # Otherwise determine values of remaining coordinate from Hamiltonian using
+        # Brent’s method in the bracketing interval `remaining_coordinate_bounds`.
         try:
             momentum_sign = grid_parameters['momentum_sign']
-            # Determine remaining axis values
             phase_space_axes[:,ind_remaining] = remaining_coordinate_quadratic(
                 phase_space_axes, H0, Hamiltonian, momentum_sign)
-        except KeyError:
+        except:
             remaining_coordinate_bounds = np.array(grid_parameters['remaining_coordinate_bounds'])
             def f_remaining_coordinate_value(u):
                 return remaining_coordinate_value(u, ind_remaining, remaining_coordinate_bounds, H0, Hamiltonian)
@@ -194,7 +247,7 @@ def check_if_points_escape_box(u, box_boundaries):
 
     Parameters
     ----------
-    u : array_like, shape(n, )
+    u : ndarray, shape(n, )
         points in phase space to check if outside box boundaries
 
     box_boundaries : list of 2-tuples of floats
@@ -202,7 +255,7 @@ def check_if_points_escape_box(u, box_boundaries):
 
     Returns
     -------
-    u_indices : array_like, shape(n, )
+    u_indices : ndarray, shape(n, )
         array of True/False bool values if points inside/outside the box
     """
     N_dim = u.shape[-1]
