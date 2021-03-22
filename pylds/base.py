@@ -136,7 +136,7 @@ def generate_points(grid_parameters):
             # Determine remaining axis values
             phase_space_axes[:,ind_remaining] = remaining_coordinate_quadratic(
                 phase_space_axes, H0, Hamiltonian, momentum_sign)
-        except:
+        except KeyError:
             remaining_coordinate_bounds = np.array(grid_parameters['remaining_coordinate_bounds'])
             def f_remaining_coordinate_value(u):
                 return remaining_coordinate_value(u, ind_remaining, remaining_coordinate_bounds, H0, Hamiltonian)
