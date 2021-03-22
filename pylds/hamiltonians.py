@@ -18,7 +18,7 @@ def HamCenter1D_Hamiltonian(t, u, PARAMETERS = [1]):
     t : float
         Time. (This Hamiltonian is independent of time.)
 
-    u : array_like, shape(n,)
+    u : ndarray, shape(n,)
         Points in phase space
 
     PARAMETERS : list of floats
@@ -26,7 +26,7 @@ def HamCenter1D_Hamiltonian(t, u, PARAMETERS = [1]):
 
     Returns
     -------
-    H : array_like, shape(n,)
+    H : ndarray, shape(n,)
         Hamiltonian at points u, in phase space at time t
     """
     x, y = u.T
@@ -45,7 +45,7 @@ def HamSaddle1D_Hamiltonian(t, u, PARAMETERS = [1]):
     t : float
         Time. (This Hamiltonian is independent of time.)
 
-    u : array_like, shape(n,)
+    u : ndarray, shape(n,)
         Points in phase space.
 
     PARAMETERS : list of floats
@@ -53,7 +53,7 @@ def HamSaddle1D_Hamiltonian(t, u, PARAMETERS = [1]):
 
     Returns
     -------
-    H : array_like, shape(n,)
+    H : ndarray, shape(n,)
         Hamiltonian at points u, in phase space at time t
     """
     x, y = u.T
@@ -71,12 +71,12 @@ def Duffing1D_Hamiltonian(t, u):
     t : float
         Time. (This Hamiltonian is independent of time.)
 
-    u : array_like, shape(n,)
+    u : ndarray, shape(n,)
         Points in phase space.
 
     Returns
     -------
-    H : array_like, shape(n,)
+    H : ndarray, shape(n,)
         Hamiltonian at points u, in phase space at time t
     """
     x, y = u.T
@@ -92,12 +92,12 @@ def Duffing1D_inverted_Hamiltonian(t, u):
     t : float
         Time. (This Hamiltonian is independent of time.)
 
-    u : array_like, shape(n,)
+    u : ndarray, shape(n,)
         Points in phase space.
 
     Returns
     -------
-    H : array_like, shape(n,)
+    H : ndarray, shape(n,)
         Hamiltonian at points u, in phase space at time t
     """
     x, y = u.T
@@ -113,12 +113,12 @@ def HamSN1D_Hamiltonian(t, u):
     t : float
         Time. (This Hamiltonian is independent of time.)
 
-    u : array_like, shape(n,)
+    u : ndarray, shape(n,)
         Points in phase space.
 
     Returns
     -------
-    H : array_like, shape(n,)
+    H : ndarray, shape(n,)
         Hamiltonian at points u, in phase space at time t
     """
     x, y = u.T
@@ -134,12 +134,12 @@ def HenonHeiles_Hamiltonian(t, u):
     t : float
         Time. (This Hamiltonian is independent of time.)
 
-    u : array_like, shape(n,)
+    u : ndarray, shape(n,)
         Points in phase space.
 
     Returns
     -------
-    H : array_like, shape(n,)
+    H : ndarray, shape(n,)
         Hamiltonian at points u, in phase space at time t
 
     """
@@ -158,12 +158,12 @@ def HenonHeiles_potential(positions, PARAMETERS = None):
 
     Parameters
     ----------
-    positions : array_like, shape(n,)
+    positions : ndarray, shape(n,)
         Points in phase space.
 
     Returns
     -------
-    V : array_like, shape(n,)
+    V : ndarray, shape(n,)
         Potential energy at points u.
 
     """
@@ -181,12 +181,12 @@ def NFSaddle_Hamiltonian(t, u):
     t : float
         Time. (This Hamiltonian is independent of time.)
 
-    u : array_like, shape(n,)
+    u : ndarray, shape(n,)
         Points in phase space.
 
     Returns
     -------
-    H : array_like, shape(n,)
+    H : ndarray, shape(n,)
         Hamiltonian at points u, in phase space at time t
 
     """
@@ -202,39 +202,37 @@ def NFSaddle_potential(positions, PARAMETERS = None):
     Potential energy function for a 2DoF Saddle.
     Functional form: V = 1/2(y**2 - x**2), with positions = (x, y).
     ----------
-    positions : array_like, shape(n,)
+    positions : ndarray, shape(n,)
         Points in phase space.
 
     Returns
     -------
-    V : array_like, shape(n,)
+    V : ndarray, shape(n,)
         Potential energy at points u.
     """
     x, y = positions.T
     V = 0.5*(y*y - x*x)
     return V
 
-def kinetic_squares(t,u):
+def kinetic_squares(t,points_momenta):
     """
-    Kinetic energy of the form sum of squares.
+    Kinetic energy of the form sum-of-squares.
 
     Parameters
     ----------
     t : float
         Time. (This Hamiltonian is independent of time.)
 
-    u : array_like, shape(n,)
+    points_momenta : ndarray, shape(n,)
         Points in phase space.
 
     Returns
     -------
-    T : array_like, shape(n,)
+    T : ndarray, shape(n,)
         Kinetic energy at points u, in phase space at time t
 
     """
-    N_dim = int(u.shape[1]/2)
-    points_momenta = u.T[N_dim:2*N_dim]
-    return 0.5* np.sum(points_momenta**2, axis=0)
+    return 0.5* np.sum(points_momenta**2, axis=1)
 
 def Hamiltonian_from_potential(potential):
     """
@@ -251,7 +249,10 @@ def Hamiltonian_from_potential(potential):
 
     """
     def Hamiltonian(t,u):
-        return potential(u) + kinetic_squares(t,u)
+        N_dim = int(u.shape[1]/2)
+        points_positions = u[:,:N_dim]
+        points_momenta = u[:,N_dim:2*N_dim]
+        return potential(points_positions) + kinetic_squares(t,points_momenta)
     return Hamiltonian
 
 
