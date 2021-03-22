@@ -156,7 +156,7 @@ def get_gradient_magnitude(LD):
     gradient_magnitude = np.sqrt(gradient_x**2 + gradient_y**2)
     return normalise(gradient_magnitude)
 
-def draw_all_lds(LD_forward, LD_backward, grid_parameters, tau, p_value, interactive=False):
+def draw_all_lds(LD_forward, LD_backward, grid_parameters, tau=np.nan, p_value=np.nan, interactive=False):
     """
     Draws the forward, backward and total Lagrangian descriptor contour plots and a contour plots showing the magnitude of its gradient field.
 
@@ -172,19 +172,16 @@ def draw_all_lds(LD_forward, LD_backward, grid_parameters, tau, p_value, interac
         Limits and size of mesh per axis.
 
     tau : float
-        Upper limit of integration.
+        Time of integration.
+        Default is np.nan.
 
     p_value : float
         Exponent in Lagrangian descriptor definition.
-
-    norm : bool, optional
-        True normalises LD values.
-
-    colormap : str, optional
-        Name of matplotlib colormap for plot.
+        Default is np.nan.
 
     interactive : bool
         True allows interactively adjusting the gradient plot minimum and maximum.
+        Default is False.
 
     Returns
     -------
@@ -192,40 +189,54 @@ def draw_all_lds(LD_forward, LD_backward, grid_parameters, tau, p_value, interac
     """
 
     # Prepare method name
-    if p_value == 2:
-        str_method = 'Arclength LD'
-    elif p_value >= 1:
-        str_method = r'p-norm LD$(p={'+str(p_value)+'r})$'
-    elif p_value == 0:
-        str_method = 'Action-based LD'
-    elif p_value < 1:
-        str_method = r'LD$_{'+str(p_value)+r'}$'
+    if np.isnan(p_value):
+        t_final = np.nan
     else:
-        str_method = ''
-    t_final=abs(tau)
+        if p_value == 2:
+            str_method = 'Arclength LD'
+        elif p_value >= 1:
+            str_method = r'p-norm LD$(p={'+str(p_value)+r'})$'
+        elif p_value == 0:
+            str_method = 'Action-based LD'
+        elif p_value < 1:
+            str_method = r'LD$_{'+str(p_value)+r'}$'
+        else:
+            str_method = ''
+        t_final=np.abs(tau)
 
     # Plot LDs
     plot_handles=[]
 
     if len(LD_forward)>0:
-        plot_title = r'Forward {}, $\tau={}$'.format(str_method,t_final)
+        if np.isnan(t_final):
+            plot_title=''
+        else:
+            plot_title = r'Forward {}, $\tau={}$'.format(str_method,t_final)
         LD_forward_gradient = get_gradient_magnitude(LD_forward)
         plot_tuple = draw_ld_pair(LD_forward, LD_forward_gradient, grid_parameters, plot_title, interactive, 'Reds')
         plot_handles.append(plot_tuple)
 
     if len(LD_backward)>0:
-        plot_title = r'Backward {}, $\tau={}$'.format(str_method,t_final)
+        if np.isnan(t_final):
+            plot_title=''
+        else:
+            plot_title = r'Backward {}, $\tau={}$'.format(str_method,t_final)
         LD_backward_gradient = -get_gradient_magnitude(LD_backward)
         plot_tuple = draw_ld_pair(LD_backward, LD_backward_gradient, grid_parameters, plot_title, interactive, 'Blues_r')
         plot_handles.append(plot_tuple)
 
     if len(LD_forward)>0 and len(LD_backward)>0:
-        plot_title = r'Total {}, $\tau={}$'.format(str_method,t_final)
+        if np.isnan(t_final):
+            plot_title=''
+        else:
+            plot_title = r'Total {}, $\tau={}$'.format(str_method,t_final)
         LD_backward_gradient = -get_gradient_magnitude(LD_backward)
         plot_tuple = draw_ld_pair(LD_backward+LD_forward, LD_forward_gradient+LD_backward_gradient, grid_parameters, plot_title, interactive, 'Blues_r')
         plot_handles.append(plot_tuple)
 
     plt.show()
+
     return plot_handles
+
 __author__ = 'Broncio Aguilar-Sanjuan, Victor-Jose Garcia-Garrido, Vladimir Krajnak'
 __status__ = 'Development'
