@@ -1,10 +1,3 @@
-"""
-Module description ...
-
-Reference:
-- Surename1, Forename1 Initials., Surename2, Forename2 Initials, YEAR. Publication/Book title
-Publisher, Number(Volume No), pp.142-161.
-"""
 import numpy as np
 
 def HamCenter1D(t, u, PARAMETERS = [1]):
@@ -16,18 +9,18 @@ def HamCenter1D(t, u, PARAMETERS = [1]):
     Parameters
     ----------
     t : float
-        fixed time-point of vector field, for all points in phase space
+        Time. (This vector field is independent of time.)
 
-    u : array_like, shape(n,)
-        points in phase space to determine vector field at time t
+    u : ndarray, shape(n,)
+        Points in phase space.
 
     PARAMETERS : list of floats
-        vector field parameters
+        Vector field parameters.
 
     Returns
     -------
-    v : array_like, shape(n,)
-        vector field corresponding to points u, in phase space at time t
+    v : ndarray, shape(n,)
+        Vector field at points u and time t.
     """
     x, y = u.T
     # Hamiltonian Model Parameter
@@ -44,18 +37,18 @@ def HamSaddle1D(t, u, PARAMETERS = [1]):
     Parameters
     ----------
     t : float
-        fixed time-point of vector field, for all points in phase space.
+        Time. (This vector field is independent of time.)
 
-    u : array_like, shape(n,)
-        points in phase space to determine vector field at time t.
+    u : ndarray, shape(n,)
+        Points in phase space.
 
     PARAMETERS : list of floats
-        vector field parameters
+        Vector field parameters.
 
     Returns
     -------
-    v : array_like, shape(n,)
-        vector field corresponding to points u, in phase space at time t
+    v : ndarray, shape(n,)
+        Vector field at points u and time t.
     """
     x, y = u.T
     # Hamiltonian Model Parameter
@@ -65,16 +58,16 @@ def HamSaddle1D(t, u, PARAMETERS = [1]):
 
 def Duffing1D(t, u, PARAMETERS = [None]):
     """
-    Returns 1DoF vector field of the Duffing oscillator, for an array of points in phase space.
+    Returns vector field for the Duffing oscillator.
     Number of model parameters: 0 . PARAMETERS = [None]
     Functional form: v = (y, x - x**3), with u = (x, y)
 
     Parameters
     ----------
     t : float
-        fixed time-point of vector field, for all points in phase space.
+        Time. (This vector field is independent of time.)
 
-    u : array_like, shape(n,)
+    u : ndarray, shape(n,)
         Points in phase space.
 
     PARAMETERS : list of floats
@@ -82,8 +75,8 @@ def Duffing1D(t, u, PARAMETERS = [None]):
 
     Returns
     -------
-    v : array_like, shape(n,)
-        Vector field corresponding to points u, in phase space at time t.
+    v : ndarray, shape(n,)
+        Vector field at points u and time t..
     """
     x, y = u.T
     # Hamiltonian Model Parameter
@@ -92,25 +85,25 @@ def Duffing1D(t, u, PARAMETERS = [None]):
 
 def Duffing1D_inverted(t, u, PARAMETERS = [None]):
     """
-    Returns 1DoF vector field of the inverted Duffing oscillator at time t, for an array of points in phase space.
+    Returns vector field for the inverted Duffing oscillator.
     Number of model parameters: 0 . PARAMETERS = [None]
     Functional form: v = (y, - x + x**3), with u = (x, y)
 
     Parameters
     ----------
     t : float
-        fixed time-point of vector field, for all points in phase space.
+        Time. (This vector field is independent of time.)
 
-    u : array_like, shape(n,)
-        points in phase space to determine vector field at time t.
+    u : ndarray, shape(n,)
+        Points in phase space.
 
     PARAMETERS : list of floats
-        vector field parameters
+        Vector field parameters.
 
     Returns
     -------
-    v : array_like, shape(n,)
-        vector field corresponding to points u, in phase space at time t
+    v : ndarray, shape(n,)
+        Vector field at points u and time t.
     """
     x, y = u.T
     # Hamiltonian Model Parameter
@@ -121,25 +114,25 @@ def Duffing1D_inverted(t, u, PARAMETERS = [None]):
 
 def HamSN1D(t, u, PARAMETERS = [None]):
     """
-    Returns 1DoF saddle-node vector field at time t, for an array of points in phase space.
+    Returns vector field for the 1DoF saddle-node model.
     Number of model parameters: 0 . PARAMETERS = [None]
     Functional form: v = (y, -x -x**2), with u = (x, y)
 
     Parameters
     ----------
     t : float
-        fixed time-point of vector field, for all points in phase space.
+        Time. (This vector field is independent of time.)
 
-    u : array_like, shape(n,)
-        points in phase space to determine vector field at time t.
+    u : ndarray, shape(n,)
+        Points in phase space.
 
     PARAMETERS : list of floats
-        vector field parameters
+        Vector field parameters.
 
     Returns
     -------
-    v : array_like, shape(n,)
-        vector field corresponding to points u, in phase space at time t
+    v : ndarray, shape(n,)
+        Vector field at points u and time t.
     """
     x, y = u.T
     # Hamiltonian Model Parameter
@@ -148,25 +141,25 @@ def HamSN1D(t, u, PARAMETERS = [None]):
 
 def forcing(t, u, perturbation_params = [1, 0.15, 0.5]):
     """
-    Returns vector field for a perturbation at time t, for an array of points in phase space.
+    Returns vector field for a perturbation.
     Number of model parameters: 3. perturbation_params = [perturbation_type, amplitude, frequency]
     Functional form: v = (, ), with u = (x, y)
 
     Parameters
     ----------
     t : float
-        fixed time-point of vector field, for all points in phase space.
+        Time. (This vector field is independent of time.)
 
-    u : array_like, shape(n,)
-        points in phase space to determine vector field at time t.
+    u : ndarray, shape(n,)
+        Points in phase space.
 
     perturbation_params : list of floats, [perturbation_type, amplitude, frequency]
-        vector field parameters
+        Perturbation parameters.
 
     Returns
     -------
-    v : array_like, shape(n,)
-        vector field corresponding to points u, in phase space at time t
+    v : ndarray, shape(n,)
+        Vector field at points u and time t.
     """
     x, y = u.T
     perturbation = np.zeros(u.shape)
@@ -183,21 +176,21 @@ def forcing(t, u, perturbation_params = [1, 0.15, 0.5]):
 
 def HenonHeiles_vector_field(t, u):
     """
-    Returns 2D Henon-Heiles vector field at time t, for an array of points in phase space.
+    Returns Henon-Heiles vector field (2DoF).
     Functional form: v = (p_x, p_y, -x - 2*x*y, -x**2 -y + y**2), with u = (x, y, p_x, p_y)
 
     Parameters
     ----------
     t : float
-        fixed time-point of vector field, for all points in phase space.
+        Time. (This vector field is independent of time.)
 
-    u : array_like, shape(n,)
-        points in phase space to determine vector field at time t.
+    u : ndarray, shape(n,)
+        Points in phase space.
 
     Returns
     -------
-    v : array_like, shape(n,)
-        vector field corresponding to points u, in phase space at time t
+    v : ndarray, shape(n,)
+        Vector field at points u and time t.
     """
     points_positions = u.T[:2]
     points_momenta = u.T[2:4]
@@ -214,24 +207,24 @@ def HenonHeiles_vector_field(t, u):
 
 def NFSaddle_vector_field(t, u, PARAMETERS = None):
     """
-    Returns vector field for a 2D index-1 saddle at time t, for an array of points in phase space.
+    Returns vector field for a 2D index-1 saddle.
     Functional form: v = (p_x, p_y, x, -y), with u = (x, y, p_x, p_y)
 
     Parameters
     ----------
     t : float
-        fixed time-point of vector field, for all points in phase space.
+        Time. (This vector field is independent of time.)
 
-    u : array_like, shape(n,)
-        points in phase space to determine vector field at time t.
+    u : ndarray, shape(n,)
+        Points in phase space.
 
     PARAMETERS : list of floats
-        vector field parameters
+        Vector field parameters.
 
     Returns
     -------
-    v : array_like, shape(n,)
-        vector field corresponding to points u, in phase space at time t
+    v : ndarray, shape(n,)
+        Vector field at points u and time t.
     """
     N_dim = u.shape[-1]
     points_positions = u.T[:int(N_dim/2)]
