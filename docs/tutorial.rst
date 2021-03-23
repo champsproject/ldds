@@ -20,28 +20,25 @@ where :math:`\mathbf{v}(\mathbf{x},t) \in C^r (r \geq 1)` in :math:`\mathbf{x}` 
 .. math::
     M_p(\mathbf{x}_{0},t_0,\tau) = \displaystyle{\int^{t_0+\tau}_{t_0-\tau} \sum_{i=1}^{n} |\dot{x}_{i}(t;\mathbf{x}_{0})|^p \; dt} \label{eqn:M_function}
 
-where $p \in (0,1]$ and $\tau \in \mathbb{R}^{+}$ are freely chosen parameters,  and the overdot symbol represents the derivative with respect to time. It is to be noted here that there are three formulations of the function $M_p$ in the literature: the arc length of a trajectory in phase space~\cite{madrid2009}, the arc length of a trajectory projected on the configuration space~~\cite{junginger2016transition,junginger2016uncovering,junginger2017chemical,junginger2017variational}, and the sum of the $p$-norm of the vector field components~\cite{lopesino_2015,lopesino2017}.
-% In the context of chemical reactions, a different form with $p = 1$ has been popular in Refs.~\cite{junginger2016transition,junginger2016uncovering,junginger2017chemical,junginger2017variational}.(I thought these people used the arclength formulation of LD and not the definition of Lopesino?) 
+where :math:`p \in (0,1]` and :math:`\tau \in \mathbb{R}^{+}` are freely chosen parameters,  and the overdot symbol represents the derivative with respect to time. It is to be noted here that there are three formulations of the function :math:`M_p` in the literature: the arc length of a trajectory in phase space~\cite{madrid2009}, the arc length of a trajectory projected on the configuration space~~\cite{junginger2016transition,junginger2016uncovering,junginger2017chemical,junginger2017variational}, and the sum of the :math:`p`-norm of the vector field components~\cite{lopesino_2015,lopesino2017}.
 Although the latter formulation of the Lagrangian descriptor~\eqref{eqn:M_function} developed in Ref.~\cite{lopesino_2015,lopesino2017} does not resemble the arc length, the numerical results using either of these forms have been shown to be in agreement and promise of predictive capability in geophysical flows~\cite{amism11,mendoza2014,ggmwm15,ramos2018}. The formulation we adopt here is motivated by the fact that this allows for proving rigorous result, which we will discuss in the next section, connecting the singular features and minimum in the LD plots with NHIM and its stable and unstable manifolds. 
-% In a forthcoming paper on{PROOF (what does this mean?): singular and extremal values in LD detect manifolds}, we present the rigorous result from which it follows that {\color{blue} SN: referring to the manuscript that we are preparing with Victor.}
 It follows from the result that 
 
-% 
-\begin{align}
-\mathcal{W}^s(\mathbf{x}_0, t_0) & = \text{\rm argmin} \; \mathcal{L}^{(f)}(\mathbf{x}_0, t_0, \tau) \\
-\mathcal{W}^u(\mathbf{x}_0, t_0) & = \text{\rm argmin} \; \mathcal{L}^{(b)}(\mathbf{x}_0, t_0, \tau)
-\end{align}
-%
-where the stable and unstable manifolds ($\mathcal{W}^s(\mathbf{x}_0, t_0)$ and $\mathcal{W}^u(\mathbf{x}_0, t_0)$) denote the invariant manifolds at intial time $t_0$ and $\text{\rm argmin} \; (\cdot)$ denotes the argument that minimizes the function $\mathcal{L}^{(\cdot)}(\mathbf{x}_0, t_0, \tau)$ in forward and backward time, respectively. In addition, the coordinates of the NHIM at time $t_0$ is given by the intersection $\mathcal{W}^s(\mathbf{x}_0, t_0)$ and $\mathcal{W}^u(\mathbf{x}_0, t_0)$ of the stable and unstable manifolds, and thus given by
+.. math:: 
+    \begin{align}
+    \mathcal{W}^s(\mathbf{x}_0, t_0) & = \text{\rm argmin} \; \mathcal{L}^{(f)}(\mathbf{x}_0, t_0, \tau) \\
+    \mathcal{W}^u(\mathbf{x}_0, t_0) & = \text{\rm argmin} \; \mathcal{L}^{(b)}(\mathbf{x}_0, t_0, \tau)
+    \end{align}
 
-% 
-\begin{align}
-\mathcal{M}(\mathbf{x}_0, t_0) & = \text{\rm argmin} \; \left( \mathcal{L}^{(f)}(\mathbf{x}_0, t_0, \tau) + \mathcal{L}^{(b)}(\mathbf{x}_0, t_0, \tau) \right) = \text{\rm argmin} \; \mathcal{L}(\mathbf{x}_0, t_0, \tau) \qquad \text{NHIM}
-\end{align}
-%
+where the stable and unstable manifolds (:math:`\mathcal{W}^s(\mathbf{x}_0, t_0)` and :math:`\mathcal{W}^u(\mathbf{x}_0, t_0)`) denote the invariant manifolds at intial time :math:`t_0` and :math:`\text{\rm argmin} \; (\cdot)` denotes the argument that minimizes the function :math:`\mathcal{L}^{(\cdot)}(\mathbf{x}_0, t_0, \tau)` in forward and backward time, respectively. In addition, the coordinates of the NHIM at time :math:`t_0` is given by the intersection :math:`\mathcal{W}^s(\mathbf{x}_0, t_0)` and :math:`\mathcal{W}^u(\mathbf{x}_0, t_0)` of the stable and unstable manifolds, and thus given by
+
+.. math::
+    \begin{align}
+    \mathcal{M}(\mathbf{x}_0, t_0) & = \text{\rm argmin} \; \left( \mathcal{L}^{(f)}(\mathbf{x}_0, t_0, \tau) + \mathcal{L}^{(b)}(\mathbf{x}_0, t_0, \tau) \right) = \text{\rm argmin} \; \mathcal{L}(\mathbf{x}_0, t_0, \tau) \qquad \text{NHIM}
+    \end{align}
 
 
-A not-so short introduction is available as a Jupyter book `here <https://champsproject.github.io/lagrangian_descriptors/>`_ 
+
 
 
 
