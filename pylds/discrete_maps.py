@@ -2,37 +2,36 @@ import numpy as np
 
 def StandardMap(t_initial, u_initial, PARAMETERS=[0.3, 1]):
     """
-    2D Standard map for initial conditions in a unit square, centred at the origin (James Meiss).
-    The map will return unwrapped trajectories for iterations of initial conditions, unlike when using PBCs.
-    For computation of the Lagrangian Descriptor relative displacements are only needed. 
+    Chirikov standard map for initial conditions in a unit square, centred at the origin (as used in [1]_).
+    The map is defined in a perioidic manner, but maps points outside the unit square (periodic domain).
+    The Lagrangian descriptor calculations use a correction, so that points are mapped into the unit square. 
     
-    Number of model parameters: 1 . PARAMETERS = [K, time_step]
-    Functional form:
-    
-    t_next = t_initial + time_step
+    Number of model parameters: 1 . PARAMETERS = [K]
+    Functional form: 
     x_next  = x_initial + y_initial - (K/(2*np.pi))*np.sin(2*np.pi*x_initial
     y_next  = y_initial - (K/(2*np.pi))*np.sin(2*np.pi*x_initial))
     
     where u_initial = (x_initial, y_initial) 
-    
+
     Parameters
     ----------
-    t_initial : float
-        time of initial iteration for u_initial points
+    t_initial : float,
+        Time corresponding to u_initial.
+        
+    u_initial : ndarray, shape(n,),
+        Points to be mapped.
     
-    u_initial : array_like, shape(n,)
-        initial points in unit square to determine their next iteration under the map
-    
-    PARAMETERS : list of floats
-        map parameters
+    PARAMETERS : list of floats,
+        Map parameters.
     
     Returns
     -------
-    t_next : float
-        time of next iteration with a default time_step equal to 1
+    u_next : ndarray, shape(n,)
+        Array of forward images of u under Chirikov standard map (not in the unit square necessarily).
         
-    u_next : array_like, shape(n,)
-        points u_next, in the 2D plane (not in the unit square necessarily).
+    References
+    ----------
+    .. [1] J.D. Meiss Visual explorations of dynamics: The standard map. Pramana - J Phys 70, 965–988 (2008). https://doi.org/10.1007/s12043-008-0103-3
     """
     x_initial, y_initial = u_initial.T
     # Map parameters
@@ -49,9 +48,9 @@ def StandardMap(t_initial, u_initial, PARAMETERS=[0.3, 1]):
 
 def StandardMap_inverse(t_initial, u_initial, PARAMETERS=[0.3, 1]):
     """
-    Inverse of 2D Standard map for initial conditions in a unit square, centred at the origin (James Meiss).
-    The map will return unwrapped trajectories for iterations of initial conditions, unlike when using PBCs.
-    For computation of the Lagrangian Descriptor relative displacements are only needed. 
+    Inverse of Chirikov standard map for initial conditions in a unit square, centred at the origin (as used in [1]_).
+    The map is defined in a perioidic manner, but maps points outside the unit square (periodic domain).
+    The Lagrangian descriptor calculations use a correction, so that points are mapped into the unit square.
     
     Number of model parameters: 1 . PARAMETERS = [K, time_step]
     Functional form: 
@@ -64,22 +63,26 @@ def StandardMap_inverse(t_initial, u_initial, PARAMETERS=[0.3, 1]):
     
     Parameters
     ----------
-    t_initial : float
-        time of initial iteration for u_initial points
+    t_initial : float,
+        Time corresponding to u_initial.
         
-    u_initial : array_like, shape(n,)
-        initial points in unit square to determine their next iteration under the map
+    u_initial : ndarray, shape(n,),
+        Points to be mapped.
     
-    PARAMETERS : list of floats
-        map parameters
+    PARAMETERS : list of floats,
+        Map parameters.
     
     Returns
     -------
-    t_next : float
-        time of next iteration with a default time_step equal to 1
+    t_next : float,
+        Time corresponding to u_next.
+    
+    u_next : ndarray, shape(n,)
+        Array of backward images of u under Chirikov standard map (not in the unit square necessarily).
         
-    u_next : array_like, shape(n,)
-        points u_next, in the 2D plane.
+    References
+    ----------
+    .. [1] J.D. Meiss Visual explorations of dynamics: The standard map. Pramana - J Phys 70, 965–988 (2008). https://doi.org/10.1007/s12043-008-0103-3
     """
     x_initial, y_initial = u_initial.T
     # Map parameters
@@ -97,7 +100,7 @@ def StandardMap_inverse(t_initial, u_initial, PARAMETERS=[0.3, 1]):
 
 def HenonMap(t_initial, u_initial, PARAMETERS=[0.298, 1, 1]):
     """
-    2D Henon map. 
+    Henon map. 
     
     Number of model parameters: 2 . PARAMETERS = [a, b, time_step]
     Functional form: 
@@ -110,22 +113,22 @@ def HenonMap(t_initial, u_initial, PARAMETERS=[0.298, 1, 1]):
     
     Parameters
     ----------
-    t_initial : float
-        time of initial iteration for u_initial points
+    t_initial : float,
+        Time corresponding to u_initial.
+        
+    u_initial : ndarray, shape(n,),
+        Points to be mapped.
     
-    u_initial : array_like, shape(n,)
-        initial points in unit square to determine their next iteration under the map
-    
-    PARAMETERS : list of floats
-        map parameters
+    PARAMETERS : list of floats,
+        Map parameters.
     
     Returns
     -------
-    t_next : float
-        time of next iteration with a default time_step equal to 1
+    t_next : float,
+        Time corresponding to u_next.
     
-    u_next : array_like, shape(n,)
-        points u_next, in the 2D plane.
+    u_next : ndarray, shape(n,)
+        Array of forward images of u under Henon map.
     """
     x_initial, y_initial = u_initial.T
     # Map parameters
@@ -156,22 +159,22 @@ def HenonMap_inverse(t_initial, u_initial, PARAMETERS=[0.298, 1, 1]):
     
     Parameters
     ----------
-    t_initial : float
-        time of initial iteration for u_initial points
+    t_initial : float,
+        Time corresponding to u_initial.
+        
+    u_initial : ndarray, shape(n,),
+        Points to be mapped.
     
-    u_initial : array_like, shape(n,)
-        initial points in unit square to determine their next iteration under the map
-    
-    PARAMETERS : list of floats
-        map parameters
+    PARAMETERS : list of floats,
+        Map parameters.
     
     Returns
     -------
-    t_next : float
-        time of next iteration with a default time_step equal to 1
-        
-    u_next : array_like, shape(n,)
-        points u_next, in the 2D plane (not in the unit square necessarily)
+    t_next : float,
+        Time corresponding to u_next.
+    
+    u_next : ndarray, shape(n,)
+        Array of backward images of u under Henon map.
     """
     x_initial, y_initial = u_initial.T
     # Map parameters
