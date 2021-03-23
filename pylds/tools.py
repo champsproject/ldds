@@ -1,10 +1,3 @@
-"""
-Module description ...
-
-Reference:
-- Surename1, Forename1 Initials., Surename2, Forename2 Initials, YEAR. Publication/Book title
-Publisher, Number(Volume No), pp.142-161.
-"""
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
@@ -171,15 +164,15 @@ def draw_all_lds(LD_forward, LD_backward, grid_parameters, tau=np.nan, p_value=n
     grid_parameters : list of 3-tuples of floats
         Limits and size of mesh per axis.
 
-    tau : float
+    tau : float, optional
         Time of integration.
         Default is np.nan.
 
-    p_value : float
+    p_value : float, optional
         Exponent in Lagrangian descriptor definition.
         Default is np.nan.
 
-    interactive : bool
+    interactive : bool, optional
         True allows interactively adjusting the gradient plot minimum and maximum.
         Default is False.
 
@@ -238,5 +231,5 @@ def draw_all_lds(LD_forward, LD_backward, grid_parameters, tau=np.nan, p_value=n
 
     return plot_handles
 
-__author__ = 'Broncio Aguilar-Sanjuan, Victor-Jose Garcia-Garrido, Vladimir Krajnak'
+__author__ = 'Broncio Aguilar-Sanjuan, Victor-Jose Garcia-Garrido, Vladimir Krajnak, Shibabrat Naik'
 __status__ = 'Development'
