@@ -1,10 +1,3 @@
-"""
-Module description ...
-
-Reference:
-- Surename1, Forename1 Initials., Surename2, Forename2 Initials, YEAR. Publication/Book title
-Publisher, Number(Volume No), pp.142-161.
-"""
 import numpy as np
 
 def HamCenter1D_Hamiltonian(t, u, PARAMETERS = [1]):
@@ -15,19 +8,19 @@ def HamCenter1D_Hamiltonian(t, u, PARAMETERS = [1]):
 
     Parameters
     ----------
-    t : float
+    t : float,
         Time. (This Hamiltonian is independent of time.)
 
-    u : ndarray, shape(n,)
-        Points in phase space
+    u : ndarray, shape(n,),
+        Points in phase space.
 
-    PARAMETERS : list of floats
-        vector field parameters
+    PARAMETERS : list of floats,
+        vector field parameters.
 
     Returns
     -------
-    H : ndarray, shape(n,)
-        Hamiltonian at points u, in phase space at time t
+    H : ndarray, shape(n,),
+        Hamiltonian at points u, in phase space at time t.
     """
     x, y = u.T
     # Hamiltonian Model Parameter
@@ -36,25 +29,25 @@ def HamCenter1D_Hamiltonian(t, u, PARAMETERS = [1]):
 
 def HamSaddle1D_Hamiltonian(t, u, PARAMETERS = [1]):
     """
-    Returns 1DoF Hamilton-Saddle vector field at time t, for an array of points in phase space.
+    Returns Hamiltonian for 1DoF saddle, for an array of points in phase space.
     Number of model parameters: 1 . PARAMETERS = [lamda].
     Functional form: H = omega/2*(y**2 - x**2), with u = (x, y).
 
     Parameters
     ----------
-    t : float
+    t : float,
         Time. (This Hamiltonian is independent of time.)
 
-    u : ndarray, shape(n,)
+    u : ndarray, shape(n,),
         Points in phase space.
 
-    PARAMETERS : list of floats
-        vector field parameters
+    PARAMETERS : list of floats,
+        vector field parameters.
 
     Returns
     -------
-    H : ndarray, shape(n,)
-        Hamiltonian at points u, in phase space at time t
+    H : ndarray, shape(n,),
+        Hamiltonian at points u, in phase space at time t.
     """
     x, y = u.T
     # Hamiltonian Model Parameter
@@ -77,7 +70,7 @@ def Duffing1D_Hamiltonian(t, u):
     Returns
     -------
     H : ndarray, shape(n,)
-        Hamiltonian at points u, in phase space at time t
+        Hamiltonian at points u, in phase space at time t.
     """
     x, y = u.T
     return 0.5*(y*y + 0.5*x**4 - x*x)
@@ -98,7 +91,7 @@ def Duffing1D_inverted_Hamiltonian(t, u):
     Returns
     -------
     H : ndarray, shape(n,)
-        Hamiltonian at points u, in phase space at time t
+        Hamiltonian at points u, in phase space at time t.
     """
     x, y = u.T
     return 0.5*(y*y - 0.5*x**4 + x*x)
@@ -119,7 +112,7 @@ def HamSN1D_Hamiltonian(t, u):
     Returns
     -------
     H : ndarray, shape(n,)
-        Hamiltonian at points u, in phase space at time t
+        Hamiltonian at points u, in phase space at time t.
     """
     x, y = u.T
     return 0.5*y*y + x**3/3 + 0.5*x*x
@@ -140,7 +133,7 @@ def HenonHeiles_Hamiltonian(t, u):
     Returns
     -------
     H : ndarray, shape(n,)
-        Hamiltonian at points u, in phase space at time t
+        Hamiltonian at points u, in phase space at time t.
 
     """
     points_positions = u.T[:2]
@@ -187,7 +180,7 @@ def NFSaddle_Hamiltonian(t, u):
     Returns
     -------
     H : ndarray, shape(n,)
-        Hamiltonian at points u, in phase space at time t
+        Hamiltonian at points u, in phase space at time t.
 
     """
     points_positions = u.T[:2]
@@ -229,7 +222,7 @@ def kinetic_squares(t,points_momenta):
     Returns
     -------
     T : ndarray, shape(n,)
-        Kinetic energy at points u, in phase space at time t
+        Kinetic energy at points u, in phase space at time t.
 
     """
     return 0.5* np.sum(points_momenta**2, axis=1)
