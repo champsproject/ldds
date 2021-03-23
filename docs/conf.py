@@ -17,8 +17,8 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'pyLD'
-copyright = '2020, .'
+project = 'LDDS'
+copyright = '2020-21, .'
 author = '.'
 
 # The full version, including alpha/beta/rc tags
