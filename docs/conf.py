@@ -39,8 +39,7 @@ extensions = ['sphinx.ext.autodoc',
     'sphinx.ext.viewcode', \
     'sphinx.ext.napoleon', \
     'sphinx.ext.doctest', \
-    'sphinx.ext.mathjax', \
-    'm2r']
+    'sphinx.ext.mathjax']
 
 intersphinx_mapping = {'python': ('https://docs.python.org/3', None)}
 
