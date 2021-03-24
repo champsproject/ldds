@@ -20,8 +20,8 @@ where :math:`\mathbf{v}(\mathbf{x},t) \in C^r (r \geq 1)` in :math:`\mathbf{x}` 
 .. math::
     M_p(\mathbf{x}_{0},t_0,\tau) = \displaystyle{\int^{t_0+\tau}_{t_0-\tau} \sum_{i=1}^{n} |\dot{x}_{i}(t;\mathbf{x}_{0})|^p \; dt} \label{eqn:M_function}
 
-where :math:`p \in (0,1]` and :math:`\tau \in \mathbb{R}^{+}` are freely chosen parameters,  and the overdot symbol represents the derivative with respect to time. It is to be noted here that there are three formulations of the function :math:`M_p` in the literature: the arc length of a trajectory in phase space [madrid2009]_, the arc length of a trajectory projected on the configuration space [junginger2016transition]_, [junginger2016uncovering]_, [junginger2017chemical]_, and the sum of the :math:`p`-norm of the vector field components [lopesino_2015]_, [lopesino2017]_.
-Although the latter formulation of the Lagrangian descriptor~\eqref{eqn:M_function} developed in Refs. [lopesino_2015]_, [lopesino2017]_ does not resemble the arc length, the numerical results using either of these forms have been shown to be in agreement and promise of predictive capability in geophysical flows ([delacamara2012]_, [garciagarrido2015]_, [ramos2018]_, [mendoza2014lagrangian]_). The formulation we adopt here is motivated by the fact that this allows for proving rigorous result, which we will discuss in the next section, connecting the singular features and minimum in the LD plots with NHIM and its stable and unstable manifolds. 
+where :math:`p \in (0,1]` and :math:`\tau \in \mathbb{R}^{+}` are freely chosen parameters,  and the overdot symbol represents the derivative with respect to time. It is to be noted here that there are three formulations of the function :math:`M_p` in the literature: the arc length of a trajectory in phase space [madrid2009]_, the arc length of a trajectory projected on the configuration space [junginger2016transition]_, [junginger2016uncovering]_, [junginger2017chemical]_, and the sum of the :math:`p`-norm of the vector field components [lopesino2015]_, [lopesino2017]_.
+Although the latter formulation of the Lagrangian descriptor~\eqref{eqn:M_function} developed in Refs. [lopesino2015]_, [lopesino2017]_ does not resemble the arc length, the numerical results using either of these forms have been shown to be in agreement and promise of predictive capability in geophysical flows ([delacamara2012]_, [garciagarrido2015]_, [ramos2018]_, [mendoza2014lagrangian]_). The formulation we adopt here is motivated by the fact that this allows for proving rigorous result, which we will discuss in the next section, connecting the singular features and minimum in the LD plots with NHIM and its stable and unstable manifolds. 
 It follows from the result that 
 
 .. math:: 
@@ -39,6 +39,11 @@ where the stable and unstable manifolds (:math:`\mathcal{W}^s(\mathbf{x}_0, t_0)
 
 
 
-.. include:: references.txt
+.. automodule:: base
+   :members:
 
+.. automodule:: tools
+   :members:
+
+.. include:: references.txt
 

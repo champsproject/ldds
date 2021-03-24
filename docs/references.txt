@@ -16,18 +16,14 @@ References
 
 .. [junginger2016uncovering] Junginger, A. and Hernandez, R. (2016b). Uncovering the Geometry of Barrierless Reactions Using Lagrangian Descriptors. The Journal of Physical Chemistry B, 120(8), 1720–1725.
 
-.. [lopesino2015] Lopesino, C., Balibrea, F., Wiggins, S., and Mancho, A. M. (2015). Lagrangian descriptors for two dimensional, area preserving, autonomous and nonautonomous maps. Communications in Nonlinear Science and Numerical Simulation, 27(1-3), 40–51.
 
 .. [junginger2017chemical] Junginger, A., Duvenbeck, L., Feldmaier, M., Main, J., Wunner, G., and Hernandez, R. (2017a). Chemical dynamics between wells across a time-dependent barrier: Self-similarity in the Lagrangian descriptor and reactive basins. The Journal of chemical physics, 147(6), 064101.
 
 
 .. [mancho2013] Mancho, A. M., Wiggins, S., Curbelo, J., and Mendoza, C. (2013). Lagrangian Descriptors: A Method for Revealing Phase Space Structures of General Time Dependent Dynamical Systems. Communications in Nonlinear Science and Numerical, 18, 3530–3557.
 
-.. [mendoza2010hidden] Mendoza, C. and Mancho, A. M. (2010). The hidden geometry of ocean flows. Phys. Rev. Lett., 105(3), 038501.
 
 .. [mendoza2014lagrangian] Mendoza, C., Mancho, A. M., and Wiggins, S. (2014). Lagrangian descriptors and the assessment of the predictive capacity of oceanic data sets. Nonlinear Processes in Geophysics, 21(3), 677–689.
-
-.. [garciagarrido2018] García-Garrido, V. J., Curbelo, J., Mancho, A. M., Wiggins, S., and Mechoso, C. R. (2018). The Application of Lagrangian Descriptors to 3d Vector Fields. Regular and Chaotic Dynamics, 23(5), 551–568.
 
 .. [garciagarrido2015] García-Garrido, V. J., Mancho, A. M., and Wiggins, S. (2015). A dynamical systems approach to the surface search for debris associated with the disappearance of flight MH370. Nonlin. Proc. Geophys., 22, 701–712.
 

@@ -41,6 +41,7 @@ Six dimensional phase space
 
 
 
-
+.. automodule:: vector_fields
+   :members:
 
 
