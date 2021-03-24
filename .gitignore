@@ -13,3 +13,5 @@ docs/_build/*
 docs/.vscode/
 docs/_static/*
 docs/source/*
+
+.ipynb_checkpoints/
