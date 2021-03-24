@@ -29,11 +29,11 @@ affiliations:
 
 Nonlinear dynamical systems are ubiquitous in natural and engineering sciences, for example, fluid mechanics, theoretical chemistry, ship dynamics, rigid body dynamics, atomic physics, solid mechanics, condensed matter physics, mathematical biology, oceanography, meteorology, celestial mechanics [see @wiggins1994normally for a list of collated references]. There has been many advances in understanding phenomena across these disciplines using the geometric viewpoint of the solutions and the underlying structures in the phase space. Chief among these phase space structures are the invariant manifolds that form a barrier between dynamically distinct solutions. In most nonlinear systems, the invariant manifolds are computed using numerical techniques that rely on some form of linearization around equilibrium points followed by continuation and globalization. However, these methods become computationally expensive and challenging when applied to the high-dimensional phase space of chemical reactions [rephrase the introduction from the CNSNS paper] or vector field defined using numerical simulation or experimental data. This points to the need for techniques that can be paired with trajectory calculations, without excessive computational overhead and at the same time can be visualized along with trajectory data. The Python package, `LDDS`, serves this need for analyzing deterministic, stochastic, high-dimensional nonlinear dynamical systems described either by an analytical vector field or a trajectory data obtained from numerical simulations or experiments.
 
+To the best of our knowledge, no other software for calculating Lagrangian descriptors exists. A variety of computational tools is available for competing approaches for the exploration of phase space structures in nonlinear dynamical systems, such as finite-time Lyapunov exponents [@lagrangian, @lyaprosen, @dynamics, @dgftle], finite-size Lyapunov exponents [@lagrangian], Lagrangian coherent structures [@mangen, @lcstool, @libcfd2lcs, @lcsmatlabkit], Eulerian coherent structures [@barriertool].
+
 ## Summary
 
 `LDDS` has the following features:
-
-
 
 
 ### Example systems {#examples}
