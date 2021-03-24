@@ -6,3 +6,10 @@
 .ipynb_checkpoints/*
 
 pylds/.ipynb_checkpoints/*
+
+#Docs build files
+docs/.Rhistory
+docs/_build/*
+docs/.vscode/
+docs/_static/*
+docs/source/*
