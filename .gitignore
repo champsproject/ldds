@@ -2,6 +2,7 @@
 *.pyc
 
 .ipynb_checkpoints/*
+../pylds/.ipynb_checkpoints/*
 
 #Docs build files
 docs/.Rhistory
