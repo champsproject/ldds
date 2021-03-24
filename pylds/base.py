@@ -406,6 +406,71 @@ def fit_pes(filename, clip_max = False):
 
     return fspline
 
+def EulerMaruyama_solver(t_initial, u_initial, vector_field, time_step, noise_amplitude=[0, 0], noise_type="additive"):
+    """
+    Returns next time and state in the evolution of a stochastic ODE system via the Euler-Maruyama method.
+    
+    Euler-Maruyama scheme:
+    
+    t_next = t_initial + dt
+    u_next = u_initial + v(t_initial, u_initial)*dt + b*dW
+    
+    with u = (x, y)
+    
+    NOTE: Depending on the 'noise_type' b will be a random constant (additive) or a vector (multiplicative).
+
+    Currently only implemented for 2D vector fields.
+
+    Parameters
+    ----------
+    t_initial : float
+        initial time-point of all initial points in phase space.
+
+    u_initial : array_like, shape(n,)
+        initial points in phase space to determine their evolution at time t_next.
+
+    vector_field: function
+        vector field over phase space.
+        
+    time_step : float
+    
+    noise_amplitude : list of floats
+        amplitude values multiplying Weiner process.
+        
+    noise_type : string
+        options 'additive' (default) or 'multiplicative'.
+
+    Returns
+    -------
+    t_next : float
+        next time-point in the evolution of stochastic system.
+        
+    u_next : array_like, shape(n,)
+        next states in the evolution of stochastic system.
+    """
+    #solver parameters
+    dt = time_step
+    v  = vector_field
+    b  = np.array(noise_amplitude)
+    
+    #define Weinner process
+    if noise_type == "additive":
+        N_dims = u_initial.shape[1] # phase space dim
+        dW = np.sqrt(abs(dt))*np.random.randn(N_dims)*np.ones(u_initial.shape)
+    
+    elif noise_type == "multiplicative":
+        dW = np.sqrt(abs(dt))*np.random.randn(*u_initial.shape)
+    
+    else:
+        error_mssg = ("ERROR: noise_type uknown. "
+                      "Set as 'additive' or 'multiplicative'")
+        print(error_mssg)
+    
+    #Euler-Maruyama iterative solver
+    t_next = t_initial + dt
+    u_next = u_initial + v(t_initial, u_initial)*dt + b*dW
+
+    return t_next, u_next
 
 def compute_lagrangian_descriptor(grid_parameters, vector_field, tau, p_value=0.5, box_boundaries=False):
     """
@@ -475,5 +540,5 @@ def compute_lagrangian_descriptor(grid_parameters, vector_field, tau, p_value=0.
     else:
         return LD**(1/p_value)
 
-__author__ = 'Broncio Aguilar-Sanjuan, Victor-Jose Garcia-Garrido, Vladimir Krajnak'
+__author__ = 'Broncio Aguilar-Sanjuan, Victor-Jose Garcia-Garrido, Vladimir Krajnak, Shibabrat Naik'
 __status__ = 'Development'

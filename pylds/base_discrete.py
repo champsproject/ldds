@@ -178,29 +178,35 @@ def compute_lagrangian_descriptor(grid_parameters, discrete_map, N_iterations, p
     LD : ndarray, shape (Nx, Ny),
         Array of Lagrangian descriptor values for all initial conditions on a regular grid.
     """
+    t0 = 0 #initial iteration
+    
     N_mesh_axes = len(grid_parameters)+1
     y0, mask = generate_points(grid_parameters)
     y0 = y0.reshape(-1,N_mesh_axes)
     y0 = y0[:,:-1] # exclude LD-axis
-        
+    
     f = discrete_map
 
     LD_values = np.zeros(len(y0))
     for i in range(N_iterations):
-        y = f(y0)
+        t, y = f(t0, y0)
         # Escape box condition
         if box_boundaries:
             y_inbox = check_if_points_escape_box(y, box_boundaries)
             y[y_inbox == False] = y0[y_inbox == False]
         
-        # Periodic Boundary conditions
+        dt = t-t0
         dy = y-y0
+        
+        # Periodic Boundary conditions
         if periodic_boundaries:
             dy = pbc_correction_distances(dy, periodic_boundaries)
             y0 = pbc_correction_coords(y0, periodic_boundaries)
             y  = pbc_correction_coords(y , periodic_boundaries)
                 
         LD_values = LD_values + lagrangian_descriptor(y0, dy, p_value)
+        
+        t0 = t0+dt
         y0 = y
 
     N_points_slice_axes = [x[-1] for x in grid_parameters] #take number of points
