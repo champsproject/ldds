@@ -1,8 +1,11 @@
 
+.DS_Store
+
 *.pyc
 
 .ipynb_checkpoints/*
-../pylds/.ipynb_checkpoints/*
+
+pylds/.ipynb_checkpoints/*
 
 #Docs build files
 docs/.Rhistory
@@ -10,5 +13,3 @@ docs/_build/*
 docs/.vscode/
 docs/_static/*
 docs/source/*
-
-pylds/.ipynb_checkpoints/__init__-checkpoint.py

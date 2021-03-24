@@ -1,39 +1,77 @@
-Repository hosting work in progress towards the construction of a Python package for Computation of Lagrangian Descriptors for Nonlinear Dynamical Systems.
+Repository for the Python package for Computation of Lagrangian Descriptors of Dynamical Systems.
 
+  -   [Summary](#summary)
+  -   [Installation](#installation)
+  -   [Usage](#usage)
+  -   [Tests](#tests)
+  -   [Contributing](#contributing)
+  -   [Acknowledgements](#acknowledgements)
+  -   [Copyright and License](#copyright-and-license)
+  -   [References](#references)
+
+LDDS
+====
+
+[![Documentation Status](https://readthedocs.org/projects/ldds/badge/?version=latest)](https://ldds.readthedocs.io/en/latest/?badge=latest)
+
+[![DOI](linktoZenodorepo.svg)](linktoZenodo)
+
+
+Summary
+-------
+
+
+Installation
+------------
 
 # Install minimal package dependencies before running Notebooks
 
-
-First, make sure to use `pip` within the `conda` environment.
-
-So, do as shown below.
-
+First, make sure to use `pip` within the `conda` environment using
 
 ```bash
 # FIRST
 conda install pip
 # SECOND
-pip install -r requeriments.txt
+pip install -r requirements.txt
 ```
 
+Clone the git repository and install `ldds` as a module using
 
-<span style='color:red'><b>NOTE</b></span> It is important to keep in mind that IN GENERAL portability across different _Operating Systems_ is not guaranteed. This means that exact package versions for some libraries may not be able to be installed in both Windows or Linux, for instance. This has some technical reasons. Also, installing identical libraries may find troubles for different CPU architectures. 
+``` bash
+$ git clone git@github.com:champsproject/ldds.git
+$ cd ldds
+$ python setup.py install
+```
+
+The `setup.py` should also install the modules listed in
+[requirements.txt](https://github.com/champsproject/ldds/blob/develop/requirements.txt)
+and which are typically installed using
+
+``` bash
+$ pip install -r requirements.txt (or pip3 install -r requirements.txt)
+```
+
+Now `ldds` module is available for import along with the methods and
+example systems as submodules, for example (SHOW HOW TO IMPORT HERE)
+
+``` python
 
 
-# CHANGE LOG
+```
+ 
 
-* Incorporated suggested changes for code transparency (Thanks v!) 
-* Added `requirements.txt`
+Contributing (THIS SECTION NEEDS COMPLETING)
+------------
+
+Guidelines on how to contribute to this package can be found
+
+along with the code of conduct
+
+for engaging with the fellow contributors.
 
 
-# TO-DOs
 
-* Add another benchmark example for 1D nonlinear systems
-* Add `docstrings` for description within functions in `Python_LD_Examples.ipynb`
-* Continue commenting functions too
-* Implement computation of LD gradient to isolate visualization of invariant manifolds
-* Move on to higher dimensions
+Acknowledgements
+----------------
 
-# NEXT STAGES
-* Break down functions to achieve a more modular structure
-* Maybe define classes of objects
+We acknowledge the support of EPSRC Grant No. EP/P021123/1 (CHAMPS project). 
