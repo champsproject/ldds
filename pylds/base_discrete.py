@@ -29,7 +29,7 @@ def check_if_points_escape_box(u, box_boundaries):
 def pbc_correction_coords_single_axis(x, box_origin, box_length):
     """
     Correct single coordinate on a periodic domain.
-    
+
     Parameters
     ----------
     x : ndarray, shape(n,)
@@ -89,7 +89,7 @@ def pbc_correction_coords(u, periodic_boundaries):
 def pbc_correction_distances_single_axis(dx, box_length):
     """
     Correct the distances between a point and its image along a single coordinate on a periodic domain.
-    
+
     Parameters
     ----------
     dx : ndarray, shape(n,)
@@ -116,7 +116,7 @@ def pbc_correction_distances(du, periodic_boundaries):
     """
     Correct the distances between a point and its image in a periodic domain in 2D.
     The periodic domain can be a rectangle (torus) or an infinite band (cylinder) in the plane.
-    
+
     Parameters
     ----------
     du : ndarray, shape(n, 2)

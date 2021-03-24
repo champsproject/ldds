@@ -146,7 +146,7 @@ def HenonMap(t_initial, u_initial, PARAMETERS=[0.298, 1, 1]):
 
 def HenonMap_inverse(t_initial, u_initial, PARAMETERS=[0.298, 1, 1]):
     """
-    Inverse of 2D Henon map.
+    Inverse of Henon map.
     
     Number of model parameters: 2 . PARAMETERS = [a, b, time_step]
     Functional form: 
