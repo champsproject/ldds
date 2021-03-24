@@ -1,0 +1,464 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="python" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="python" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Introduction &mdash; LDDS 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Getting started" href="getting_started.html" />
+    <link rel="prev" title="Welcome to documentation for LDDS" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> LDDS
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#lagrangian-descriptors">Lagrangian descriptors</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary of Common Terms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">LDDS</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Introduction</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/tutorial.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>LDDS is a Python library for computing Lagrangian descriptors of dynamical systems.</p>
+<div class="section" id="lagrangian-descriptors">
+<h2>Lagrangian descriptors<a class="headerlink" href="#lagrangian-descriptors" title="Permalink to this headline">¶</a></h2>
+<p>The Lagrangian descriptor (LD) as presented in Refs. <a class="reference internal" href="#madrid2009" id="id1"><span>[madrid2009]</span></a>, <a class="reference internal" href="#mancho2013" id="id2"><span>[mancho2013]</span></a> is an arc-length of a trajectory calculated on a chosen initial time <span class="math notranslate nohighlight">\(t_0\)</span> and measured for fixed forward and backward integration time, <span class="math notranslate nohighlight">\(\tau\)</span>. For continuous time dynamical systems, Ref.[lopesino2017]_ gives an alternative definition of the LD which is useful for proving rigorous results and can be computed along with the trajectory. It provides a characterization of the notion of singular features of the LD that facilitates a proof for detecting invariant manifolds in certain model situations.  In addition, the <a href="#id3"><span class="problematic" id="id4">``</span></a>additive nature'' of this new definition of LD provides
+an approach for assessing the influence of each degree-of-freedom separately on the Lagrangian descriptor.  This property was used in Ref. <span id="id5">[demian2017]</span> which showed that a Lagrangian descriptor can be used to detect Lyapunov periodic orbits in the two degrees-of-freedom Hénon-Heiles Hamiltonian system. We will describe this procedure for two and three degrees-of-freedom linear autonomous Hamiltonian systems. We begin by establishing notation in the general setting of a time-dependent vector field where</p>
+<div class="math notranslate nohighlight">
+\[\frac{d\mathbf{x}}{dt} = \mathbf{v}(\mathbf{x},t), \quad \mathbf{x} \in \mathbb{R}^n \;,\; t \in \mathbb{R}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{v}(\mathbf{x},t) \in C^r (r \geq 1)\)</span> in <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and continuous in time. The definition of LDs depends on the initial condition <span class="math notranslate nohighlight">\(\mathbf{x}_{0} = \mathbf{x}(t_0)\)</span>, on the initial time <span class="math notranslate nohighlight">\(t_0\)</span> (trivial for autonomous systems) and the integration time <span class="math notranslate nohighlight">\(\tau\)</span>, and the type of norm of the trajectory's components, and takes the form,</p>
+<div class="math notranslate nohighlight">
+\[M_p(\mathbf{x}_{0},t_0,\tau) = \displaystyle{\int^{t_0+\tau}_{t_0-\tau} \sum_{i=1}^{n} |\dot{x}_{i}(t;\mathbf{x}_{0})|^p \; dt} \label{eqn:M_function}\]</div>
+<p>where <span class="math notranslate nohighlight">\(p \in (0,1]\)</span> and <span class="math notranslate nohighlight">\(\tau \in \mathbb{R}^{+}\)</span> are freely chosen parameters,  and the overdot symbol represents the derivative with respect to time. It is to be noted here that there are three formulations of the function <span class="math notranslate nohighlight">\(M_p\)</span> in the literature: the arc length of a trajectory in phase space <a class="reference internal" href="#madrid2009" id="id6"><span>[madrid2009]</span></a>, the arc length of a trajectory projected on the configuration space <a class="reference internal" href="#junginger2016transition" id="id7"><span>[junginger2016transition]</span></a>, <a class="reference internal" href="#junginger2016uncovering" id="id8"><span>[junginger2016uncovering]</span></a>, <a class="reference internal" href="#junginger2017chemical" id="id9"><span>[junginger2017chemical]</span></a>, and the sum of the <span class="math notranslate nohighlight">\(p\)</span>-norm of the vector field components <a class="reference internal" href="#lopesino2015" id="id10"><span>[lopesino2015]</span></a>, <a class="reference internal" href="#lopesino2017" id="id11"><span>[lopesino2017]</span></a>.
+Although the latter formulation of the Lagrangian descriptor~eqref{eqn:M_function} developed in Refs. <a class="reference internal" href="#lopesino2015" id="id12"><span>[lopesino2015]</span></a>, <a class="reference internal" href="#lopesino2017" id="id13"><span>[lopesino2017]</span></a> does not resemble the arc length, the numerical results using either of these forms have been shown to be in agreement and promise of predictive capability in geophysical flows (<a class="reference internal" href="#delacamara2012" id="id14"><span>[delacamara2012]</span></a>, <a class="reference internal" href="#garciagarrido2015" id="id15"><span>[garciagarrido2015]</span></a>, <a class="reference internal" href="#ramos2018" id="id16"><span>[ramos2018]</span></a>, <a class="reference internal" href="#mendoza2014lagrangian" id="id17"><span>[mendoza2014lagrangian]</span></a>). The formulation we adopt here is motivated by the fact that this allows for proving rigorous result, which we will discuss in the next section, connecting the singular features and minimum in the LD plots with NHIM and its stable and unstable manifolds.
+It follows from the result that</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+\mathcal{W}^s(\mathbf{x}_0, t_0) &amp; = \text{argmin} \; \mathcal{L}^{(f)}(\mathbf{x}_0, t_0, \tau) \\
+\mathcal{W}^u(\mathbf{x}_0, t_0) &amp; = \text{argmin} \; \mathcal{L}^{(b)}(\mathbf{x}_0, t_0, \tau)
+\end{align}\end{split}\]</div>
+<p>where the stable and unstable manifolds (<span class="math notranslate nohighlight">\(\mathcal{W}^s(\mathbf{x}_0, t_0)\)</span> and <span class="math notranslate nohighlight">\(\mathcal{W}^u(\mathbf{x}_0, t_0)\)</span>) denote the invariant manifolds at intial time <span class="math notranslate nohighlight">\(t_0\)</span> and <span class="math notranslate nohighlight">\(\text{\rm argmin} \; (\cdot)\)</span> denotes the argument that minimizes the function <span class="math notranslate nohighlight">\(\mathcal{L}^{(\cdot)}(\mathbf{x}_0, t_0, \tau)\)</span> in forward and backward time, respectively. In addition, the coordinates of the NHIM at time <span class="math notranslate nohighlight">\(t_0\)</span> is given by the intersection <span class="math notranslate nohighlight">\(\mathcal{W}^s(\mathbf{x}_0, t_0)\)</span> and <span class="math notranslate nohighlight">\(\mathcal{W}^u(\mathbf{x}_0, t_0)\)</span> of the stable and unstable manifolds, and thus given by</p>
+<div class="math notranslate nohighlight">
+\[\begin{align}
+\mathcal{M}(\mathbf{x}_0, t_0) &amp; = \text{argmin} \; \left( \mathcal{L}^{(f)}(\mathbf{x}_0, t_0, \tau) + \mathcal{L}^{(b)}(\mathbf{x}_0, t_0, \tau) \right) = \text{argmin} \; \mathcal{L}(\mathbf{x}_0, t_0, \tau) \qquad \text{NHIM}
+\end{align}\]</div>
+<span class="target" id="module-base"></span><p>Module description ...</p>
+<p>Reference:
+- Surename1, Forename1 Initials., Surename2, Forename2 Initials, YEAR. Publication/Book title
+Publisher, Number(Volume No), pp.142-161.</p>
+<dl class="function">
+<dt id="base.check_if_points_escape_box">
+<code class="sig-prename descclassname">base.</code><code class="sig-name descname">check_if_points_escape_box</code><span class="sig-paren">(</span><em class="sig-param">u</em>, <em class="sig-param">box_boundaries</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/base.html#check_if_points_escape_box"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#base.check_if_points_escape_box" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine if points in phase-space u have scaped box with user-defined defined dimensions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>u</strong> (<em>array_like</em><em>, </em><em>shape</em><em>(</em><em>n</em><em>, </em><em>)</em>) -- points in phase-space to check if outside box boundaries</p></li>
+<li><p><strong>box_boundaries</strong> (<em>list of 2-tuples of floats</em>) -- box lower and upper limits along X and Y axes</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>u_indices</strong> -- array of True/False bool values if points inside/outside the box</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>array_like, shape(n, )</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="base.compute_lagrangian_descriptor">
+<code class="sig-prename descclassname">base.</code><code class="sig-name descname">compute_lagrangian_descriptor</code><span class="sig-paren">(</span><em class="sig-param">grid_parameters</em>, <em class="sig-param">vector_field</em>, <em class="sig-param">tau</em>, <em class="sig-param">p_value=0.5</em>, <em class="sig-param">box_boundaries=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/base.html#compute_lagrangian_descriptor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#base.compute_lagrangian_descriptor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the values of the LD function from integrated trajectories from initial conditions in phase-space.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>grid_parameters</strong> (<em>list of 3-tuples of floats</em>) -- input parameters of limits and size of mesh per axis</p></li>
+<li><p><strong>vector_field</strong> (<em>function</em>) -- vector field over phase-space</p></li>
+<li><p><strong>tau</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) -- Upper limit of integration.</p></li>
+<li><p><strong>p_value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) -- Exponent in Lagrangian descriptor definition.
+0 is the acton-based LD,
+0 &lt; p_value &lt; 1 is the Lp quasinorm,
+1 &lt;= p_value &lt; 2 is the Lp norm LD,
+2 is the arclength LD.
+The default is 0.5.</p></li>
+<li><p><strong>box_boundaries</strong> (<em>list of 2-tuples</em><em>, </em><em>optional</em>) -- Box boundaries for escape condition of variable time integration.
+Boundaries are infinite by default.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>LD</strong> -- Array of computed Lagrangian descriptor values for all initial conditions.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray, shape (Nx, Ny)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="base.generate_points">
+<code class="sig-prename descclassname">base.</code><code class="sig-name descname">generate_points</code><span class="sig-paren">(</span><em class="sig-param">grid_parameters</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/base.html#generate_points"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#base.generate_points" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a 1D array of all points from a on a uniform grid with dimensions and size defined by list of input parameters.
+An additional dimension initiallised with zeros is added for the calculation of Lagrangian Descriptors.
+NOTE: For n-DoF systems, currently energy conservation is only used to determine momenta dimensions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>grid_parameters</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a><em> (</em><em>1-DoF systems</em><em>) or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><em>dict</em></a><em> (</em><em>n-DoF systems</em><em>)</em>) -- <p>if 1-DoF, list should have two 3-tuples of floats
+entries are input parameters of limits and size of mesh per axis</p>
+<p>if n-DoF, dict should have the following keys
+* 'slice_parameters' : list, should have two 3-tuples of floats, for a 2D slice
+* 'dims_slice' : list of 0 and 1, ones indicate slice axes
+* 'dims_fixed' : list of 0 and 1, ones indicate fixed axes
+* 'momentum_sign' : int, -1 / 1, for negative/positive momentum for remaining axis
+* 'potential_energy' : func used by energy conservation condition to determine remaining momentum axis
+* 'energy_level' : float, energy value for energy conservation condition</p>
+</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>mesh</strong> -- flattened array of initial conditions</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>1d numpy array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="base.lagrangian_descriptor">
+<code class="sig-prename descclassname">base.</code><code class="sig-name descname">lagrangian_descriptor</code><span class="sig-paren">(</span><em class="sig-param">u</em>, <em class="sig-param">v</em>, <em class="sig-param">p_value=0.5</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/base.html#lagrangian_descriptor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#base.lagrangian_descriptor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Vector field equation for Lagrangian descriptor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>v</strong> (<em>ndarray</em><em>, </em><em>shape</em><em>(</em><em>n</em><em>,</em><em>2</em><em>)</em>) -- Vector field at given point.</p></li>
+<li><p><strong>p_value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) -- Exponent in Lagrangian descriptor definition.
+0 is the acton-based LD,
+0 &lt; p_value &lt; 1 is the Lp quasinorm,
+1 &lt;= p_value &lt; 2 is the Lp norm LD,
+2 is the arclength LD.
+The default is 0.5.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>LD</strong> -- Vector field for Lagrangian descriptor dimension.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray, shape(n,1)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="base.perturb_field">
+<code class="sig-prename descclassname">base.</code><code class="sig-name descname">perturb_field</code><span class="sig-paren">(</span><em class="sig-param">vector_field</em>, <em class="sig-param">perturbation</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/base.html#perturb_field"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#base.perturb_field" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the vector field function with a linearly added pertubation
+Both input function should input (t, u), with t: float, and u: ndarray
+Also, the output of these funcs must be ndarrays of the same shape</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vector_field</strong> (<em>function</em>) -- unperturbed vector field</p></li>
+<li><p><strong>perturbation</strong> (<em>function</em>) -- forcing added to the vector field</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>perturbed function</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="base.vector_field_flat">
+<code class="sig-prename descclassname">base.</code><code class="sig-name descname">vector_field_flat</code><span class="sig-paren">(</span><em class="sig-param">t</em>, <em class="sig-param">points</em>, <em class="sig-param">vector_field</em>, <em class="sig-param">p_value</em>, <em class="sig-param">box_boundaries</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/base.html#vector_field_flat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#base.vector_field_flat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns vector field values for integration of flattened input array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) -- time</p></li>
+<li><p><strong>points</strong> (<em>ndarray</em><em>, </em><em>shape</em><em>(</em><em>n</em><em>,</em><em>3</em><em>)</em>) -- </p></li>
+<li><p><strong>vector_field</strong> (<em>function</em>) -- User defined vector field.</p></li>
+<li><p><strong>p_value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) -- Exponent in Lagrangian descriptor definition.
+0 is the acton-based LD,
+0 &lt; p_value &lt; 1 is the Lp quasinorm,
+1 &lt;= p_value &lt; 2 is the Lp norm LD,
+2 is the arclength LD.
+The default is 0.5.</p></li>
+<li><p><strong>box_boundaries</strong> (<em>list of 2-tuples</em><em>, </em><em>optional</em>) -- box boundaries for escape condition of variable time integration
+boundaries are infinite by default.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>y0 values for integrator</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>1d array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-tools"></span><p>Module description ...</p>
+<p>Reference:
+- Surename1, Forename1 Initials., Surename2, Forename2 Initials, YEAR. Publication/Book title
+Publisher, Number(Volume No), pp.142-161.</p>
+<dl class="function">
+<dt id="tools.draw_lagrangian_descriptor">
+<code class="sig-prename descclassname">tools.</code><code class="sig-name descname">draw_lagrangian_descriptor</code><span class="sig-paren">(</span><em class="sig-param">LD</em>, <em class="sig-param">LD_type</em>, <em class="sig-param">grid_parameters</em>, <em class="sig-param">tau</em>, <em class="sig-param">p_value</em>, <em class="sig-param">norm=True</em>, <em class="sig-param">colormap_name='bone'</em>, <em class="sig-param">colormap_mode=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tools.html#draw_lagrangian_descriptor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.draw_lagrangian_descriptor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws a Lagrangian descriptor contour plot and a contour plot showing the magnitude of its gradient field.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>LD</strong> (<em>ndarray</em><em>, </em><em>shape</em><em>(</em><em>n</em><em>, </em><em>)</em>) -- Array of Lagrangian Descriptor values.</p></li>
+<li><p><strong>LD_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) -- Type of LD to plot. Options: 'forward', 'backward', 'total'.</p></li>
+<li><p><strong>grid_parameters</strong> (<em>list of 3-tuples of floats</em>) -- Limits and size of mesh per axis.</p></li>
+<li><p><strong>tau</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) -- Upper limit of integration.</p></li>
+<li><p><strong>p_value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) -- Exponent in Lagrangian descriptor definition.</p></li>
+<li><p><strong>norm</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) -- True normalises LD values.</p></li>
+<li><p><strong>colormap_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) -- Name of matplotlib colormap for plot.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Nothing.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="section" id="references">
+<span id="id18"></span><h3>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h3>
+<dl class="citation">
+<dt class="label" id="madrid2009"><span class="brackets">madrid2009</span><span class="fn-backref">(<a href="#id1">1</a>,<a href="#id6">2</a>)</span></dt>
+<dd><p>Madrid, J. A. J. and Mancho, A. M. (2009) Distinguished trajectories in time dependent vector fields. Chaos, 19, 013111.</p>
+</dd>
+<dt class="label" id="lopesino2017"><span class="brackets">lopesino2017</span><span class="fn-backref">(<a href="#id11">1</a>,<a href="#id13">2</a>)</span></dt>
+<dd><p>Lopesino, C., Balibrea-Iniesta, F., García-Garrido, V. J., Wiggins, S., and Mancho, A. M. (2017). A theoretical framework for Lagrangian descriptors. International Journal of Bifurcation and Chaos, 27(01), 1730001.</p>
+</dd>
+<dt class="label" id="lopesino2015"><span class="brackets">lopesino2015</span><span class="fn-backref">(<a href="#id10">1</a>,<a href="#id12">2</a>)</span></dt>
+<dd><p>Lopesino, C., Balibrea, F., Wiggins, S., and Mancho, A. M. (2015). Lagrangian descriptors for two dimensional, area preserving, autonomous and nonautonomous maps. Communications in Nonlinear Science and Numerical Simulation, 27(1-3), 40–51.</p>
+</dd>
+<dt class="label" id="junginger2016lagrangian"><span class="brackets">junginger2016lagrangian</span></dt>
+<dd><p>Junginger, A. and Hernandez, R. (2016a). Lagrangian descriptors in dissipative systems. Physical Chemistry Chemical Physics, 18(44), 30282–30287.</p>
+</dd>
+<dt class="label" id="junginger2016transition"><span class="brackets"><a class="fn-backref" href="#id7">junginger2016transition</a></span></dt>
+<dd><p>Junginger, A., Craven, G. T., Bartsch, T., Revuelta, F., Borondo, F., Benito, R., and Hernandez, R. (2016). Transition state geometry of driven chemical reactions on time-dependent double- well potentials. Physical Chemistry Chemical Physics, 18(44), 30270–30281.</p>
+</dd>
+<dt class="label" id="junginger2016uncovering"><span class="brackets"><a class="fn-backref" href="#id8">junginger2016uncovering</a></span></dt>
+<dd><p>Junginger, A. and Hernandez, R. (2016b). Uncovering the Geometry of Barrierless Reactions Using Lagrangian Descriptors. The Journal of Physical Chemistry B, 120(8), 1720–1725.</p>
+</dd>
+<dt class="label" id="junginger2017chemical"><span class="brackets"><a class="fn-backref" href="#id9">junginger2017chemical</a></span></dt>
+<dd><p>Junginger, A., Duvenbeck, L., Feldmaier, M., Main, J., Wunner, G., and Hernandez, R. (2017a). Chemical dynamics between wells across a time-dependent barrier: Self-similarity in the Lagrangian descriptor and reactive basins. The Journal of chemical physics, 147(6), 064101.</p>
+</dd>
+<dt class="label" id="mancho2013"><span class="brackets"><a class="fn-backref" href="#id2">mancho2013</a></span></dt>
+<dd><p>Mancho, A. M., Wiggins, S., Curbelo, J., and Mendoza, C. (2013). Lagrangian Descriptors: A Method for Revealing Phase Space Structures of General Time Dependent Dynamical Systems. Communications in Nonlinear Science and Numerical, 18, 3530–3557.</p>
+</dd>
+<dt class="label" id="mendoza2014lagrangian"><span class="brackets"><a class="fn-backref" href="#id17">mendoza2014lagrangian</a></span></dt>
+<dd><p>Mendoza, C., Mancho, A. M., and Wiggins, S. (2014). Lagrangian descriptors and the assessment of the predictive capacity of oceanic data sets. Nonlinear Processes in Geophysics, 21(3), 677–689.</p>
+</dd>
+<dt class="label" id="garciagarrido2015"><span class="brackets"><a class="fn-backref" href="#id15">garciagarrido2015</a></span></dt>
+<dd><p>García-Garrido, V. J., Mancho, A. M., and Wiggins, S. (2015). A dynamical systems approach to the surface search for debris associated with the disappearance of flight MH370. Nonlin. Proc. Geophys., 22, 701–712.</p>
+</dd>
+<dt class="label" id="ramos2018"><span class="brackets"><a class="fn-backref" href="#id16">ramos2018</a></span></dt>
+<dd><p>Ramos, A. G., García-Garrido, V. J., Mancho, A. M., Wiggins, S., Coca, J., Glenn, S., Schofield, O., Kohut, J., Aragon, D., Kerfoot, J., Haskins, T., Miles, T., Haldeman, C., Strandskov, N., All- sup, B., Jones, C., and Shapiro., J. (2018). Lagrangian coherent structure assisted path planning for transoceanic autonomous underwater vehicle missions. Scientfic Reports, 4, 4575.</p>
+</dd>
+<dt class="label" id="delacamara2012"><span class="brackets"><a class="fn-backref" href="#id14">delacamara2012</a></span></dt>
+<dd><p>de la Cámara, A., Mancho, A. M., Ide, K., Serrano, E., and Mechoso, C. (2012). Routes of transport across the Antarctic polar vortex in the southern spring. J. Atmos. Sci., 69(2), 753–767.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="getting_started.html" class="btn btn-neutral float-right" title="Getting started" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to documentation for LDDS" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020-21, .
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
