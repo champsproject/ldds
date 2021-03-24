@@ -1,4 +1,4 @@
-.. pyLD documentation master file, created by
+.. LDDS documentation master file, created by
    sphinx-quickstart on Fri Oct  9 15:13:24 2020.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
@@ -8,7 +8,7 @@
 :globalsidebartoc: True
 
 =================================
-Welcome to documentation for pyLD
+Welcome to documentation for LDDS
 =================================
 
 .. Define an order for the Table of Contents
@@ -23,6 +23,8 @@ Welcome to documentation for pyLD
    examples
 
 
+.. automodule:: pylds.base
+   :members:
 
 Indices and tables
 ==================
