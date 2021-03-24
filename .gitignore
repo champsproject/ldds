@@ -1,6 +1,8 @@
 
-*.pyc
-ipynb_checkpoints/LD_Python_Examples-checkpoint.ipynb
-pylds/.ipynb_checkpoints/__init__-checkpoint.py
+.DS_Store
 
-.ipynb_checkpoints/
+*.pyc
+
+.ipynb_checkpoints/*
+
+pylds/.ipynb_checkpoints/*
