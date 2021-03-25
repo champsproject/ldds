@@ -54,10 +54,10 @@ def HamSaddle1D_Hamiltonian(t, u, PARAMETERS = [1]):
     lamda, = PARAMETERS
     return 0.5*lamda*(y*y - x*x)
 
-def Duffing1D_Hamiltonian(t, u):
+def Duffing1D_Hamiltonian(t, u, PARAMETERS = [1, 1]):
     """
-    Returns Hamiltonian for the Duffing oscillator.
-    Functional form: H = 1/2*(y**2 + x**4/2 - x**2), with u = (x, y).
+    Returns Hamiltonian for the Duffing oscillator. PARAMETERS = [alpha, beta]
+    Functional form: H = 1/2*p_x**2 - alpha*x**2 + beta*x**4), with u = (x, p_x).
 
     Parameters
     ----------
@@ -67,34 +67,17 @@ def Duffing1D_Hamiltonian(t, u):
     u : ndarray, shape(n,)
         Points in phase space.
 
-    Returns
-    -------
-    H : ndarray, shape(n,)
-        Hamiltonian at points u, in phase space at time t.
-    """
-    x, y = u.T
-    return 0.5*(y*y + 0.5*x**4 - x*x)
-
-def Duffing1D_inverted_Hamiltonian(t, u):
-    """
-    Returns Hamiltonian for the inverted Duffing oscillator.
-    Functional form: H = 1/2*(y**2 - x**4/2 + x**2), with u = (x, y).
-
-    Parameters
-    ----------
-    t : float
-        Time. (This Hamiltonian is independent of time.)
-
-    u : ndarray, shape(n,)
-        Points in phase space.
+    PARAMETERS : list of floats, optional
+        Hamiltonian parameters [alpha, beta]. Default is [1, 1].
 
     Returns
     -------
     H : ndarray, shape(n,)
         Hamiltonian at points u, in phase space at time t.
     """
-    x, y = u.T
-    return 0.5*(y*y - 0.5*x**4 + x*x)
+    x, p_x = u.T
+    alpha, beta = PARAMETERS
+    return 0.5*(p_x**2 - alpha*x**2 + 0.5*beta*x**4)
 
 def HamSN1D_Hamiltonian(t, u):
     """
