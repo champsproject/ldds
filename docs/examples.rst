@@ -35,6 +35,8 @@ of the Lorenz model. The map equations are as follows:
     x_{n+1} = a - x_{n}^2 + b y_{n}
     y_{n+1} = x_{n}
    \end{align}
+   
+where :math:`a,b` are the model parameters.
 
 The inverse Hénon map is:
 
@@ -50,7 +52,34 @@ Two dimensional phase space
 
 1. Hamiltonian center
 
+The Hamiltonian function:
+
+.. math::
+   H(x,p_x) = \dfrac{\omega}{2} \left( p_x^2 + x^2 \right) \label{eqn:ham_center1dof}
+
+defines the normal form of a 1 DoF system with a center equilibrium at the origin. The associated dynamical system is:
+
+.. math::
+   \begin{align}
+   \dot{x} &= \dfrac{\partial H}{\partial p_x} = f_1(x,p_x) = \omega p_x \\
+   \dot{p}_x &= -\dfrac{\partial H}{\partial x} = f_2(x,p_x) = -\omega x
+   \end{align}
+   
+
 2. `Hamiltonian saddle <https://champsproject.github.io/lagrangian_descriptors/content/chapter2_1.html#one-degree-of-freedom-hyperbolic-equilibrium-point>`_
+
+The Hamiltonian function:
+
+.. math::
+   H(x,p_x) = \dfrac{\lambda}{2} \left( p_x^2 - x^2 \right) \label{eqn:ham_saddle1dof}
+
+defines the normal form of a 1 DoF system with a saddle equilibrium at the origin. The associated dynamcical system is:
+
+.. math::
+   \begin{align}
+   \dot{x} &= \dfrac{\partial H}{\partial p_x} = f_1(x,p_x) = \lambda p_x \\
+   \dot{p}_x &= -\dfrac{\partial H}{\partial x} = f_2(x,p_x) = \lambda x
+   \end{align}
 
 3. Duffing oscillator 
 
@@ -99,7 +128,37 @@ Four dimensional phase space
 
 1. `Saddle-center Hamiltonian <https://champsproject.github.io/lagrangian_descriptors/content/chapter2_1.html#two-degrees-of-freedom-and-the-hyperbolic-periodic-orbit>`_ 
 
+The Saddle-center Hamiltonian function is:
+
+.. math::
+   H(x,y,p_x,p_y) = \dfrac{1}{2} \left( p_x^2 + p_y^2 + y^2 - x^2) \right)  \label{eqn:ham_saddcen}
+
+and Hamilton's equations of motion are in this case:
+
+.. math::
+   \begin{align}
+   \dot{x} &= \dfrac{\partial H}{\partial p_x} = f_1(x,y,p_x,p_y) = p_x \\
+   \dot{y} &= \dfrac{\partial H}{\partial p_y} = f_2(x,y,p_x,p_y) = p_y \\
+   \dot{p}_x &= -\dfrac{\partial H}{\partial x} = f_3(x,y,p_x,p_y) = x \\
+   \dot{p}_y &= -\dfrac{\partial H}{\partial y} = f_4(x,y,p_x,p_y) = - y
+   \end{align}
+
 2. Hénon-Heiles Hamiltonian
+
+The Hamiltonian function for the Hénon-Heiles system is given:
+
+.. math::
+   H(x,y,p_x,p_y) = \dfrac{1}{2} \left( p_x^2 + p_y^2 \right) + \dfrac{1}{2} \left( x^2 + y^2 \right) + yx^2 - \dfrac{1}{3} y^3 \label{eqn:ham_henheil}
+
+and Hamilton's equations of motion are in this case:
+
+.. math::
+   \begin{align}
+   \dot{x} &= \dfrac{\partial H}{\partial p_x} = f_1(x,y,p_x,p_y) = p_x \\
+   \dot{y} &= \dfrac{\partial H}{\partial p_y} = f_2(x,y,p_x,p_y) = p_y \\
+   \dot{p}_x &= -\dfrac{\partial H}{\partial x} = f_3(x,y,p_x,p_y) = - x - 2xy \\
+   \dot{p}_y &= -\dfrac{\partial H}{\partial y} = f_4(x,y,p_x,p_y) = - x^2 - y + y^2
+   \end{align}
 
 Six dimensional phase space
 ---------------------------
