@@ -16,15 +16,35 @@ Two dimensional phase space
 
 2. `Hamiltonian saddle <https://champsproject.github.io/lagrangian_descriptors/content/chapter2_1.html#one-degree-of-freedom-hyperbolic-equilibrium-point>`_
 
-3. Duffing oscillator (energy conservative)
+3. Duffing oscillator 
 
-4. Inverted Duffing oscillator (energy conservative)
+a. Time dependent Hamiltonian 
 
-5. Saddle-node Hamiltonian 
+.. math::
+   H(x,p_x,t) = \dfrac{1}{2}p_x^2 + \dfrac{\alpha}{2}x^2 - \dfrac{\beta}{4}x^4 - f(t) x \label{eqn:ham_duff_forced}
 
-6. Non-autonomous double-gyre flow
 
-7. Forced Duffing oscillator
+The corresponding vector field is
+
+.. math::
+   \begin{align}
+   \dot{x} &= \dfrac{\partial H}{\partial p_x} = f_1(x,p_x) = p_x \\
+   \dot{p}_x &= -\dfrac{\partial H}{\partial x} = f_2(x,p_x) = \alpha x - \beta x^3 + f(t)
+   \end{align}
+
+where :math:`f(t)` is the time dependent forcing function. The package offers two different options for the external forcing, :math:`f(t) = A\mathrm{sech}(t)\sin(\omega t)` and also :math:`f(t) = A\sin(\omega t)`. Other versions can be added manually by the user in the forcing function of the vector_fields.py file.
+
+b. Unforced 
+
+This model system corresponds to the undamped Duffing oscillator with model parameters in Hamiltonian~\eqref{eqn:eqn:ham_duff} chosen as :math:`f(t) = 0`.
+
+c. Inverted 
+
+This model system corresponds to the undamped unforced Duffing equation with Hamiltonian ~\eqref{eqn:eqn:ham_duff}, where the model parameters are chosen as :math:`\alpha = \beta = - 1`.
+
+4. Saddle-node Hamiltonian 
+
+5. Non-autonomous double-gyre flow
 
 
 Four dimensional phase space

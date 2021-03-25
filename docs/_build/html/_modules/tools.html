@@ -148,47 +148,40 @@
            <div itemprop="articleBody">
             
   <h1>Source code for tools</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Module description ...</span>
-
-<span class="sd">Reference:</span>
-<span class="sd">- Surename1, Forename1 Initials., Surename2, Forename2 Initials, YEAR. Publication/Book title</span>
-<span class="sd">Publisher, Number(Volume No), pp.142-161.</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">mpl_toolkits.axes_grid1.inset_locator</span> <span class="k">import</span> <span class="n">inset_axes</span>
+<span class="kn">import</span> <span class="nn">ipywidgets</span> <span class="k">as</span> <span class="nn">widgets</span>
 
-<div class="viewcode-block" id="draw_lagrangian_descriptor"><a class="viewcode-back" href="../tutorial.html#tools.draw_lagrangian_descriptor">[docs]</a><span class="k">def</span> <span class="nf">draw_lagrangian_descriptor</span><span class="p">(</span><span class="n">LD</span><span class="p">,</span> <span class="n">LD_type</span><span class="p">,</span> <span class="n">grid_parameters</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">p_value</span><span class="p">,</span> <span class="n">norm</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">colormap_name</span><span class="o">=</span><span class="s1">&#39;bone&#39;</span><span class="p">,</span> <span class="n">colormap_mode</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="draw_ld"><a class="viewcode-back" href="../tutorial.html#tools.draw_ld">[docs]</a><span class="k">def</span> <span class="nf">draw_ld</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">LD</span><span class="p">,</span> <span class="n">grid_parameters</span><span class="p">,</span> <span class="n">subplot_title</span><span class="p">,</span> <span class="n">interactive</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Draws a Lagrangian descriptor contour plot and a contour plot showing the magnitude of its gradient field.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
+<span class="sd">    fig : matplotlib.figure.Figure</span>
+<span class="sd">        Figure where contour plot will be drawn.</span>
+
+<span class="sd">    axis : matplotlib.axes._subplots.AxesSubplot</span>
+<span class="sd">        Axis handle of subplot in figure.</span>
+
 <span class="sd">    LD : ndarray, shape(n, )</span>
-<span class="sd">        Array of Lagrangian Descriptor values.</span>
-<span class="sd">    </span>
-<span class="sd">    LD_type : str</span>
-<span class="sd">        Type of LD to plot. Options: &#39;forward&#39;, &#39;backward&#39;, &#39;total&#39;.</span>
-<span class="sd">    </span>
+<span class="sd">        Array to be plotted.</span>
+
 <span class="sd">    grid_parameters : list of 3-tuples of floats</span>
 <span class="sd">        Limits and size of mesh per axis.</span>
-<span class="sd">    </span>
-<span class="sd">    tau : float</span>
-<span class="sd">        Upper limit of integration.</span>
-<span class="sd">        </span>
-<span class="sd">    p_value : float</span>
-<span class="sd">        Exponent in Lagrangian descriptor definition.</span>
-<span class="sd">    </span>
-<span class="sd">    norm : bool, optional</span>
-<span class="sd">        True normalises LD values.</span>
-<span class="sd">    </span>
-<span class="sd">    colormap_name : str, optional</span>
+
+<span class="sd">    subplot_title : string</span>
+<span class="sd">        Subplot title.</span>
+
+<span class="sd">    interactive : bool</span>
+<span class="sd">        True allows interactively adjusting the gradient contouor plot minimum and maximum.</span>
+
+<span class="sd">    cmap: string</span>
 <span class="sd">        Name of matplotlib colormap for plot.</span>
-<span class="sd">    </span>
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">        Nothing.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#axes</span>
     <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">grid_parameters</span><span class="p">)</span> <span class="o">==</span> <span class="nb">dict</span><span class="p">:</span>
         <span class="c1">#n-DoF systems</span>
         <span class="n">slice_parameters</span> <span class="o">=</span> <span class="n">grid_parameters</span><span class="p">[</span><span class="s1">&#39;slice_parameters&#39;</span><span class="p">]</span> <span class="c1"># 2n-D grid</span>
@@ -202,69 +195,193 @@
 
     <span class="n">ax1_min</span><span class="p">,</span> <span class="n">ax1_max</span><span class="p">,</span> <span class="n">N1</span> <span class="o">=</span> <span class="n">slice_parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">ax2_min</span><span class="p">,</span> <span class="n">ax2_max</span><span class="p">,</span> <span class="n">N2</span> <span class="o">=</span> <span class="n">slice_parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        
-    <span class="k">if</span> <span class="n">norm</span><span class="p">:</span>
-        <span class="n">LD</span> <span class="o">=</span> <span class="n">LD</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">LD</span><span class="p">)</span>  <span class="c1"># Scale LD output</span>
-        <span class="n">LD</span> <span class="o">=</span> <span class="n">LD</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">LD</span><span class="p">)</span>  <span class="c1"># Scale LD output</span>
-    
-    <span class="c1"># Plot LDs</span>
-    <span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax0</span><span class="p">,</span> <span class="n">ax1</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.5</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">130</span><span class="p">)</span>
-    
+
     <span class="n">points_ax1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">ax1_min</span><span class="p">,</span> <span class="n">ax1_max</span><span class="p">,</span> <span class="n">N1</span><span class="p">)</span>
     <span class="n">points_ax2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">ax2_min</span><span class="p">,</span> <span class="n">ax2_max</span><span class="p">,</span> <span class="n">N2</span><span class="p">)</span>
-    
-    <span class="k">if</span> <span class="n">colormap_mode</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span> <span class="o">=</span> <span class="n">LD</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">LD</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
-    <span class="k">elif</span> <span class="n">colormap_mode</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="n">vmin</span> <span class="o">=</span> <span class="n">LD</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">-</span><span class="n">LD</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
-        <span class="n">vmax</span> <span class="o">=</span> <span class="n">LD</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
-    
-    <span class="n">con0</span> <span class="o">=</span> <span class="n">ax0</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">points_ax1</span><span class="p">,</span> <span class="n">points_ax2</span><span class="p">,</span> <span class="n">LD</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">colormap_name</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
 
-    <span class="c1"># Customise appearance</span>
-    <span class="k">if</span> <span class="n">p_value</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="n">str_method</span> <span class="o">=</span> <span class="s1">&#39;arclength - &#39;</span>
-    <span class="k">elif</span> <span class="n">p_value</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="n">str_method</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;p-norm $(p=</span><span class="si">{}</span><span class="s1">)$&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">p_value</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">p_value</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>        
-        <span class="n">str_method</span> <span class="o">=</span> <span class="s1">&#39;action-based&#39;</span>
-    <span class="k">elif</span> <span class="n">p_value</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="n">str_method</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;LD$_p$ $(p=</span><span class="si">{}</span><span class="s1">)$&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">p_value</span><span class="p">)</span>
-    
-    <span class="n">t_final</span><span class="o">=</span><span class="nb">abs</span><span class="p">(</span><span class="n">tau</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">LD_type</span> <span class="o">==</span> <span class="s1">&#39;forward&#39;</span><span class="p">:</span>
-        <span class="n">string_title</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;Forward LD </span><span class="si">{}</span><span class="s1">, $\tau=</span><span class="si">{}</span><span class="s1">$&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">str_method</span><span class="p">,</span><span class="n">t_final</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">LD_type</span> <span class="o">==</span> <span class="s1">&#39;backward&#39;</span><span class="p">:</span>
-        <span class="n">string_title</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;Backward LD </span><span class="si">{}</span><span class="s1">, $\tau=</span><span class="si">{}</span><span class="s1">$&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">str_method</span><span class="p">,</span><span class="n">t_final</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">LD_type</span> <span class="o">==</span> <span class="s1">&#39;total&#39;</span><span class="p">:</span>
-        <span class="n">string_title</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;Total LD </span><span class="si">{}</span><span class="s1">, $\tau=</span><span class="si">{}</span><span class="s1">$&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">str_method</span><span class="p">,</span><span class="n">t_final</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span> 
-        <span class="n">string_title</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Incorrect &quot;LD_type&quot;. Valid options: forward, backward, total. Plot will appear without title&#39;</span><span class="p">)</span>
-    
-    <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="n">string_title</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.04</span><span class="p">)</span>
-    <span class="n">ax0</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;LD values&#39;</span><span class="p">)</span>
-    <span class="n">ax0</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">slice_axes_labels</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="n">ax0</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">slice_axes_labels</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-    
-    <span class="n">ticks_LD</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">LD</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">LD</span><span class="p">),</span> <span class="mi">11</span><span class="p">)</span>
-    <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">con0</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax0</span><span class="p">,</span> <span class="n">ticks</span><span class="o">=</span><span class="n">ticks_LD</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%.2f</span><span class="s1">&#39;</span><span class="p">)</span>
-    
-    <span class="n">gradient_x</span><span class="p">,</span> <span class="n">gradient_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span> <span class="n">LD</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">)</span>
+    <span class="c1"># plot</span>
+    <span class="n">n_levels</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="n">vmin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">LD</span><span class="p">)</span>
+    <span class="n">vmax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">LD</span><span class="p">)</span>
+    <span class="n">interact_step</span> <span class="o">=</span> <span class="p">(</span><span class="n">vmax</span><span class="o">-</span><span class="n">vmin</span><span class="p">)</span><span class="o">/</span><span class="n">n_levels</span>
+
+    <span class="n">con1</span> <span class="o">=</span> <span class="n">axis</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">points_ax1</span><span class="p">,</span> <span class="n">points_ax2</span><span class="p">,</span> <span class="n">LD</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">n_levels</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">interactive</span><span class="p">:</span>
+        <span class="nd">@widgets</span><span class="o">.</span><span class="n">interact</span><span class="p">(</span><span class="n">clim_min</span><span class="o">=</span><span class="p">(</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="o">-</span><span class="n">interact_step</span><span class="p">,</span> <span class="n">interact_step</span><span class="p">),</span><span class="n">clim_max</span><span class="o">=</span><span class="p">(</span><span class="n">vmin</span><span class="o">+</span><span class="n">interact_step</span><span class="p">,</span> <span class="n">vmax</span><span class="p">,</span> <span class="n">interact_step</span><span class="p">))</span>
+        <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="n">clim_min</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span><span class="n">clim_max</span><span class="o">=</span><span class="n">vmax</span><span class="p">):</span>
+            <span class="n">clim_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">clim_min</span><span class="o">+</span><span class="n">interact_step</span><span class="p">,</span> <span class="n">clim_max</span><span class="p">)</span>
+            <span class="n">con1</span><span class="o">.</span><span class="n">set_clim</span><span class="p">(</span><span class="n">clim_min</span><span class="p">,</span><span class="n">clim_max</span><span class="p">)</span>
+
+    <span class="n">axins</span> <span class="o">=</span> <span class="n">inset_axes</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span>
+               <span class="n">width</span><span class="o">=</span><span class="s2">&quot;5%&quot;</span><span class="p">,</span>
+               <span class="n">height</span><span class="o">=</span><span class="s2">&quot;100%&quot;</span><span class="p">,</span>
+               <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower left&#39;</span><span class="p">,</span>
+               <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.025</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+               <span class="n">bbox_transform</span><span class="o">=</span><span class="n">axis</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span>
+               <span class="n">borderpad</span><span class="o">=</span><span class="mi">0</span>
+               <span class="p">)</span>
+    <span class="n">ticks_gradient</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">vmin</span><span class="p">,</span><span class="n">vmax</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">con1</span><span class="p">,</span> <span class="n">cax</span><span class="o">=</span><span class="n">axins</span><span class="p">,</span> <span class="n">ticks</span><span class="o">=</span><span class="n">ticks_gradient</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%.1f</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;vertical&#39;</span><span class="p">)</span>
+
+    <span class="n">axis</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">subplot_title</span><span class="p">)</span>
+    <span class="n">axis</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">slice_axes_labels</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">axis</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">slice_axes_labels</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="draw_ld_pair"><a class="viewcode-back" href="../tutorial.html#tools.draw_ld_pair">[docs]</a><span class="k">def</span> <span class="nf">draw_ld_pair</span><span class="p">(</span><span class="n">LD</span><span class="p">,</span> <span class="n">LD_gradient</span><span class="p">,</span> <span class="n">grid_parameters</span><span class="p">,</span> <span class="n">plot_title</span><span class="p">,</span> <span class="n">interactive</span><span class="p">,</span> <span class="n">cmap_gradient</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Lagrangian descriptor plot wrapper.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    LD : ndarray, shape(n, )</span>
+<span class="sd">        Array of Lagrangian Descriptor values.</span>
+
+<span class="sd">    LD_gradient : ndarray, shape(n, )</span>
+<span class="sd">        Array of Lagrangian Descriptor gradient values.</span>
+
+<span class="sd">    grid_parameters : list of 3-tuples of floats</span>
+<span class="sd">        Limits and size of mesh per axis.</span>
+
+<span class="sd">    plot_title : string</span>
+<span class="sd">        Plot title.</span>
+
+<span class="sd">    interactive : bool</span>
+<span class="sd">        True allows interactively adjusting the gradient contouor plot minimum and maximum.</span>
+
+<span class="sd">    cmap_gradient : string</span>
+<span class="sd">        Name of matplotlib colormap for gradient contour plot.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">       fig : `~.figure.Figure`</span>
+
+<span class="sd">       ax : `.axes.Axes` or array of Axes</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.5</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">130</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">top</span><span class="o">=</span><span class="mf">0.85</span><span class="p">,</span> <span class="n">bottom</span><span class="o">=</span><span class="mf">0.13</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mf">0.34</span><span class="p">)</span>  <span class="c1">#margins to accommodate boundary of interactive figure environment</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="n">plot_title</span><span class="p">)</span>
+
+    <span class="n">draw_ld</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">normalise</span><span class="p">(</span><span class="n">LD</span><span class="p">),</span> <span class="n">grid_parameters</span><span class="p">,</span> <span class="s1">&#39;LD values&#39;</span><span class="p">,</span> <span class="n">interactive</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">draw_ld</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">LD_gradient</span><span class="p">,</span> <span class="n">grid_parameters</span><span class="p">,</span> <span class="s1">&#39;LD gradient magnitude&#39;</span><span class="p">,</span> <span class="n">interactive</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap_gradient</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span></div>
+
+<div class="viewcode-block" id="normalise"><a class="viewcode-back" href="../tutorial.html#tools.normalise">[docs]</a><span class="k">def</span> <span class="nf">normalise</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Normalises an array.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    A : ndarray, shape(n, )</span>
+<span class="sd">        Array of input values.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Normalised array : ndarray, shape(n, ).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">A</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">A</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">A</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="get_gradient_magnitude"><a class="viewcode-back" href="../tutorial.html#tools.get_gradient_magnitude">[docs]</a><span class="k">def</span> <span class="nf">get_gradient_magnitude</span><span class="p">(</span><span class="n">LD</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates magnitude of the gradient of input array LD.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    LD : ndarray, shape(n, )</span>
+<span class="sd">        Array of input values.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    gradient_magnitude : ndarray, shape(n, )</span>
+<span class="sd">        Magnitude of the gradient of input array LD.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">gradient_x</span><span class="p">,</span> <span class="n">gradient_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">LD</span><span class="p">)</span>
     <span class="n">gradient_magnitude</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">gradient_x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">gradient_y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
-    <span class="n">gradient_magnitude</span> <span class="o">=</span> <span class="n">gradient_magnitude</span><span class="o">/</span><span class="n">gradient_magnitude</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
-    
-    <span class="n">con1</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">points_ax1</span><span class="p">,</span> <span class="n">points_ax2</span><span class="p">,</span> <span class="n">gradient_magnitude</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Reds&#39;</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
-    <span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;LD gradient magnitude&#39;</span><span class="p">)</span>
-    <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">slice_axes_labels</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="n">ax1</span><span class="o">.</span><span class="n">label_outer</span><span class="p">()</span>
-    
-    <span class="n">ticks_gradient</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">gradient_magnitude</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">gradient_magnitude</span><span class="p">),</span> <span class="mi">11</span><span class="p">)</span>
-    <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">con1</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ticks</span><span class="o">=</span><span class="n">ticks_gradient</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%.2f</span><span class="s1">&#39;</span><span class="p">)</span>
-    
-    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
-    
-<span class="n">__author__</span> <span class="o">=</span> <span class="s1">&#39;Broncio Aguilar-Sanjuan, Victor-Jose Garcia-Garrido, Vladimir Krajnak&#39;</span>
+    <span class="k">return</span> <span class="n">normalise</span><span class="p">(</span><span class="n">gradient_magnitude</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="draw_all_lds"><a class="viewcode-back" href="../tutorial.html#tools.draw_all_lds">[docs]</a><span class="k">def</span> <span class="nf">draw_all_lds</span><span class="p">(</span><span class="n">LD_forward</span><span class="p">,</span> <span class="n">LD_backward</span><span class="p">,</span> <span class="n">grid_parameters</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">p_value</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">interactive</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Draws the forward, backward and total Lagrangian descriptor contour plots and a contour plots showing the magnitude of its gradient field.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    LD_forward : ndarray, shape(n, )</span>
+<span class="sd">        Array of Lagrangian Descriptor values in forward time.</span>
+
+<span class="sd">    LD_backward : ndarray, shape(n, )</span>
+<span class="sd">        Array of Lagrangian Descriptor values in backward time.</span>
+
+<span class="sd">    grid_parameters : list of 3-tuples of floats</span>
+<span class="sd">        Limits and size of mesh per axis.</span>
+
+<span class="sd">    tau : float, optional</span>
+<span class="sd">        Time of integration.</span>
+<span class="sd">        Default is np.nan.</span>
+
+<span class="sd">    p_value : float, optional</span>
+<span class="sd">        Exponent in Lagrangian descriptor definition.</span>
+<span class="sd">        Default is np.nan.</span>
+
+<span class="sd">    interactive : bool, optional</span>
+<span class="sd">        True allows interactively adjusting the gradient plot minimum and maximum.</span>
+<span class="sd">        Default is False.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">        List of tuples of the form (fig, ax).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Prepare method name</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">p_value</span><span class="p">):</span>
+        <span class="n">t_final</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">p_value</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">str_method</span> <span class="o">=</span> <span class="s1">&#39;Arclength LD&#39;</span>
+        <span class="k">elif</span> <span class="n">p_value</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">str_method</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;p-norm LD$(p={&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">p_value</span><span class="p">)</span><span class="o">+</span><span class="sa">r</span><span class="s1">&#39;})$&#39;</span>
+        <span class="k">elif</span> <span class="n">p_value</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">str_method</span> <span class="o">=</span> <span class="s1">&#39;Action-based LD&#39;</span>
+        <span class="k">elif</span> <span class="n">p_value</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">str_method</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;LD$_{&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">p_value</span><span class="p">)</span><span class="o">+</span><span class="sa">r</span><span class="s1">&#39;}$&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">str_method</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">t_final</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">tau</span><span class="p">)</span>
+
+    <span class="c1"># Plot LDs</span>
+    <span class="n">plot_handles</span><span class="o">=</span><span class="p">[]</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">LD_forward</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">t_final</span><span class="p">):</span>
+            <span class="n">plot_title</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">plot_title</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;Forward </span><span class="si">{}</span><span class="s1">, $\tau=</span><span class="si">{}</span><span class="s1">$&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">str_method</span><span class="p">,</span><span class="n">t_final</span><span class="p">)</span>
+        <span class="n">LD_forward_gradient</span> <span class="o">=</span> <span class="n">get_gradient_magnitude</span><span class="p">(</span><span class="n">LD_forward</span><span class="p">)</span>
+        <span class="n">plot_tuple</span> <span class="o">=</span> <span class="n">draw_ld_pair</span><span class="p">(</span><span class="n">LD_forward</span><span class="p">,</span> <span class="n">LD_forward_gradient</span><span class="p">,</span> <span class="n">grid_parameters</span><span class="p">,</span> <span class="n">plot_title</span><span class="p">,</span> <span class="n">interactive</span><span class="p">,</span> <span class="s1">&#39;Reds&#39;</span><span class="p">)</span>
+        <span class="n">plot_handles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">plot_tuple</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">LD_backward</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">t_final</span><span class="p">):</span>
+            <span class="n">plot_title</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">plot_title</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;Backward </span><span class="si">{}</span><span class="s1">, $\tau=</span><span class="si">{}</span><span class="s1">$&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">str_method</span><span class="p">,</span><span class="n">t_final</span><span class="p">)</span>
+        <span class="n">LD_backward_gradient</span> <span class="o">=</span> <span class="o">-</span><span class="n">get_gradient_magnitude</span><span class="p">(</span><span class="n">LD_backward</span><span class="p">)</span>
+        <span class="n">plot_tuple</span> <span class="o">=</span> <span class="n">draw_ld_pair</span><span class="p">(</span><span class="n">LD_backward</span><span class="p">,</span> <span class="n">LD_backward_gradient</span><span class="p">,</span> <span class="n">grid_parameters</span><span class="p">,</span> <span class="n">plot_title</span><span class="p">,</span> <span class="n">interactive</span><span class="p">,</span> <span class="s1">&#39;Blues_r&#39;</span><span class="p">)</span>
+        <span class="n">plot_handles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">plot_tuple</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">LD_forward</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">LD_backward</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">t_final</span><span class="p">):</span>
+            <span class="n">plot_title</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">plot_title</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;Total </span><span class="si">{}</span><span class="s1">, $\tau=</span><span class="si">{}</span><span class="s1">$&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">str_method</span><span class="p">,</span><span class="n">t_final</span><span class="p">)</span>
+        <span class="n">LD_backward_gradient</span> <span class="o">=</span> <span class="o">-</span><span class="n">get_gradient_magnitude</span><span class="p">(</span><span class="n">LD_backward</span><span class="p">)</span>
+        <span class="n">plot_tuple</span> <span class="o">=</span> <span class="n">draw_ld_pair</span><span class="p">(</span><span class="n">LD_backward</span><span class="o">+</span><span class="n">LD_forward</span><span class="p">,</span> <span class="n">LD_forward_gradient</span><span class="o">+</span><span class="n">LD_backward_gradient</span><span class="p">,</span> <span class="n">grid_parameters</span><span class="p">,</span> <span class="n">plot_title</span><span class="p">,</span> <span class="n">interactive</span><span class="p">,</span> <span class="s1">&#39;Blues_r&#39;</span><span class="p">)</span>
+        <span class="n">plot_handles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">plot_tuple</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">plot_handles</span></div>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s1">&#39;Broncio Aguilar-Sanjuan, Victor-Jose Garcia-Garrido, Vladimir Krajnak, Shibabrat Naik&#39;</span>
 <span class="n">__status__</span> <span class="o">=</span> <span class="s1">&#39;Development&#39;</span>
 </pre></div>
 

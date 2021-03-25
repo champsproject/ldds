@@ -182,188 +182,107 @@ It follows from the result that</p>
 \[\begin{align}
 \mathcal{M}(\mathbf{x}_0, t_0) &amp; = \text{argmin} \; \left( \mathcal{L}^{(f)}(\mathbf{x}_0, t_0, \tau) + \mathcal{L}^{(b)}(\mathbf{x}_0, t_0, \tau) \right) = \text{argmin} \; \mathcal{L}(\mathbf{x}_0, t_0, \tau) \qquad \text{NHIM}
 \end{align}\]</div>
-<span class="target" id="module-base"></span><p>Module description ...</p>
-<p>Reference:
-- Surename1, Forename1 Initials., Surename2, Forename2 Initials, YEAR. Publication/Book title
-Publisher, Number(Volume No), pp.142-161.</p>
-<dl class="function">
-<dt id="base.check_if_points_escape_box">
-<code class="sig-prename descclassname">base.</code><code class="sig-name descname">check_if_points_escape_box</code><span class="sig-paren">(</span><em class="sig-param">u</em>, <em class="sig-param">box_boundaries</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/base.html#check_if_points_escape_box"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#base.check_if_points_escape_box" title="Permalink to this definition">¶</a></dt>
-<dd><p>Determine if points in phase-space u have scaped box with user-defined defined dimensions</p>
+<span class="target" id="module-tools"></span><dl class="function">
+<dt id="tools.draw_all_lds">
+<code class="sig-prename descclassname">tools.</code><code class="sig-name descname">draw_all_lds</code><span class="sig-paren">(</span><em class="sig-param">LD_forward</em>, <em class="sig-param">LD_backward</em>, <em class="sig-param">grid_parameters</em>, <em class="sig-param">tau=nan</em>, <em class="sig-param">p_value=nan</em>, <em class="sig-param">interactive=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tools.html#draw_all_lds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.draw_all_lds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws the forward, backward and total Lagrangian descriptor contour plots and a contour plots showing the magnitude of its gradient field.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>u</strong> (<em>array_like</em><em>, </em><em>shape</em><em>(</em><em>n</em><em>, </em><em>)</em>) -- points in phase-space to check if outside box boundaries</p></li>
-<li><p><strong>box_boundaries</strong> (<em>list of 2-tuples of floats</em>) -- box lower and upper limits along X and Y axes</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>u_indices</strong> -- array of True/False bool values if points inside/outside the box</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>array_like, shape(n, )</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="base.compute_lagrangian_descriptor">
-<code class="sig-prename descclassname">base.</code><code class="sig-name descname">compute_lagrangian_descriptor</code><span class="sig-paren">(</span><em class="sig-param">grid_parameters</em>, <em class="sig-param">vector_field</em>, <em class="sig-param">tau</em>, <em class="sig-param">p_value=0.5</em>, <em class="sig-param">box_boundaries=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/base.html#compute_lagrangian_descriptor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#base.compute_lagrangian_descriptor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the values of the LD function from integrated trajectories from initial conditions in phase-space.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>grid_parameters</strong> (<em>list of 3-tuples of floats</em>) -- input parameters of limits and size of mesh per axis</p></li>
-<li><p><strong>vector_field</strong> (<em>function</em>) -- vector field over phase-space</p></li>
-<li><p><strong>tau</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) -- Upper limit of integration.</p></li>
+<li><p><strong>LD_forward</strong> (<em>ndarray</em><em>, </em><em>shape</em><em>(</em><em>n</em><em>, </em><em>)</em>) -- Array of Lagrangian Descriptor values in forward time.</p></li>
+<li><p><strong>LD_backward</strong> (<em>ndarray</em><em>, </em><em>shape</em><em>(</em><em>n</em><em>, </em><em>)</em>) -- Array of Lagrangian Descriptor values in backward time.</p></li>
+<li><p><strong>grid_parameters</strong> (<em>list of 3-tuples of floats</em>) -- Limits and size of mesh per axis.</p></li>
+<li><p><strong>tau</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) -- Time of integration.
+Default is np.nan.</p></li>
 <li><p><strong>p_value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) -- Exponent in Lagrangian descriptor definition.
-0 is the acton-based LD,
-0 &lt; p_value &lt; 1 is the Lp quasinorm,
-1 &lt;= p_value &lt; 2 is the Lp norm LD,
-2 is the arclength LD.
-The default is 0.5.</p></li>
-<li><p><strong>box_boundaries</strong> (<em>list of 2-tuples</em><em>, </em><em>optional</em>) -- Box boundaries for escape condition of variable time integration.
-Boundaries are infinite by default.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>LD</strong> -- Array of computed Lagrangian descriptor values for all initial conditions.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>ndarray, shape (Nx, Ny)</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="base.generate_points">
-<code class="sig-prename descclassname">base.</code><code class="sig-name descname">generate_points</code><span class="sig-paren">(</span><em class="sig-param">grid_parameters</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/base.html#generate_points"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#base.generate_points" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a 1D array of all points from a on a uniform grid with dimensions and size defined by list of input parameters.
-An additional dimension initiallised with zeros is added for the calculation of Lagrangian Descriptors.
-NOTE: For n-DoF systems, currently energy conservation is only used to determine momenta dimensions.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>grid_parameters</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a><em> (</em><em>1-DoF systems</em><em>) or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><em>dict</em></a><em> (</em><em>n-DoF systems</em><em>)</em>) -- <p>if 1-DoF, list should have two 3-tuples of floats
-entries are input parameters of limits and size of mesh per axis</p>
-<p>if n-DoF, dict should have the following keys
-* 'slice_parameters' : list, should have two 3-tuples of floats, for a 2D slice
-* 'dims_slice' : list of 0 and 1, ones indicate slice axes
-* 'dims_fixed' : list of 0 and 1, ones indicate fixed axes
-* 'momentum_sign' : int, -1 / 1, for negative/positive momentum for remaining axis
-* 'potential_energy' : func used by energy conservation condition to determine remaining momentum axis
-* 'energy_level' : float, energy value for energy conservation condition</p>
-</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>mesh</strong> -- flattened array of initial conditions</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>1d numpy array</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="base.lagrangian_descriptor">
-<code class="sig-prename descclassname">base.</code><code class="sig-name descname">lagrangian_descriptor</code><span class="sig-paren">(</span><em class="sig-param">u</em>, <em class="sig-param">v</em>, <em class="sig-param">p_value=0.5</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/base.html#lagrangian_descriptor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#base.lagrangian_descriptor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Vector field equation for Lagrangian descriptor.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>v</strong> (<em>ndarray</em><em>, </em><em>shape</em><em>(</em><em>n</em><em>,</em><em>2</em><em>)</em>) -- Vector field at given point.</p></li>
-<li><p><strong>p_value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) -- Exponent in Lagrangian descriptor definition.
-0 is the acton-based LD,
-0 &lt; p_value &lt; 1 is the Lp quasinorm,
-1 &lt;= p_value &lt; 2 is the Lp norm LD,
-2 is the arclength LD.
-The default is 0.5.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>LD</strong> -- Vector field for Lagrangian descriptor dimension.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>ndarray, shape(n,1)</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="base.perturb_field">
-<code class="sig-prename descclassname">base.</code><code class="sig-name descname">perturb_field</code><span class="sig-paren">(</span><em class="sig-param">vector_field</em>, <em class="sig-param">perturbation</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/base.html#perturb_field"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#base.perturb_field" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the vector field function with a linearly added pertubation
-Both input function should input (t, u), with t: float, and u: ndarray
-Also, the output of these funcs must be ndarrays of the same shape</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>vector_field</strong> (<em>function</em>) -- unperturbed vector field</p></li>
-<li><p><strong>perturbation</strong> (<em>function</em>) -- forcing added to the vector field</p></li>
+Default is np.nan.</p></li>
+<li><p><strong>interactive</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) -- True allows interactively adjusting the gradient plot minimum and maximum.
+Default is False.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p></p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>perturbed function</p>
+<dd class="field-odd"><p>List of tuples of the form (fig, ax)</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="function">
-<dt id="base.vector_field_flat">
-<code class="sig-prename descclassname">base.</code><code class="sig-name descname">vector_field_flat</code><span class="sig-paren">(</span><em class="sig-param">t</em>, <em class="sig-param">points</em>, <em class="sig-param">vector_field</em>, <em class="sig-param">p_value</em>, <em class="sig-param">box_boundaries</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/base.html#vector_field_flat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#base.vector_field_flat" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns vector field values for integration of flattened input array.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) -- time</p></li>
-<li><p><strong>points</strong> (<em>ndarray</em><em>, </em><em>shape</em><em>(</em><em>n</em><em>,</em><em>3</em><em>)</em>) -- </p></li>
-<li><p><strong>vector_field</strong> (<em>function</em>) -- User defined vector field.</p></li>
-<li><p><strong>p_value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) -- Exponent in Lagrangian descriptor definition.
-0 is the acton-based LD,
-0 &lt; p_value &lt; 1 is the Lp quasinorm,
-1 &lt;= p_value &lt; 2 is the Lp norm LD,
-2 is the arclength LD.
-The default is 0.5.</p></li>
-<li><p><strong>box_boundaries</strong> (<em>list of 2-tuples</em><em>, </em><em>optional</em>) -- box boundaries for escape condition of variable time integration
-boundaries are infinite by default.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>y0 values for integrator</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>1d array</p>
-</dd>
-</dl>
-</dd></dl>
-
-<span class="target" id="module-tools"></span><p>Module description ...</p>
-<p>Reference:
-- Surename1, Forename1 Initials., Surename2, Forename2 Initials, YEAR. Publication/Book title
-Publisher, Number(Volume No), pp.142-161.</p>
-<dl class="function">
-<dt id="tools.draw_lagrangian_descriptor">
-<code class="sig-prename descclassname">tools.</code><code class="sig-name descname">draw_lagrangian_descriptor</code><span class="sig-paren">(</span><em class="sig-param">LD</em>, <em class="sig-param">LD_type</em>, <em class="sig-param">grid_parameters</em>, <em class="sig-param">tau</em>, <em class="sig-param">p_value</em>, <em class="sig-param">norm=True</em>, <em class="sig-param">colormap_name='bone'</em>, <em class="sig-param">colormap_mode=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tools.html#draw_lagrangian_descriptor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.draw_lagrangian_descriptor" title="Permalink to this definition">¶</a></dt>
+<dt id="tools.draw_ld">
+<code class="sig-prename descclassname">tools.</code><code class="sig-name descname">draw_ld</code><span class="sig-paren">(</span><em class="sig-param">fig</em>, <em class="sig-param">axis</em>, <em class="sig-param">LD</em>, <em class="sig-param">grid_parameters</em>, <em class="sig-param">subplot_title</em>, <em class="sig-param">interactive</em>, <em class="sig-param">cmap='viridis'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tools.html#draw_ld"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.draw_ld" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws a Lagrangian descriptor contour plot and a contour plot showing the magnitude of its gradient field.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>LD</strong> (<em>ndarray</em><em>, </em><em>shape</em><em>(</em><em>n</em><em>, </em><em>)</em>) -- Array of Lagrangian Descriptor values.</p></li>
-<li><p><strong>LD_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) -- Type of LD to plot. Options: 'forward', 'backward', 'total'.</p></li>
+<li><p><strong>fig</strong> (<em>matplotlib.figure.Figure</em>) -- Figure where contour plot will be drawn.</p></li>
+<li><p><strong>axis</strong> (<em>matplotlib.axes._subplots.AxesSubplot</em>) -- Axis handle of subplot in figure.</p></li>
+<li><p><strong>LD</strong> (<em>ndarray</em><em>, </em><em>shape</em><em>(</em><em>n</em><em>, </em><em>)</em>) -- Array to be plotted.</p></li>
 <li><p><strong>grid_parameters</strong> (<em>list of 3-tuples of floats</em>) -- Limits and size of mesh per axis.</p></li>
-<li><p><strong>tau</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) -- Upper limit of integration.</p></li>
-<li><p><strong>p_value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) -- Exponent in Lagrangian descriptor definition.</p></li>
-<li><p><strong>norm</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) -- True normalises LD values.</p></li>
-<li><p><strong>colormap_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) -- Name of matplotlib colormap for plot.</p></li>
+<li><p><strong>subplot_title</strong> (<em>string</em>) -- Subplot title.</p></li>
+<li><p><strong>interactive</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) -- True allows interactively adjusting the gradient contouor plot minimum and maximum.</p></li>
+<li><p><strong>cmap</strong> (<em>string</em>) -- Name of matplotlib colormap for plot.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="tools.draw_ld_pair">
+<code class="sig-prename descclassname">tools.</code><code class="sig-name descname">draw_ld_pair</code><span class="sig-paren">(</span><em class="sig-param">LD</em>, <em class="sig-param">LD_gradient</em>, <em class="sig-param">grid_parameters</em>, <em class="sig-param">plot_title</em>, <em class="sig-param">interactive</em>, <em class="sig-param">cmap_gradient</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tools.html#draw_ld_pair"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.draw_ld_pair" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lagrangian descriptor plot wrapper.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>LD</strong> (<em>ndarray</em><em>, </em><em>shape</em><em>(</em><em>n</em><em>, </em><em>)</em>) -- Array of Lagrangian Descriptor values.</p></li>
+<li><p><strong>LD_gradient</strong> (<em>ndarray</em><em>, </em><em>shape</em><em>(</em><em>n</em><em>, </em><em>)</em>) -- Array of Lagrangian Descriptor gradient values.</p></li>
+<li><p><strong>grid_parameters</strong> (<em>list of 3-tuples of floats</em>) -- Limits and size of mesh per axis.</p></li>
+<li><p><strong>plot_title</strong> (<em>string</em>) -- Plot title.</p></li>
+<li><p><strong>interactive</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) -- True allows interactively adjusting the gradient contouor plot minimum and maximum.</p></li>
+<li><p><strong>cmap_gradient</strong> (<em>string</em>) -- Name of matplotlib colormap for gradient contour plot.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>fig</strong> (<cite>~.figure.Figure</cite>)</p></li>
+<li><p><strong>ax</strong> (<cite>.axes.Axes</cite> or array of Axes)</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="tools.get_gradient_magnitude">
+<code class="sig-prename descclassname">tools.</code><code class="sig-name descname">get_gradient_magnitude</code><span class="sig-paren">(</span><em class="sig-param">LD</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tools.html#get_gradient_magnitude"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.get_gradient_magnitude" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates magnitude of the gradient of input array LD.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>LD</strong> (<em>ndarray</em><em>, </em><em>shape</em><em>(</em><em>n</em><em>, </em><em>)</em>) -- Array of input values.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>gradient_magnitude</strong> -- Magnitude of the gradient of input array LD.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Nothing.</p>
+<dd class="field-odd"><p>ndarray, shape(n, )</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="tools.normalise">
+<code class="sig-prename descclassname">tools.</code><code class="sig-name descname">normalise</code><span class="sig-paren">(</span><em class="sig-param">A</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tools.html#normalise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tools.normalise" title="Permalink to this definition">¶</a></dt>
+<dd><p>Normalises an array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>A</strong> (<em>ndarray</em><em>, </em><em>shape</em><em>(</em><em>n</em><em>, </em><em>)</em>) -- Array of input values.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Normalised array</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray, shape(n, )</p>
 </dd>
 </dl>
 </dd></dl>

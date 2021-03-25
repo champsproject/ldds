@@ -170,11 +170,31 @@
 <ol class="arabic simple">
 <li><p>Hamiltonian center</p></li>
 <li><p><a class="reference external" href="https://champsproject.github.io/lagrangian_descriptors/content/chapter2_1.html#one-degree-of-freedom-hyperbolic-equilibrium-point">Hamiltonian saddle</a></p></li>
-<li><p>Duffing oscillator (energy conservative)</p></li>
-<li><p>Inverted Duffing oscillator (energy conservative)</p></li>
+<li><p>Duffing oscillator</p></li>
+</ol>
+<ol class="loweralpha simple">
+<li><p>Time dependent Hamiltonian</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[H(x,p_x,t) = \dfrac{1}{2}p_x^2 + \dfrac{\alpha}{2}x^2 - \dfrac{\beta}{4}x^4 - f(t) x \label{eqn:ham_duff_forced}\]</div>
+<p>The corresponding vector field is</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+\dot{x} &amp;= \dfrac{\partial H}{\partial p_x} = f_1(x,p_x) = p_x \\
+\dot{p}_x &amp;= -\dfrac{\partial H}{\partial x} = f_2(x,p_x) = \alpha x - \beta x^3 + f(t)
+\end{align}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(f(t)\)</span> is the time dependent forcing function. The package offers two different options for the external forcing, <span class="math notranslate nohighlight">\(f(t) = A\mathrm{sech}(t)\sin(\omega t)\)</span> and also <span class="math notranslate nohighlight">\(f(t) = A\sin(\omega t)\)</span>. Other versions can be added manually by the user in the forcing function of the vector_fields.py file.</p>
+<ol class="loweralpha simple">
+<li><p>Unforced</p></li>
+</ol>
+<p>This model system corresponds to the undamped Duffing oscillator with model parameters in Hamiltonian~eqref{eqn:eqn:ham_duff} chosen as <span class="math notranslate nohighlight">\(f(t) = 0\)</span>.</p>
+<ol class="loweralpha simple" start="2">
+<li><p>Inverted</p></li>
+</ol>
+<p>This model system corresponds to the undamped unforced Duffing equation with Hamiltonian ~eqref{eqn:eqn:ham_duff}, where the model parameters are chosen as <span class="math notranslate nohighlight">\(\alpha = \beta = - 1\)</span>.</p>
+<ol class="arabic simple" start="5">
 <li><p>Saddle-node Hamiltonian</p></li>
 <li><p>Non-autonomous double-gyre flow</p></li>
-<li><p>Forced Duffing oscillator</p></li>
 </ol>
 </div>
 <div class="section" id="four-dimensional-phase-space">
@@ -189,29 +209,53 @@
 <ol class="arabic simple">
 <li><p><a class="reference external" href="https://champsproject.github.io/lagrangian_descriptors/content/chapter2_1.html#three-and-more-degrees-of-freedom-and-nhims">Saddle-center-center Hamiltonian</a></p></li>
 </ol>
-<span class="target" id="module-vector_fields"></span><p>Module description ...</p>
-<p>Reference:
-- Surename1, Forename1 Initials., Surename2, Forename2 Initials, YEAR. Publication/Book title
-Publisher, Number(Volume No), pp.142-161.</p>
+<span class="target" id="module-vector_fields"></span><dl class="function">
+<dt id="vector_fields.DoubleGyre">
+<code class="sig-prename descclassname">vector_fields.</code><code class="sig-name descname">DoubleGyre</code><span class="sig-paren">(</span><em class="sig-param">t, u, PARAMETERS=[0.25, 6.283185307179586, 0, 0, 1, 0.25]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vector_fields.html#DoubleGyre"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vector_fields.DoubleGyre" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns 2D Double Gyre vector field at time t, for an array of points in phase space.
+Number of model parameters: 6 . PARAMETERS = [A, phi, psi, mu, s, epsilon]
+Functional form:</p>
+<p>vx = -pi*A*sin(pi*f(t, x)/s)*cos(pi*y/s) - mu*x
+vy =  pi*A*cos(pi*f(t, x)/s)*sin(pi*y/s)*df(t,x)/dx - mu*y</p>
+<p>with</p>
+<p>f(t, x)    = epsilon*sin(phi*t + psi)*x**2 + (1 - 2*epsilon*sin(phi*t + psi))*x
+df/dx(t,x) = 2*epsilon*sin(phi*t + psi)*x + (1 - 2*epsilon*sin(phi*t + psi))
+u = (x, y)
+:param t: fixed time-point of vector field, for all points in phase space.
+:type t: float
+:param u: points in phase space to determine vector field at time t.
+:type u: array_like, shape(n,)
+:param PARAMETERS: vector field parameters
+:type PARAMETERS: list of floats</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>v</strong> -- vector field corresponding to points u, in phase space at time t</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>array_like, shape(n,)</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="function">
 <dt id="vector_fields.Duffing1D">
-<code class="sig-prename descclassname">vector_fields.</code><code class="sig-name descname">Duffing1D</code><span class="sig-paren">(</span><em class="sig-param">t, u, PARAMETERS=[None]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vector_fields.html#Duffing1D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vector_fields.Duffing1D" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns 1D vector field of the Duffing oscillator, for an array of points in phase space.
+<code class="sig-prename descclassname">vector_fields.</code><code class="sig-name descname">Duffing1D</code><span class="sig-paren">(</span><em class="sig-param">t, u, PARAMETERS=[1, 1, -1]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vector_fields.html#Duffing1D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vector_fields.Duffing1D" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns vector field for the Duffing oscillator.
 Number of model parameters: 0 . PARAMETERS = [None]
 Functional form: v = (y, x - x**3), with u = (x, y)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) -- fixed time-point of vector field, for all points in phase space.</p></li>
-<li><p><strong>u</strong> (<em>array_like</em><em>, </em><em>shape</em><em>(</em><em>n</em><em>,</em><em>)</em>) -- Points in phase space.</p></li>
+<li><p><strong>t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) -- Time. (This vector field is independent of time.)</p></li>
+<li><p><strong>u</strong> (<em>ndarray</em><em>, </em><em>shape</em><em>(</em><em>n</em><em>,</em><em>)</em>) -- Points in phase space.</p></li>
 <li><p><strong>PARAMETERS</strong> (<em>list of floats</em>) -- Vector field parameters.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>v</strong> -- Vector field corresponding to points u, in phase space at time t.</p>
+<dd class="field-even"><p><strong>v</strong> -- Vector field at points u and time t..</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>array_like, shape(n,)</p>
+<dd class="field-odd"><p>ndarray, shape(n,)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -219,22 +263,22 @@ Functional form: v = (y, x - x**3), with u = (x, y)</p>
 <dl class="function">
 <dt id="vector_fields.Duffing1D_inverted">
 <code class="sig-prename descclassname">vector_fields.</code><code class="sig-name descname">Duffing1D_inverted</code><span class="sig-paren">(</span><em class="sig-param">t, u, PARAMETERS=[None]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vector_fields.html#Duffing1D_inverted"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vector_fields.Duffing1D_inverted" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns 1D vector field of the inverted Duffing oscillator at time t, for an array of points in phase space.
+<dd><p>Returns vector field for the inverted Duffing oscillator.
 Number of model parameters: 0 . PARAMETERS = [None]
 Functional form: v = (y, - x + x**3), with u = (x, y)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) -- fixed time-point of vector field, for all points in phase space.</p></li>
-<li><p><strong>u</strong> (<em>array_like</em><em>, </em><em>shape</em><em>(</em><em>n</em><em>,</em><em>)</em>) -- points in phase space to determine vector field at time t.</p></li>
-<li><p><strong>PARAMETERS</strong> (<em>list of floats</em>) -- vector field parameters</p></li>
+<li><p><strong>t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) -- Time. (This vector field is independent of time.)</p></li>
+<li><p><strong>u</strong> (<em>ndarray</em><em>, </em><em>shape</em><em>(</em><em>n</em><em>,</em><em>)</em>) -- Points in phase space.</p></li>
+<li><p><strong>PARAMETERS</strong> (<em>list of floats</em>) -- Vector field parameters.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>v</strong> -- vector field corresponding to points u, in phase space at time t</p>
+<dd class="field-even"><p><strong>v</strong> -- Vector field at points u and time t.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>array_like, shape(n,)</p>
+<dd class="field-odd"><p>ndarray, shape(n,)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -242,22 +286,22 @@ Functional form: v = (y, - x + x**3), with u = (x, y)</p>
 <dl class="function">
 <dt id="vector_fields.HamCenter1D">
 <code class="sig-prename descclassname">vector_fields.</code><code class="sig-name descname">HamCenter1D</code><span class="sig-paren">(</span><em class="sig-param">t, u, PARAMETERS=[1]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vector_fields.html#HamCenter1D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vector_fields.HamCenter1D" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns 1D Hamilton-Centre vector field at time t, for an array of points in phase space.
+<dd><p>Returns vector field for a 1DoF centre at time t, for an array of points in phase space.
 Number of model parameters: 1 . PARAMETERS = [omega]
 Functional form: v = (omega*y, - omega*x), with u = (x, y)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) -- fixed time-point of vector field, for all points in phase space</p></li>
-<li><p><strong>u</strong> (<em>array_like</em><em>, </em><em>shape</em><em>(</em><em>n</em><em>,</em><em>)</em>) -- points in phase space to determine vector field at time t</p></li>
-<li><p><strong>PARAMETERS</strong> (<em>list of floats</em>) -- vector field parameters</p></li>
+<li><p><strong>t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) -- Time. (This vector field is independent of time.)</p></li>
+<li><p><strong>u</strong> (<em>ndarray</em><em>, </em><em>shape</em><em>(</em><em>n</em><em>,</em><em>)</em>) -- Points in phase space.</p></li>
+<li><p><strong>PARAMETERS</strong> (<em>list of floats</em>) -- Vector field parameters.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>v</strong> -- vector field corresponding to points u, in phase space at time t</p>
+<dd class="field-even"><p><strong>v</strong> -- Vector field at points u and time t.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>array_like, shape(n,)</p>
+<dd class="field-odd"><p>ndarray, shape(n,)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -265,22 +309,22 @@ Functional form: v = (omega*y, - omega*x), with u = (x, y)</p>
 <dl class="function">
 <dt id="vector_fields.HamSN1D">
 <code class="sig-prename descclassname">vector_fields.</code><code class="sig-name descname">HamSN1D</code><span class="sig-paren">(</span><em class="sig-param">t, u, PARAMETERS=[None]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vector_fields.html#HamSN1D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vector_fields.HamSN1D" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns 1D Hamilton-Saddle-Node vector field at time t, for an array of points in phase space.
+<dd><p>Returns vector field for the 1DoF saddle-node model.
 Number of model parameters: 0 . PARAMETERS = [None]
 Functional form: v = (y, -x -x**2), with u = (x, y)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) -- fixed time-point of vector field, for all points in phase space.</p></li>
-<li><p><strong>u</strong> (<em>array_like</em><em>, </em><em>shape</em><em>(</em><em>n</em><em>,</em><em>)</em>) -- points in phase space to determine vector field at time t.</p></li>
-<li><p><strong>PARAMETERS</strong> (<em>list of floats</em>) -- vector field parameters</p></li>
+<li><p><strong>t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) -- Time. (This vector field is independent of time.)</p></li>
+<li><p><strong>u</strong> (<em>ndarray</em><em>, </em><em>shape</em><em>(</em><em>n</em><em>,</em><em>)</em>) -- Points in phase space.</p></li>
+<li><p><strong>PARAMETERS</strong> (<em>list of floats</em>) -- Vector field parameters.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>v</strong> -- vector field corresponding to points u, in phase space at time t</p>
+<dd class="field-even"><p><strong>v</strong> -- Vector field at points u and time t.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>array_like, shape(n,)</p>
+<dd class="field-odd"><p>ndarray, shape(n,)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -288,84 +332,43 @@ Functional form: v = (y, -x -x**2), with u = (x, y)</p>
 <dl class="function">
 <dt id="vector_fields.HamSaddle1D">
 <code class="sig-prename descclassname">vector_fields.</code><code class="sig-name descname">HamSaddle1D</code><span class="sig-paren">(</span><em class="sig-param">t, u, PARAMETERS=[1]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vector_fields.html#HamSaddle1D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vector_fields.HamSaddle1D" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns 1D Hamilton-Saddle vector field at time t, for an array of points in phase space.
+<dd><p>Returns vector field for a 1DoF saddle at time t, for an array of points in phase space.
 Number of model parameters: 1 . PARAMETERS = [lamda]
 Functional form: v = (lamda*y, - lamda*x), with u = (x, y)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) -- fixed time-point of vector field, for all points in phase space.</p></li>
-<li><p><strong>u</strong> (<em>array_like</em><em>, </em><em>shape</em><em>(</em><em>n</em><em>,</em><em>)</em>) -- points in phase space to determine vector field at time t.</p></li>
-<li><p><strong>PARAMETERS</strong> (<em>list of floats</em>) -- vector field parameters</p></li>
+<li><p><strong>t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) -- Time. (This vector field is independent of time.)</p></li>
+<li><p><strong>u</strong> (<em>ndarray</em><em>, </em><em>shape</em><em>(</em><em>n</em><em>,</em><em>)</em>) -- Points in phase space.</p></li>
+<li><p><strong>PARAMETERS</strong> (<em>list of floats</em>) -- Vector field parameters.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>v</strong> -- vector field corresponding to points u, in phase space at time t</p>
+<dd class="field-even"><p><strong>v</strong> -- Vector field at points u and time t.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>array_like, shape(n,)</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="vector_fields.HenonHeiles_potential">
-<code class="sig-prename descclassname">vector_fields.</code><code class="sig-name descname">HenonHeiles_potential</code><span class="sig-paren">(</span><em class="sig-param">positions</em>, <em class="sig-param">PARAMETERS=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vector_fields.html#HenonHeiles_potential"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vector_fields.HenonHeiles_potential" title="Permalink to this definition">¶</a></dt>
-<dd><p>Potential Energy Function (PEF) of 2DoF Henon-Heiles system.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>positions</strong> (<em>array_like</em><em>, </em><em>shape</em><em>(</em><em>n</em><em>,</em><em>)</em>) -- array of 2D points in configuration space.</p></li>
-<li><p><strong>PARAMETERS</strong> (<em>list of floats</em>) -- vector field parameters</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>V</strong> -- potential energy corresponding to all positions</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>array_like, shape(n,)</p>
+<dd class="field-odd"><p>ndarray, shape(n,)</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="vector_fields.HenonHeiles_vector_field">
-<code class="sig-prename descclassname">vector_fields.</code><code class="sig-name descname">HenonHeiles_vector_field</code><span class="sig-paren">(</span><em class="sig-param">t</em>, <em class="sig-param">u</em>, <em class="sig-param">PARAMETERS=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vector_fields.html#HenonHeiles_vector_field"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vector_fields.HenonHeiles_vector_field" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns 2D Henon-Heiles vector field at time t, for an array of points in phase space.
+<code class="sig-prename descclassname">vector_fields.</code><code class="sig-name descname">HenonHeiles_vector_field</code><span class="sig-paren">(</span><em class="sig-param">t</em>, <em class="sig-param">u</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vector_fields.html#HenonHeiles_vector_field"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vector_fields.HenonHeiles_vector_field" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns Henon-Heiles vector field (2DoF).
 Functional form: v = (p_x, p_y, -x - 2*x*y, -x**2 -y + y**2), with u = (x, y, p_x, p_y)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) -- fixed time-point of vector field, for all points in phase space.</p></li>
-<li><p><strong>u</strong> (<em>array_like</em><em>, </em><em>shape</em><em>(</em><em>n</em><em>,</em><em>)</em>) -- points in phase space to determine vector field at time t.</p></li>
-<li><p><strong>PARAMETERS</strong> (<em>list of floats</em>) -- vector field parameters</p></li>
+<li><p><strong>t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) -- Time. (This vector field is independent of time.)</p></li>
+<li><p><strong>u</strong> (<em>ndarray</em><em>, </em><em>shape</em><em>(</em><em>n</em><em>,</em><em>)</em>) -- Points in phase space.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>v</strong> -- vector field corresponding to points u, in phase space at time t</p>
+<dd class="field-even"><p><strong>v</strong> -- Vector field at points u and time t.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>array_like, shape(n,)</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="vector_fields.NFSaddle_potential">
-<code class="sig-prename descclassname">vector_fields.</code><code class="sig-name descname">NFSaddle_potential</code><span class="sig-paren">(</span><em class="sig-param">positions</em>, <em class="sig-param">PARAMETERS=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vector_fields.html#NFSaddle_potential"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vector_fields.NFSaddle_potential" title="Permalink to this definition">¶</a></dt>
-<dd><p>Potential Energy Function (PEF) of 2DoF Index-1 Normal-Form Saddle system.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>positions</strong> (<em>array_like</em><em>, </em><em>shape</em><em>(</em><em>n</em><em>,</em><em>)</em>) -- array of 2D points in configuration space.</p></li>
-<li><p><strong>PARAMETERS</strong> (<em>list of floats</em>) -- vector field parameters</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>V</strong> -- potential energy corresponding to all positions</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>array_like, shape(n,)</p>
+<dd class="field-odd"><p>ndarray, shape(n,)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -373,8 +376,31 @@ Functional form: v = (p_x, p_y, -x - 2*x*y, -x**2 -y + y**2), with u = (x, y, p_
 <dl class="function">
 <dt id="vector_fields.NFSaddle_vector_field">
 <code class="sig-prename descclassname">vector_fields.</code><code class="sig-name descname">NFSaddle_vector_field</code><span class="sig-paren">(</span><em class="sig-param">t</em>, <em class="sig-param">u</em>, <em class="sig-param">PARAMETERS=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vector_fields.html#NFSaddle_vector_field"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vector_fields.NFSaddle_vector_field" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns 2D Index-1 Normal-Form Saddle vector field at time t, for an array of points in phase space.
+<dd><p>Returns vector field for a 2D index-1 saddle.
 Functional form: v = (p_x, p_y, x, -y), with u = (x, y, p_x, p_y)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) -- Time. (This vector field is independent of time.)</p></li>
+<li><p><strong>u</strong> (<em>ndarray</em><em>, </em><em>shape</em><em>(</em><em>n</em><em>,</em><em>)</em>) -- Points in phase space.</p></li>
+<li><p><strong>PARAMETERS</strong> (<em>list of floats</em>) -- Vector field parameters.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>v</strong> -- Vector field at points u and time t.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray, shape(n,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="vector_fields.Saddle1D">
+<code class="sig-prename descclassname">vector_fields.</code><code class="sig-name descname">Saddle1D</code><span class="sig-paren">(</span><em class="sig-param">t, u, PARAMETERS=[1, 1]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vector_fields.html#Saddle1D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vector_fields.Saddle1D" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns 1D Hamilton-Saddle vector field at time t, for an array of points in phase space.
+Number of model parameters: 2 .PARAMETERS = [a1, a2]
+Functional form: v = (a1*x, -a2*y), with u = (x, y)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -395,22 +421,22 @@ Functional form: v = (p_x, p_y, x, -y), with u = (x, y, p_x, p_y)</p>
 <dl class="function">
 <dt id="vector_fields.forcing">
 <code class="sig-prename descclassname">vector_fields.</code><code class="sig-name descname">forcing</code><span class="sig-paren">(</span><em class="sig-param">t, u, perturbation_params=[1, 0.15, 0.5]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vector_fields.html#forcing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vector_fields.forcing" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns vector field for a perturbation at time t, for an array of points in phase space.
+<dd><p>Returns vector field for a perturbation.
 Number of model parameters: 3. perturbation_params = [perturbation_type, amplitude, frequency]
 Functional form: v = (, ), with u = (x, y)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) -- fixed time-point of vector field, for all points in phase space.</p></li>
-<li><p><strong>u</strong> (<em>array_like</em><em>, </em><em>shape</em><em>(</em><em>n</em><em>,</em><em>)</em>) -- points in phase space to determine vector field at time t.</p></li>
-<li><p><strong>perturbation_params</strong> (<em>list of floats</em><em>, </em><em>[</em><em>perturbation_type</em><em>, </em><em>amplitude</em><em>, </em><em>frequency</em><em>]</em>) -- vector field parameters</p></li>
+<li><p><strong>t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) -- Time. (This vector field is independent of time.)</p></li>
+<li><p><strong>u</strong> (<em>ndarray</em><em>, </em><em>shape</em><em>(</em><em>n</em><em>,</em><em>)</em>) -- Points in phase space.</p></li>
+<li><p><strong>perturbation_params</strong> (<em>list of floats</em><em>, </em><em>[</em><em>perturbation_type</em><em>, </em><em>amplitude</em><em>, </em><em>frequency</em><em>]</em>) -- Perturbation parameters.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>v</strong> -- vector field corresponding to points u, in phase space at time t</p>
+<dd class="field-even"><p><strong>v</strong> -- Vector field at points u and time t.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>array_like, shape(n,)</p>
+<dd class="field-odd"><p>ndarray, shape(n,)</p>
 </dd>
 </dl>
 </dd></dl>
