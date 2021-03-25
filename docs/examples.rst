@@ -8,6 +8,7 @@ Maps
 
 The standard map (kicked rotator) is a two-dimensional map used in dynamical systems to study a periodically 
 kicked pendulum. Its equations are given by the expressions:
+
 .. math::
    \begin{align}
     x_{n+1} &= x_{n} + y_{n} - \dfrac{K}{2\pi} \sin(2\pi x_{n))
@@ -16,6 +17,7 @@ kicked pendulum. Its equations are given by the expressions:
 where :math:`K` is the parameter that controls the forcing strength of the perturbation.
    
 The inverse map is described by:
+
 .. math::
    \begin{align}
     x_{n} = x_{n+1} - y_{n+1}
@@ -27,6 +29,7 @@ The inverse map is described by:
 
 The Hénon map was introduced by Michel Hénon as a simplified model of the Poincaré section 
 of the Lorenz model. The map equations are as follows:
+
 .. math::
    \begin{align}
     x_{n+1} = a - x_{n}^2 + b y_{n}
@@ -34,6 +37,7 @@ of the Lorenz model. The map equations are as follows:
    \end{align}
 
 The inverse Hénon map is:
+
 .. math::
    \begin{align}
     x_{n} = y_{n+1}
