@@ -21,7 +21,7 @@ Two dimensional phase space
 a. Time dependent Hamiltonian 
 
 .. math::
-   H(x,p_x,t) = \dfrac{1}{2}p_x^2 + \dfrac{\alpha}{2}x^2 - \dfrac{\beta}{4}x^4 - f(t) x \label{eqn:ham_duff_forced}
+   H(x,p_x,t) = \dfrac{1}{2}p_x^2 - \dfrac{\alpha}{2}x^2 + \dfrac{\beta}{4}x^4 - f(t) x \label{eqn:ham_duff_forced}
 
 
 The corresponding vector field is
