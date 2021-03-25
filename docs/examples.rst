@@ -5,8 +5,40 @@ Maps
 ----
 
 1. Standard map
+
+The standard map (kicked rotator) is a two-dimensional map used in dynamical systems to study a periodically 
+kicked pendulum. Its equations are given by the expressions:
+.. math::
+   \begin{align}
+    x_{n+1} &= x_{n} + y_{n} - \dfrac{K}{2\pi} \sin(2\pi x_{n))
+    y_{n+1} &= y_{n} - \dfrac{K}{2\pi} \sin(2\pi x_{n))
+   \end{align}
+where :math:`K` is the parameter that controls the forcing strength of the perturbation.
+   
+The inverse map is described by:
+.. math::
+   \begin{align}
+    x_{n} = x_{n+1} - y_{n+1}
+    y_{n} = y_{n+1} + \dfrac{K}{2\pi} \sin(2\pi (x_{n+1} - y_{n+1}))
+   \end{align}
+
    
 2. Hénon map
+
+The Hénon map was introduced by Michel Hénon as a simplified model of the Poincaré section 
+of the Lorenz model. The map equations are as follows:
+.. math::
+   \begin{align}
+    x_{n+1} = a - x_{n}^2 + b y_{n}
+    y_{n+1} = x_{n}
+   \end{align}
+
+The inverse Hénon map is:
+.. math::
+   \begin{align}
+    x_{n} = y_{n+1}
+    y_{n} = \dfrac{x_{n+1} - a + y_{n+1}^2}{b}
+   \end{align}
 
 
 Two dimensional phase space
@@ -43,6 +75,17 @@ c. Inverted
 This model system corresponds to the undamped unforced Duffing equation with Hamiltonian ~\eqref{eqn:eqn:ham_duff}, where the model parameters are chosen as :math:`\alpha = \beta = - 1`.
 
 4. Saddle-node Hamiltonian 
+
+This system is defined by the Hamiltonian:
+.. math::
+    H(x,p_x) = \dfrac{1}{2}p_x^2 + \dfrac{1}{2}x^2 + \dfrac{1}{3}x^3 \label{eqn:ham_saddnode}
+
+and its associated vector field is:
+.. math::
+    \begin{align}
+    \dot{x} = \dfrac{\partial H}{\partial p_x} = f_1(x,p_x) = p_x \\
+    \dot{p}_x = -\dfrac{\partial H}{\partial x} = f_2(x,p_x) = -x - x^2
+    \end{align} 
 
 5. Non-autonomous double-gyre flow
 
