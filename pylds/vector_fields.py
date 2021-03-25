@@ -84,11 +84,11 @@ def HamSaddle1D(t, u, PARAMETERS = [1]):
     v = np.column_stack([ lamda * y, lamda * x])
     return v
 
-def Duffing1D(t, u, PARAMETERS = [1, -1]):
+def Duffing1D(t, u, PARAMETERS = [1, 1]):
     """
     Returns vector field for the Duffing oscillator.
     Number of model parameters: 2 . PARAMETERS = [alpha, beta]
-    Functional form: v = (y, x - x**3), with u = (x, y)
+    Functional form: v = (y, alpha*x - beta*x**3), with u = (x, y)
 
     Parameters
     ----------
@@ -98,8 +98,8 @@ def Duffing1D(t, u, PARAMETERS = [1, -1]):
     u : ndarray, shape(n,)
         Points in phase space.
 
-    PARAMETERS : list of floats
-        Vector field parameters.
+    PARAMETERS : list of floats, optional
+        Vector field parameters [alpha, beta]. Default is [1, 1].
 
     Returns
     -------
@@ -109,7 +109,7 @@ def Duffing1D(t, u, PARAMETERS = [1, -1]):
     x, y = u.T
     # Hamiltonian Model Parameter
     alpha, beta = PARAMETERS
-    v = np.column_stack([ y, alpha*x + beta*x**3])
+    v = np.column_stack([ y, alpha*x - beta*x**3])
     return v
 
 def HamSN1D(t, u, PARAMETERS = [None]):
