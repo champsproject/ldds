@@ -205,7 +205,7 @@ def HenonHeiles_vector_field(t, u):
     v = np.column_stack([v_x, v_y, v_p_x, v_p_y])
     return v
 
-def NFSaddle_vector_field(t, u, PARAMETERS = None):
+def quadratic_normalform_saddlecenter(t, u, PARAMETERS = [1,1]):
     """
     Returns vector field for a 2D index-1 saddle.
     Functional form: v = (p_x, p_y, x, -y), with u = (x, y, p_x, p_y)
@@ -238,8 +238,8 @@ def NFSaddle_vector_field(t, u, PARAMETERS = None):
     # Vector field defintion
     v_x   =  p_x
     v_y   =  p_y
-    v_p_x = x
-    v_p_y = -y
+    v_p_x = PARAMETERS[0]*x
+    v_p_y = -PARAMETERS[1]*y
     v = np.column_stack([v_x, v_y, v_p_x, v_p_y])
     return v
 

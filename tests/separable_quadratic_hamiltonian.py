@@ -13,11 +13,11 @@ from matplotlib.ticker import LinearLocator, FormatStrFormatter
 import matplotlib.pyplot as plt
 
 
-def normal_form_potential(q1, q2, LAMBDA = -1, OMEGA2 = 1):
+def normal_form_potential(q1, q2, LAMBDA = 1, OMEGA2 = 1):
     """ Potential energy function for the uncoupled normal form Hamiltonian
     """
 
-    normal_form_pe = 0.5*LAMBDA*q1**2 + 0.5*OMEGA2*q2**2 
+    normal_form_pe = -0.5*LAMBDA*q1**2 + 0.5*OMEGA2*q2**2 
 
     return normal_form_pe
 

@@ -1,0 +1,6 @@
+jupyter
+matplotlib
+numpy
+scipy
+ipywidgets
+h5py

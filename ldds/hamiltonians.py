@@ -147,7 +147,7 @@ def HenonHeiles_potential(positions, PARAMETERS = None):
     V = (1/2)*(x**2 + y**2) + (y * x**2) - (1/3)*y**3
     return V
 
-def NFSaddle_Hamiltonian(t, u):
+def quadratic_normal_form_saddlecenter_ham(t, u):
     """
     Hamiltonian for a 2DoF Saddle.
     Functional form: H = 1/2(p_x**2 + p_y**2) + 1/2(y**2 - x**2), with u = (x, y, p_x, p_y).
