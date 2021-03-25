@@ -87,7 +87,7 @@ def HamSaddle1D(t, u, PARAMETERS = [1]):
 def Duffing1D(t, u, PARAMETERS = [1, 1, -1]):
     """
     Returns vector field for the Duffing oscillator.
-    Number of model parameters: 0 . PARAMETERS = [None]
+    Number of model parameters: 0 . PARAMETERS = [alpha, beta, gamma]
     Functional form: v = (y, x - x**3), with u = (x, y)
 
     Parameters
@@ -110,35 +110,6 @@ def Duffing1D(t, u, PARAMETERS = [1, 1, -1]):
     # Hamiltonian Model Parameter
     alpha, beta, gamma = PARAMETERS
     v = np.column_stack([ alpha*y, beta*x + gamma*x**3])
-    return v
-
-def Duffing1D_inverted(t, u, PARAMETERS = [None]):
-    """
-    Returns vector field for the inverted Duffing oscillator.
-    Number of model parameters: 0 . PARAMETERS = [None]
-    Functional form: v = (y, - x + x**3), with u = (x, y)
-
-    Parameters
-    ----------
-    t : float
-        Time. (This vector field is independent of time.)
-
-    u : ndarray, shape(n,)
-        Points in phase space.
-
-    PARAMETERS : list of floats
-        Vector field parameters.
-
-    Returns
-    -------
-    v : ndarray, shape(n,)
-        Vector field at points u and time t.
-    """
-    x, y = u.T
-    # Hamiltonian Model Parameter
-    # perturbation = forcing(t, u, flag_pert, perturbation_params)
-    # v = np.array([y, - x + x**3 + perturbation]).T
-    v = np.column_stack([y, - x + x**3])
     return v
 
 def HamSN1D(t, u, PARAMETERS = [None]):
