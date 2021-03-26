@@ -1,11 +1,15 @@
-
+#OS junk files
+[Tt]thumbs.db
+.Rhistory
 .DS_Store
-
+__pycache__
 *.pyc
 
 .ipynb_checkpoints/*
 
-pylds/.ipynb_checkpoints/*
+ldds/.ipynb_checkpoints/*
+ldds/.egg-info/*
+
 
 #Docs build files
 docs/.Rhistory
@@ -14,4 +18,6 @@ docs/.vscode/
 docs/_static/*
 docs/source/*
 
-.ipynb_checkpoints/
+# package build files
+dist/*
+build/lib/ldds
