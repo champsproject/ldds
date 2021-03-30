@@ -1,6 +1,6 @@
 # Tutorials
 
-In this folder you can find a collection of useful Notebooks containing several tutorials, in order to understand the principles and the potential of **PyDMD**. An additional PDF tutorial ([DSWeb contest winner](https://dsweb.siam.org/The-Magazine/All-Issues/dsweb-2019-contest-tutorials-on-dynamical-systems-software)) is available [here](tutorial_dsweb.pdf).
+This folder contains a collection of useful Notebooks with tutorials on how to use the **LDDS** Lagrangian descriptors Python module for analyzing the phase space structure of dynamical systems.
 
 #### [Tutorial 1](tutorial-1.ipynb)
 
@@ -53,4 +53,4 @@ LD from data 1DoF non-autonomous
 LD for 3 DoF Systems
 
 #### More to come...
-We plan to add more tutorials but the time is often against us. If you want to contribute with a notebook on a feature not covered yet we will be very happy and give you support on editing!
+We encourage contributions from users to develop Jupyter notebooks that extend the capabilities and features of the **LDDS** software package.
