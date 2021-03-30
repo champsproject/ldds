@@ -88,13 +88,12 @@ class TestContourMap(unittest.TestCase):
 
         # Load benchmark data
         hf_data = h5py.File('./benchmark_data/quadratic_ham2dof/test_M100x100_finalT10_E1e-1.h5', 'r')
-        forward_ld_benchmark = hf_data.get('LD_q1p1_q2zero')
-        forward_ld_benchmark = np.array(forward_ld_benchmark)
+        ld_benchmark = np.array(hf_data.get('LD_q1p1_q2zero'))
         hf_data.close()
 
 
         np.testing.assert_array_almost_equal(forward_ld+backward_ld, 
-                                            forward_ld_benchmark, decimal = 3)
+                                            ld_benchmark, decimal = 3)
 
 
 
