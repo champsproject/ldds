@@ -9,7 +9,7 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 import h5py
-from pylds.base import fit_pes
+from ldds.base import fit_pes
 
 def discretise_potential(coords, potential):
     """
@@ -62,7 +62,7 @@ def generate_pes_data(coords, potential, filename):
 
     pes_data = discretise_potential(coords, potential)
     
-    dirname = 'pylds/pes_files'
+    dirname = 'ldds/pes_files'
     filepath = os.path.join(dirname, filename+'.hdf5')
     hf = h5py.File(filepath,'w')
     hf.create_dataset('coords', data=np.array(coords).astype('float64'))
