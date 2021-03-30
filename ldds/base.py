@@ -473,7 +473,7 @@ def EulerMaruyama_solver(t_initial, u_initial, vector_field, time_step, noise_am
 
     return t_next, u_next
 
-def compute_lagrangian_descriptor(grid_parameters, vector_field, tau, p_value=0.5, box_boundaries=False):
+def compute_lagrangian_descriptor(grid_parameters, vector_field, tau, p_value=0.5, box_boundaries=False, rtol=1.0e-4):
     """
     Returns the values of the LD function from integrated trajectories from initial conditions in phase space.
 
@@ -499,6 +499,9 @@ def compute_lagrangian_descriptor(grid_parameters, vector_field, tau, p_value=0.
     box_boundaries : list of 2-tuples, optional
         Box boundaries for escape condition of variable time integration.
         Boundaries are infinite by default.
+
+    rtol : float,
+        Relative tolerance of integration step.
 
     Returns
     -------
@@ -528,7 +531,7 @@ def compute_lagrangian_descriptor(grid_parameters, vector_field, tau, p_value=0.
         mask_y0 = np.transpose([mask for i in range(N_dim+1)]).flatten()
         y0 = ma.masked_array(y0, mask=mask_y0)
 
-    solution = solve_ivp(f, [0,tau], y0, t_eval=[tau], rtol=1.0e-4)
+    solution = solve_ivp(f, [0,tau], y0, t_eval=[tau], rtol=rtol, atol=1.0e-12)
 
     LD_values = solution.y[N_dim::N_dim+1] #values corresponding to LD
     LD_values[mask] = np.nan #mask LD values for slice
