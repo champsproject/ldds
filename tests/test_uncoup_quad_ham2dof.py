@@ -2,7 +2,8 @@
 # quartic Hamiltonian
 
 import numpy as np
-from scipy.integrate import solve_ivp
+
+import h5py
 
 import unittest
 
@@ -61,9 +62,9 @@ class TestContourMap(unittest.TestCase):
         p_value = 0.5
 
         # Mesh parameters
-        x1_min, x1_max = [-1.6, 1.6]
-        x2_min, x2_max = [-1.6, 1.6]
-        x1_res, x2_res = [60, 60]
+        x1_min, x1_max = [-1.0, 1.0]
+        x2_min, x2_max = [-1.0, 1.0]
+        x1_res, x2_res = [101, 101]
         slice_parameters = [[x1_min, x1_max, x1_res],[x2_min, x2_max, x2_res]]
 
         dims_fixed = [0,1,0,0] # Variable ordering (x1 x2 y1 y2)
@@ -85,10 +86,13 @@ class TestContourMap(unittest.TestCase):
         forward_ld = compute_lagrangian_descriptor(grid_parameters, quadratic_normalform_saddlecenter, tau)
 
         # Load benchmark data
-        forward_ld_benchmark = np.loadtxt('./benchmark_data/test.hdf5')
+        hf_data = h5py.File('./benchmark_data/quadratic_ham2dof/test_M100x100_finalT10_E1e-1.h5', 'r')
+        forward_ld_benchmark = hf_data.get('LD_q1p1_q2zero')
+        forward_ld_benchmark = np.array(forward_ld_benchmark)
+        hf_data.close()
 
 
-        np.testing.assert_array_almost_equal(forward_ld, 
+        np.testing.assert_array_almost_equal(forward_ld.transpose(), 
                                             forward_ld_benchmark, decimal = 3)
 
 
