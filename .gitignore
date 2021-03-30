@@ -14,10 +14,10 @@ ldds/.egg-info/
 
 #Docs build files
 docs/.Rhistory
-docs/_build/*
+docs/_build/
 docs/.vscode/
-docs/_static/*
-docs/source/*
+docs/_static/
+docs/source/
 
 # package build files
 dist/*
