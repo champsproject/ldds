@@ -1,5 +1,6 @@
-Repository for the Python package for Computation of Lagrangian Descriptors of Dynamical Systems.
+**LDDS**: Python package for Computation of Lagrangian Descriptors of Dynamical Systems.
 
+## Table of contents
   -   [Summary](#summary)
   -   [Installation](#installation)
   -   [Usage](#usage)
@@ -17,14 +18,11 @@ LDDS
 [![DOI](linktoZenodorepo.svg)](linktoZenodo)
 
 
-Summary
--------
+## Description
 
 
-Installation
-------------
 
-# Install minimal package dependencies before running Notebooks
+## Dependencies and installation
 
 First, make sure to use `pip` within the `conda` environment using
 
@@ -58,10 +56,21 @@ example systems as submodules, for example (SHOW HOW TO IMPORT HERE)
 
 
 ```
- 
 
-Contributing (THIS SECTION NEEDS COMPLETING)
-------------
+## Documentation
+
+**LDDS** uses [Sphinx](http://www.sphinx-doc.org/en/stable/) for documentation and is made available online [here](https://ldds.readthedocs.io/en/latest/?badge=latest#) using [Read the Docs](https://readthedocs.org/). To build the html version of the docs locally simply:
+
+```bash
+> cd docs
+> make html
+```
+
+The generated html can be viewed by opening `docs/_build/html/index.html`.
+
+
+
+## Contributing (THIS SECTION NEEDS COMPLETING)
 
 Guidelines on how to contribute to this package can be found
 
