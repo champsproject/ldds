@@ -48,5 +48,9 @@ Stochastic Systems (Saddle, Duffing, Double-Gyre)
 
 LD from data 1DoF non-autonomous
 
+#### [Tutorial 11](tutorial-12.ipynb)
+
+LD for 3 DoF Systems
+
 #### More to come...
 We plan to add more tutorials but the time is often against us. If you want to contribute with a notebook on a feature not covered yet we will be very happy and give you support on editing!
