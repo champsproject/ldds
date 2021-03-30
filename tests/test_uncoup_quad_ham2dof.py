@@ -84,6 +84,7 @@ class TestContourMap(unittest.TestCase):
 
         # Obtain LD from the package
         forward_ld = compute_lagrangian_descriptor(grid_parameters, quadratic_normalform_saddlecenter, tau)
+        backward_ld = compute_lagrangian_descriptor(grid_parameters, quadratic_normalform_saddlecenter, -tau)
 
         # Load benchmark data
         hf_data = h5py.File('./benchmark_data/quadratic_ham2dof/test_M100x100_finalT10_E1e-1.h5', 'r')
@@ -92,7 +93,7 @@ class TestContourMap(unittest.TestCase):
         hf_data.close()
 
 
-        np.testing.assert_array_almost_equal(forward_ld, 
+        np.testing.assert_array_almost_equal(forward_ld+backward_ld, 
                                             forward_ld_benchmark, decimal = 3)
 
 
