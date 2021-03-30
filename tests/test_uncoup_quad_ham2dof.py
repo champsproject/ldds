@@ -92,7 +92,7 @@ class TestContourMap(unittest.TestCase):
         hf_data.close()
 
 
-        np.testing.assert_array_almost_equal(forward_ld.transpose(), 
+        np.testing.assert_array_almost_equal(forward_ld, 
                                             forward_ld_benchmark, decimal = 3)
 
 
