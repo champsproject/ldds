@@ -9,7 +9,7 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 import h5py
-from pylds.base import fit_pes
+from ldds.base import fit_pes
 
 def discretise_potential(coords, potential):
     """
@@ -122,7 +122,7 @@ def generate_vector_field_data(sample_time_points, sample_coords, vector_field, 
 
     vector_field_data = discretise_vector_field(sample_time_points, sample_coords, vector_field)
     
-    dirname = 'pylds/vector_field_files'
+    dirname = 'ldds/vector_field_files'
     filepath = os.path.join(dirname, filename+'.hdf5')
     hf = h5py.File(filepath,'w')
     

@@ -432,7 +432,7 @@ def fit_vector_field(filename):
         returns a vector field function to be evaluated at (t, u).
         with t a float and u (n,2)-array.
     """
-    hf = h5py.File('pylds/vector_field_files/'+filename+'.hdf5','r')
+    hf = h5py.File('ldds/vector_field_files/'+filename+'.hdf5','r')
     #extract data
     time = np.array(hf.get('sample_time'))
     coords = np.array(hf.get('sample_coords'))
@@ -449,12 +449,12 @@ def fit_vector_field(filename):
     def vector_field_interpolated(t, u):
         #evaluate components of interpolated field at t
         x, y = coords
-        z_x = v_interp_t(t).T[0].reshape(len(x), len(y))
-        z_y = v_interp_t(t).T[1].reshape(len(x), len(y))
+        v_t_eval_x = v_interp_t(t).T[0].reshape(len(x), len(y))
+        v_t_eval_y = v_interp_t(t).T[1].reshape(len(x), len(y))
         
         #interpolate above data in space
-        v_x = interp2d(x, y, z_x, kind='cubic')
-        v_y = interp2d(x, y, z_y, kind='cubic')
+        v_x = interp2d(x, y, v_t_eval_x, kind='cubic')
+        v_y = interp2d(x, y, v_t_eval_y, kind='cubic')
         
         #evaluate components of interpolated field at u
         v_x_eval = np.array(list(map(lambda a: vector_field_wrap(v_x, a), u)))
