@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Module description ...
 
@@ -15,7 +16,7 @@ from functools import reduce
 from scipy.interpolate import RectBivariateSpline, CubicSpline
 from scipy.interpolate import interp1d, interp2d
 from scipy.optimize import brentq
-from pylds.hamiltonians import Hamiltonian_from_potential
+from ldds.hamiltonians import Hamiltonian_from_potential
 
 def remaining_coordinate_quadratic(phase_space_axes, H0, Hamiltonian, momentum_sign):
     """
@@ -439,13 +440,13 @@ def fit_vector_field(filename):
     
     hf.close()
     
+    #interpolate data in time 
+    v_interp_t = lambda t: interp1d(time, data.T, kind='cubic')(t).T
+    
     def vector_field_wrap(v, u):
         return v(u[0],u[1])
     
     def vector_field_interpolated(t, u):
-        #interpolate data in time 
-        v_interp_t = lambda t: interp1d(time, data.T, kind='cubic')(t).T
-        
         #evaluate components of interpolated field at t
         x, y = coords
         z_x = v_interp_t(t).T[0].reshape(len(x), len(y))
