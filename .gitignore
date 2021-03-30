@@ -5,11 +5,11 @@
 __pycache__
 *.pyc
 
-.ipynb_checkpoints/*
-ldds.egg-info/*
+.ipynb_checkpoints/
+ldds.egg-info/
 
-ldds/.ipynb_checkpoints/*
-ldds/.egg-info/*
+ldds/.ipynb_checkpoints/
+ldds/.egg-info/
 
 
 #Docs build files
