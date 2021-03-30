@@ -10,6 +10,7 @@ ldds.egg-info/
 
 ldds/.ipynb_checkpoints/
 ldds/.egg-info/
+tests/.ipynb_checkpoints/
 
 
 #Docs build files
