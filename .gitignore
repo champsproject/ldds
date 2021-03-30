@@ -21,3 +21,5 @@ docs/source/*
 # package build files
 dist/*
 build/lib/ldds
+
+tutorials/.ipynb_checkpoints/
