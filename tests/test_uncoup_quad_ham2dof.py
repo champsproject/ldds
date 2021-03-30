@@ -83,8 +83,8 @@ class TestContourMap(unittest.TestCase):
         
 
         # Obtain LD from the package
-        forward_ld = compute_lagrangian_descriptor(grid_parameters, quadratic_normalform_saddlecenter, tau)
-        backward_ld = compute_lagrangian_descriptor(grid_parameters, quadratic_normalform_saddlecenter, -tau)
+        forward_ld = compute_lagrangian_descriptor(grid_parameters, quadratic_normalform_saddlecenter, tau, rtol=1.0e-8)
+        backward_ld = compute_lagrangian_descriptor(grid_parameters, quadratic_normalform_saddlecenter, -tau, rtol=1.0e-8)
 
         # Load benchmark data
         hf_data = h5py.File('./benchmark_data/quadratic_ham2dof/test_M100x100_finalT10_E1e-1.h5', 'r')
