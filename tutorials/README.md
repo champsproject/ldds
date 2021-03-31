@@ -22,7 +22,7 @@ How to create a 1 DoF system of your choice
 
 #### [Tutorial 5](tutorial-5.ipynb)
 
-2 DoF Henon-Heiles y Index-1 saddle (Explain different slices) (Fix time and variable time)
+2 DoF Henon-Heiles and Index-1 saddle (Explain different slices) (Fix time and variable time)
 
 #### [Tutorial 6](tutorial-6.ipynb)
 
@@ -48,7 +48,7 @@ Stochastic Systems (Saddle, Duffing, Double-Gyre)
 
 LD from data 1DoF non-autonomous
 
-#### [Tutorial 11](tutorial-12.ipynb)
+#### [Tutorial 12](tutorial-12.ipynb)
 
 LD for 3 DoF Systems
 
