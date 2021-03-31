@@ -139,10 +139,10 @@ def HamSN1D(t, u, PARAMETERS = [None]):
     v = np.column_stack([ y, -x -x**2])
     return v
 
-def forcing(t, u, perturbation_params = [1, 0.15, 0.5]):
+def forcing(t, u, perturbation_params = [0, 1, 0.15, 0.5]):
     """
     Returns vector field for a perturbation.
-    Number of model parameters: 3. perturbation_params = [perturbation_type, amplitude, frequency]
+    Number of model parameters: 3. perturbation_params = [phase_shift, perturbation_type, amplitude, frequency]
     Functional form: v = (, ), with u = (x, y)
 
     Parameters
@@ -153,7 +153,7 @@ def forcing(t, u, perturbation_params = [1, 0.15, 0.5]):
     u : ndarray, shape(n,)
         Points in phase space.
 
-    perturbation_params : list of floats, [perturbation_type, amplitude, frequency]
+    perturbation_params : list of floats, [phase_shift, perturbation_type, amplitude, frequency]
         Perturbation parameters.
 
     Returns
@@ -165,12 +165,12 @@ def forcing(t, u, perturbation_params = [1, 0.15, 0.5]):
     perturbation = np.zeros(u.shape)
 
     # Perturbation parameters
-    perturbation_type, amplitude, freq = perturbation_params
+    phase_shift, perturbation_type, amplitude, freq = perturbation_params
 
     if perturbation_type == 1:
-        perturbation = perturbation + np.array([0, amplitude * np.sin(freq*t)])
+        perturbation = perturbation + np.array([0, amplitude * np.sin(phase_shift + freq*t)])
     elif perturbation_type == 2:
-        perturbation = perturbation + np.array([0, amplitude * np.sin(freq*t) / np.cosh(t)])
+        perturbation = perturbation + np.array([0, amplitude * np.sin(phase_shift + freq*t)/np.cosh(t)])
 
     return perturbation
 
