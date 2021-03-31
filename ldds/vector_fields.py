@@ -166,11 +166,12 @@ def forcing(t, u, perturbation_params = [0, 1, 0.15, 0.5]):
 
     # Perturbation parameters
     phase_shift, perturbation_type, amplitude, freq = perturbation_params
+    time = t - phase_shift
 
     if perturbation_type == 1:
-        perturbation = perturbation + np.array([0, amplitude * np.sin(phase_shift + freq*t)])
+        perturbation = perturbation + np.array([0, amplitude * np.sin(freq*time)])
     elif perturbation_type == 2:
-        perturbation = perturbation + np.array([0, amplitude * np.sin(phase_shift + freq*t)/np.cosh(t)])
+        perturbation = perturbation + np.array([0, amplitude * np.sin(freq*time)/np.cosh(time)])
 
     return perturbation
 
