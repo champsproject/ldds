@@ -65,8 +65,8 @@ def generate_pes_data(coords, potential, filename):
     dirname = 'ldds/pes_files'
     filepath = os.path.join(dirname, filename+'.hdf5')
     hf = h5py.File(filepath,'w')
-    hf.create_dataset('coords', data=np.array(coords).astype('float32'))
-    hf.create_dataset('pes_data', data=pes_data.astype('float32'))
+    hf.create_dataset('coords', data=np.array(coords).astype('float64'))
+    hf.create_dataset('pes_data', data=pes_data.astype('float64'))
     hf.close()
 
 def discretise_vector_field(sample_time_points, sample_coords, vector_field):
@@ -126,8 +126,8 @@ def generate_vector_field_data(sample_time_points, sample_coords, vector_field, 
     filepath = os.path.join(dirname, filename+'.hdf5')
     hf = h5py.File(filepath,'w')
     
-    hf.create_dataset('sample_time', data=np.array(sample_time_points).astype('float32'))
-    hf.create_dataset('sample_coords', data=np.array(sample_coords).astype('float32'))
-    hf.create_dataset('vector_field_data', data=vector_field_data.astype('float32'))
+    hf.create_dataset('sample_time', data=np.array(sample_time_points).astype('float64'))
+    hf.create_dataset('sample_coords', data=np.array(sample_coords).astype('float64'))
+    hf.create_dataset('vector_field_data', data=vector_field_data.astype('float64'))
     
     hf.close()
