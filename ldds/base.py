@@ -544,5 +544,6 @@ def compute_lagrangian_descriptor(grid_parameters, vector_field, tau, p_value=0.
     else:
         return LD**(1/p_value)
 
+
 __author__ = 'Broncio Aguilar-Sanjuan, Victor-Jose Garcia-Garrido, Vladimir Krajnak, Shibabrat Naik'
 __status__ = 'Development'
