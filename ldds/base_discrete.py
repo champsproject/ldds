@@ -1,6 +1,6 @@
 import numpy as np
 from operator import itemgetter
-from pylds.base import generate_points, lagrangian_descriptor
+from ldds.base import generate_points, lagrangian_descriptor
 
 def check_if_points_escape_box(u, box_boundaries):
     """
