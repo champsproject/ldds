@@ -36,8 +36,15 @@ def draw_ld(fig, axis, LD, grid_parameters, subplot_title, interactive, cmap='vi
         #n-DoF systems
         slice_parameters = grid_parameters['slice_parameters'] # 2n-D grid
         dims_slice = np.array(grid_parameters['dims_slice'])
-        slice_axes_labels = np.array(['$x$','$y$','$p_x$','$p_y$'])
-        slice_axes_labels = slice_axes_labels[dims_slice==1]
+        if len(dims_slice) == 2:
+            labels = ['$x$', '$p_x$']
+        elif len(dims_slice) == 4:
+            labels = np.array(['$x$','$y$','$p_x$','$p_y$'])
+        elif len(dims_slice) == 6:
+            labels = np.array(['$x$','$y$','$z$','$p_x$','$p_y$','$p_z$'])
+        else:
+            labels = np.array(['']*len(dims_slice))
+        slice_axes_labels = labels[dims_slice==1]
     else:
         #1-DoF systems
         slice_parameters = grid_parameters # 2-D grid
