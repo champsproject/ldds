@@ -5,12 +5,13 @@ Reference:
 - Surename1, Forename1 Initials., Surename2, Forename2 Initials, YEAR. Publication/Book title
 Publisher, Number(Volume No), pp.142-161.
 """
-
-import ldds
+import os
 import sys
+import ldds
 import numpy as np
 import numpy.ma as ma
 import h5py
+import pathlib
 from scipy.integrate import solve_ivp
 from functools import reduce
 from scipy.interpolate import RectBivariateSpline, CubicSpline
@@ -375,8 +376,10 @@ def fit_pes(filename, clip_max = False):
     fspline : function
         fspline returns the potential at (x0) or (x0,y0).
     """
-
-    hf = h5py.File('pylds/pes_files/'+filename+'.hdf5','r')
+    dirname = "pes_files"
+    dirpath = os.path.join(pathlib.Path(__file__).parent.absolute(), dirname)
+    filepath = os.path.join(dirpath, filename+'.hdf5')
+    hf = h5py.File(filepath,'r')
     coords = np.array(hf.get('coords'))
     pes_data = np.array(hf.get('pes_data'))
     hf.close()

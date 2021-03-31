@@ -6,6 +6,8 @@ Created on Thu Feb 13 12:36:43 2020
 @author: vk17590
 """
 import os
+import pathlib
+from os.path import abspath
 import numpy as np
 import matplotlib.pyplot as plt
 import h5py
@@ -62,8 +64,9 @@ def generate_pes_data(coords, potential, filename):
 
     pes_data = discretise_potential(coords, potential)
     
-    dirname = 'ldds/pes_files'
-    filepath = os.path.join(dirname, filename+'.hdf5')
+    dirname = "pes_files"
+    dirpath = os.path.join(pathlib.Path(__file__).parent.absolute(), dirname)
+    filepath = os.path.join(dirpath, filename+'.hdf5')
     hf = h5py.File(filepath,'w')
     hf.create_dataset('coords', data=np.array(coords).astype('float64'))
     hf.create_dataset('pes_data', data=pes_data.astype('float64'))
