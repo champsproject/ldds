@@ -117,6 +117,11 @@ class TestContourMap(unittest.TestCase):
         ld_benchmark = np.array(hf_data.get('LD_q1q2_p1zero'))
         hf_data.close()
 
+        np.testing.assert_array_almost_equal(forward_ld+backward_ld, 
+                                            ld_benchmark, decimal = 3)
+
+                                            
+
 
 if __name__ == "__main__":
     unittest.main()
