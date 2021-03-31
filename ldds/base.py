@@ -377,7 +377,7 @@ def fit_pes(filename, clip_max = False):
         fspline returns the potential at (x0) or (x0,y0).
     """
 
-    hf = h5py.File('pylds/pes_files/'+filename+'.hdf5','r')
+    hf = h5py.File('ldds/pes_files/'+filename+'.hdf5','r')
     coords = np.array(hf.get('coords'))
     pes_data = np.array(hf.get('pes_data'))
     hf.close()
