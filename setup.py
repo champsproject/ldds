@@ -16,7 +16,7 @@ with open('LICENSE') as f:
 with open('requirements.txt') as f:
     requirements = f.read().splitlines()
 
-package_name = 'pyLD'
+package_name = 'ldds'
 version_num = '0.1.0'
 
 def main():
@@ -34,14 +34,13 @@ def main():
         
         author_email = '.',
         
-        url = 'https://github.com/broncio123/lds',
+        url = 'https://github.com/champsproject/ldds',
         
         license = license,
         
         # packages=find_packages(exclude=('test','data', 'docs')),
-        packages=['pyld'],
-        package_dir={'pyld': 'pylds'},
-        # package_dir={'uposham': 'src/'},
+        packages=['ldds'],
+        package_dir={'ldds': 'ldds'},
 
         install_requires = requirements
     )
