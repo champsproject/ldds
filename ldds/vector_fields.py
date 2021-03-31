@@ -166,7 +166,7 @@ def forcing(t, u, perturbation_params = [0, 1, 0.15, 0.5]):
 
     # Perturbation parameters
     phase_shift, perturbation_type, amplitude, freq = perturbation_params
-    time = t - phase_shift
+    time = t + phase_shift
 
     if perturbation_type == 1:
         perturbation = perturbation + np.array([0, amplitude * np.sin(freq*time)])
@@ -245,14 +245,14 @@ def quadratic_normalform_saddlecenter(t, u, PARAMETERS = [1,1]):
     return v
 
 
-def DoubleGyre(t, u, PARAMETERS = [0.25, 2*np.pi, 0, 0, 1, 0.25]):
+def DoubleGyre(t, u, PARAMETERS = [0, 0.25, 2*np.pi, 0, 0, 1, 0.25]):
     """
     Returns 2D Double Gyre vector field at time t, for an array of points in phase space.
-    Number of model parameters: 6 . PARAMETERS = [A, phi, psi, mu, s, epsilon]
+    Number of model parameters: 6 . PARAMETERS = [phase_shift, A, phi, psi, mu, s, epsilon]
     Functional form: 
     
-    vx = -pi*A*sin(pi*f(t, x)/s)*cos(pi*y/s) - mu*x
-    vy =  pi*A*cos(pi*f(t, x)/s)*sin(pi*y/s)*df(t,x)/dx - mu*y
+    vx = -pi*A*sin(pi*f(t + phase_shift, x)/s)*cos(pi*y/s) - mu*x
+    vy =  pi*A*cos(pi*f(t + phase_shift, x)/s)*sin(pi*y/s)*df(t + phase_shift,x)/dx - mu*y
     
     with
     
@@ -274,12 +274,14 @@ def DoubleGyre(t, u, PARAMETERS = [0.25, 2*np.pi, 0, 0, 1, 0.25]):
     """
     x, y = u.T
     # model parameter
-    A, phi, psi, mu, s, epsilon = PARAMETERS
+    phase_shift, A, phi, psi, mu, s, epsilon = PARAMETERS
+    
+    time = t + phase_shift
     # vector field components
     def f(t, x): return epsilon*np.sin(phi*t + psi)*x**2 + (1-2*epsilon*np.sin(phi*t + psi))*x
     def df_dx(t,x): return 2*epsilon*np.sin(phi*t + psi)*x + (1-2*epsilon*np.sin(phi*t + psi))
-    v_x = -np.pi*A*np.sin(np.pi*f(t, x)/s)*np.cos(np.pi*y/s) - mu*x
-    v_y =  np.pi*A*np.cos(np.pi*f(t, x)/s)*np.sin(np.pi*y/s)*df_dx(t,x) - mu*y
+    v_x = -np.pi*A*np.sin(np.pi*f(time, x)/s)*np.cos(np.pi*y/s) - mu*x
+    v_y =  np.pi*A*np.cos(np.pi*f(time, x)/s)*np.sin(np.pi*y/s)*df_dx(time,x) - mu*y
     v   = np.column_stack([v_x, v_y])
     return v
 
