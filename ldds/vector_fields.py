@@ -170,7 +170,7 @@ def forcing(t, u, perturbation_params = [1, 0.15, 0.5]):
     if perturbation_type == 1:
         perturbation = perturbation + np.array([0, amplitude * np.sin(freq*t)])
     elif perturbation_type == 2:
-        perturbation = perturbation + np.array([0, amplitude * np.sech(t) * np.sin(freq*t)])
+        perturbation = perturbation + np.array([0, amplitude * np.sin(freq*t) / np.cosh(t)])
 
     return perturbation
 
