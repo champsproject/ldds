@@ -2,7 +2,8 @@
 # quartic Hamiltonian
 
 import numpy as np
-from scipy.integrate import solve_ivp
+
+import h5py
 
 import unittest
 
@@ -11,12 +12,6 @@ from ldds.base import compute_lagrangian_descriptor
 from ldds.vector_fields import quadratic_normalform_saddlecenter
 from ldds.hamiltonians import quadratic_normal_form_saddlecenter_ham
 
-# import uposham.uncoupled_quartic_hamiltonian as uncoupled
-# import uposham.differential_correction_uncoupled as diff_corr_unc
-# import uposham.turning_pt_uncoupled as turning_pt_uncoupled 
-# import uposham.turning_pt_coord_diff_uncoupled as tpcd_uncoupled 
-
-# import uposham.differential_correction as diffcorr
 
 import os
 # path_to_data = os.path.join(os.path.dirname(os.path.dirname(__file__)), \
@@ -47,12 +42,14 @@ class TestContourMap(unittest.TestCase):
     """
 
     def test_uncoupled_ham2dof(self):
-        """ Compare with provided data for the system """
+        """ 
+        Compare with provided data for the system on (q1,p1) and (q1,q2) pair of coordinates 
+        """
     
         Hamiltonian = quadratic_normal_form_saddlecenter_ham
         vector_field = quadratic_normalform_saddlecenter
 
-        H0 = 0.1
+        H0 = 0.1 # energy of the initial conditions
 
         # Integration parameters
         tau = 10
@@ -61,9 +58,9 @@ class TestContourMap(unittest.TestCase):
         p_value = 0.5
 
         # Mesh parameters
-        x1_min, x1_max = [-1.6, 1.6]
-        x2_min, x2_max = [-1.6, 1.6]
-        x1_res, x2_res = [60, 60]
+        x1_min, x1_max = [-1.0, 1.0]
+        x2_min, x2_max = [-1.0, 1.0]
+        x1_res, x2_res = [101, 101]
         slice_parameters = [[x1_min, x1_max, x1_res],[x2_min, x2_max, x2_res]]
 
         dims_fixed = [0,1,0,0] # Variable ordering (x1 x2 y1 y2)
@@ -82,15 +79,43 @@ class TestContourMap(unittest.TestCase):
         
 
         # Obtain LD from the package
-        forward_ld = compute_lagrangian_descriptor(grid_parameters, quadratic_normalform_saddlecenter, tau)
+        forward_ld = compute_lagrangian_descriptor(grid_parameters, quadratic_normalform_saddlecenter, tau, rtol=1.0e-8)
+        backward_ld = compute_lagrangian_descriptor(grid_parameters, quadratic_normalform_saddlecenter, -tau, rtol=1.0e-8)
 
         # Load benchmark data
-        forward_ld_benchmark = np.loadtxt('./benchmark_data/test.hdf5')
+        hf_data = h5py.File('./benchmark_data/quadratic_ham2dof/test_M100x100_finalT10_E1e-1_q1p1.h5', 'r')
+        ld_benchmark = np.array(hf_data.get('LD_q1p1_q2zero'))
+        hf_data.close()
 
 
-        np.testing.assert_array_almost_equal(forward_ld, 
-                                            forward_ld_benchmark, decimal = 3)
+        np.testing.assert_array_almost_equal(forward_ld+backward_ld, 
+                                            ld_benchmark, decimal = 3)
 
+
+        
+        dims_fixed = [0,0,1,0] # Variable ordering (x1 x2 y1 y2)
+        dims_fixed_values = [0] # This can also be an array of values
+        dims_slice = [1,1,0,0] # Visualisation slice
+        momentum_sign = 1 # Direction of momentum that defines the slice - (1) positive / (-1) negative
+        grid_parameters = {
+            'slice_parameters' : slice_parameters,
+            'dims_slice' : dims_slice,
+            'dims_fixed' : dims_fixed,
+            'dims_fixed_values' : dims_fixed_values,
+            'momentum_sign' : momentum_sign,
+            'Hamiltonian': Hamiltonian,
+            'energy_level': H0
+        }
+        
+
+        # Obtain LD from the package
+        forward_ld = compute_lagrangian_descriptor(grid_parameters, quadratic_normalform_saddlecenter, tau, rtol=1.0e-8)
+        backward_ld = compute_lagrangian_descriptor(grid_parameters, quadratic_normalform_saddlecenter, -tau, rtol=1.0e-8)
+
+        # Load benchmark data
+        hf_data = h5py.File('./benchmark_data/quadratic_ham2dof/test_M100x100_finalT10_E1e-1_q1q2.h5', 'r')
+        ld_benchmark = np.array(hf_data.get('LD_q1q2_p1zero'))
+        hf_data.close()
 
 
 if __name__ == "__main__":

@@ -5,18 +5,20 @@
 __pycache__
 *.pyc
 
-.ipynb_checkpoints/*
+.ipynb_checkpoints/
+ldds.egg-info/
 
-ldds/.ipynb_checkpoints/*
-ldds/.egg-info/*
+ldds/.ipynb_checkpoints/
+ldds/.egg-info/
+tests/.ipynb_checkpoints/
 
 
 #Docs build files
 docs/.Rhistory
-docs/_build/*
+docs/_build/
 docs/.vscode/
-docs/_static/*
-docs/source/*
+docs/_static/
+docs/source/
 
 # package build files
 dist/*

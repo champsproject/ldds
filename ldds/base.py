@@ -343,11 +343,11 @@ def vector_field_flat(t, points, vector_field, p_value, box_boundaries):
 
     # Define output vector field in combination with escape condition
     v = np.zeros(u.shape)
-    v[u_inbox == True] = vector_field(t, u[u_inbox == True])
+    v[u_inbox] = vector_field(t, u[u_inbox])
 
     # Calculate LD vector field
     LD_vec = np.zeros(len(u))
-    LD_vec [u_inbox == True] = lagrangian_descriptor(u[u_inbox == True], v[u_inbox == True], p_value)
+    LD_vec [u_inbox] = lagrangian_descriptor(u[u_inbox], v[u_inbox], p_value)
 
     # Add LD
     v_out=np.column_stack((v, LD_vec))
@@ -413,14 +413,14 @@ def fit_pes(filename, clip_max = False):
 def EulerMaruyama_solver(t_initial, u_initial, vector_field, time_step, noise_amplitude=[0, 0], noise_type="additive"):
     """
     Returns next time and state in the evolution of a stochastic ODE system via the Euler-Maruyama method.
-    
+
     Euler-Maruyama scheme:
-    
+
     t_next = t_initial + dt
     u_next = u_initial + v(t_initial, u_initial)*dt + b*dW
-    
+
     with u = (x, y)
-    
+
     NOTE: Depending on the 'noise_type' b will be a random constant (additive) or a vector (multiplicative).
 
     Currently only implemented for 2D vector fields.
@@ -435,12 +435,12 @@ def EulerMaruyama_solver(t_initial, u_initial, vector_field, time_step, noise_am
 
     vector_field: function
         vector field over phase space.
-        
+
     time_step : float
-    
+
     noise_amplitude : list of floats
         amplitude values multiplying Weiner process.
-        
+
     noise_type : string
         options 'additive' (default) or 'multiplicative'.
 
@@ -448,7 +448,7 @@ def EulerMaruyama_solver(t_initial, u_initial, vector_field, time_step, noise_am
     -------
     t_next : float
         next time-point in the evolution of stochastic system.
-        
+
     u_next : array_like, shape(n,)
         next states in the evolution of stochastic system.
     """
@@ -456,27 +456,27 @@ def EulerMaruyama_solver(t_initial, u_initial, vector_field, time_step, noise_am
     dt = time_step
     v  = vector_field
     b  = np.array(noise_amplitude)
-    
+
     #define Weinner process
     if noise_type == "additive":
         N_dims = u_initial.shape[1] # phase space dim
         dW = np.sqrt(abs(dt))*np.random.randn(N_dims)*np.ones(u_initial.shape)
-    
+
     elif noise_type == "multiplicative":
         dW = np.sqrt(abs(dt))*np.random.randn(*u_initial.shape)
-    
+
     else:
         error_mssg = ("ERROR: noise_type uknown. "
                       "Set as 'additive' or 'multiplicative'")
         print(error_mssg)
-    
+
     #Euler-Maruyama iterative solver
     t_next = t_initial + dt
     u_next = u_initial + v(t_initial, u_initial)*dt + b*dW
 
     return t_next, u_next
 
-def compute_lagrangian_descriptor(grid_parameters, vector_field, tau, p_value=0.5, box_boundaries=False):
+def compute_lagrangian_descriptor(grid_parameters, vector_field, tau, p_value=0.5, box_boundaries=False, rtol=1.0e-4):
     """
     Returns the values of the LD function from integrated trajectories from initial conditions in phase space.
 
@@ -502,6 +502,9 @@ def compute_lagrangian_descriptor(grid_parameters, vector_field, tau, p_value=0.
     box_boundaries : list of 2-tuples, optional
         Box boundaries for escape condition of variable time integration.
         Boundaries are infinite by default.
+
+    rtol : float,
+        Relative tolerance of integration step.
 
     Returns
     -------
@@ -531,13 +534,13 @@ def compute_lagrangian_descriptor(grid_parameters, vector_field, tau, p_value=0.
         mask_y0 = np.transpose([mask for i in range(N_dim+1)]).flatten()
         y0 = ma.masked_array(y0, mask=mask_y0)
 
-    solution = solve_ivp(f, [0,tau], y0, t_eval=[tau], rtol=2.0e-4)
+    solution = solve_ivp(f, [0,tau], y0, t_eval=[tau], rtol=rtol, atol=1.0e-12)
 
     LD_values = solution.y[N_dim::N_dim+1] #values corresponding to LD
+    LD_values[mask] = np.nan #mask LD values for slice
 
     N_points_slice_axes = slice_parameters[:,-1].astype('int')
     LD = np.abs(LD_values).reshape(*N_points_slice_axes) #reshape to 2-D array
-    LD = ma.masked_array(LD, mask=mask) #mask LD values for slice
 
     if p_value<=1:
         return LD
