@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from ldds.base import compute_lagrangian_descriptor
 from ldds.tools import draw_all_lds
 
@@ -17,7 +16,7 @@ p_value = 1/2
 H0 = 1 # Energy
 ax1_min,ax1_max = [-2, 2]
 ax2_min,ax2_max = [-2, 2]
-N1, N2 = [100, 100]
+N1, N2 = [300, 300]
 
 # Box escape condition
 box_boundaries = False
