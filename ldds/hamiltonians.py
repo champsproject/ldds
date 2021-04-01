@@ -190,6 +190,32 @@ def NFSaddle_potential(positions, PARAMETERS = None):
     V = 0.5*(y*y - x*x)
     return V
 
+def quadratic_normal_form_saddlecentercenter_ham(t, u):
+    """
+    Hamiltonian for a 3DoF Saddle.
+    Functional form: H = 1/2(p_x**2 + p_y**2 + p_z**2) + 1/2(y**2 + z**2 - x**2), with u = (x, y, z, p_x, p_y, p_z).
+
+    Parameters
+    ----------
+    t : float
+        Time. (This Hamiltonian is independent of time.)
+
+    u : ndarray, shape(n,)
+        Points in phase space.
+
+    Returns
+    -------
+    H : ndarray, shape(n,)
+        Hamiltonian at points u, in phase space at time t.
+
+    """
+    points_positions = u.T[:3]
+    points_momenta = u.T[3:6]
+    x, y, z = points_positions
+    p_x, p_y, p_z = points_momenta
+    H = 0.5*(p_x**2 + p_y**2 + p_z**2 + y**2 +z**2 - x**2)
+    return H
+
 def kinetic_squares(t,points_momenta):
     """
     Kinetic energy of the form sum-of-squares.

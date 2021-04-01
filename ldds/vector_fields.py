@@ -258,5 +258,45 @@ def DoubleGyre(t, u, PARAMETERS = [0, 0.25, 2*np.pi, 0, 0, 1, 0.25]):
     return v
 
 
+def quadratic_normalform_saddlecentercenter(t, u, PARAMETERS = [1,1,1]):
+    """
+    Returns vector field for a 3D index-1 saddle.
+    Functional form: v = (p_x, p_y, p_z, x, -y, -z), with u = (x, y, z, p_x, p_y, p_z)
+
+    Parameters
+    ----------
+    t : float
+        Time. (This vector field is independent of time.)
+
+    u : ndarray, shape(n,)
+        Points in phase space.
+
+    PARAMETERS : list of floats
+        Vector field parameters.
+
+    Returns
+    -------
+    v : ndarray, shape(n,)
+        Vector field at points u and time t.
+    """
+    N_dim = u.shape[-1]
+    points_positions = u.T[:int(N_dim/2)]
+    points_momenta = u.T[int(N_dim/2):]
+    x, y, z = points_positions
+    p_x, p_y, p_z = points_momenta
+
+    # Hamiltonian Model Parameter
+    # None
+
+    # Vector field defintion
+    v_x   =  p_x
+    v_y   =  p_y
+    v_z   =  p_z
+    v_p_x = PARAMETERS[0]*x
+    v_p_y = -PARAMETERS[1]*y
+    v_p_z = -PARAMETERS[2]*z
+    v = np.column_stack([v_x, v_y, v_z, v_p_x, v_p_y, v_p_z])
+    return v
+
 __author__ = 'Broncio Aguilar-Sanjuan, Victor-Jose Garcia-Garrido, Vladimir Krajnak, Shibabrat Naik'
 __status__ = 'Development'
