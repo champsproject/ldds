@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Module description ...
 
@@ -15,6 +16,7 @@ import pathlib
 from scipy.integrate import solve_ivp
 from functools import reduce
 from scipy.interpolate import RectBivariateSpline, CubicSpline
+from scipy.interpolate import interp1d, interp2d
 from scipy.optimize import brentq
 from ldds.hamiltonians import Hamiltonian_from_potential
 
@@ -410,6 +412,62 @@ def fit_pes(filename, clip_max = False):
 
     return fspline
 
+def fit_vector_field(filename):
+    """
+    Returns a 2-dimensional function (vector field) fitted to 
+    data located in pylds/vector_field_files/filename.hdf5.
+
+    Parameters
+    ----------
+    filename : string
+        Name of file containing data:
+        sample_time_points: 1d array,
+            time-points in a sample time-interval.
+
+        sample_coords : list of ndarrays,
+            [x,y] contain coordinates.
+            
+        vector_field_data : ndarray, len(t),
+            Array of function/vector field values.
+    
+    Returns
+    -------
+    vector_field_interpolated : function
+        returns a vector field function to be evaluated at (t, u).
+        with t a float and u (n,2)-array.
+    """
+    hf = h5py.File('ldds/vector_field_files/'+filename+'.hdf5','r')
+    #extract data
+    time = np.array(hf.get('sample_time'))
+    coords = np.array(hf.get('sample_coords'))
+    data = np.array(hf.get('vector_field_data'))
+    
+    hf.close()
+    
+    #interpolate data in time 
+    v_interp_t = lambda t: interp1d(time, data.T, kind='cubic')(t).T
+    
+    def vector_field_wrap(v, u):
+        return v(u[0],u[1])
+    
+    def vector_field_interpolated(t, u):
+        #evaluate components of interpolated field at t
+        x, y = coords
+        v_t_eval_x = v_interp_t(t).T[0].reshape(len(x), len(y))
+        v_t_eval_y = v_interp_t(t).T[1].reshape(len(x), len(y))
+        
+        #interpolate above data in space
+        v_x = interp2d(x, y, v_t_eval_x, kind='cubic')
+        v_y = interp2d(x, y, v_t_eval_y, kind='cubic')
+        
+        #evaluate components of interpolated field at u
+        v_x_eval = np.array(list(map(lambda a: vector_field_wrap(v_x, a), u)))
+        v_y_eval = np.array(list(map(lambda a: vector_field_wrap(v_y, a), u)))
+        
+        return np.column_stack([v_x_eval, v_y_eval])
+    
+    return vector_field_interpolated
+
 def EulerMaruyama_solver(t_initial, u_initial, vector_field, time_step, noise_amplitude=[0, 0], noise_type="additive"):
     """
     Returns next time and state in the evolution of a stochastic ODE system via the Euler-Maruyama method.
@@ -546,6 +604,7 @@ def compute_lagrangian_descriptor(grid_parameters, vector_field, tau, p_value=0.
         return LD
     else:
         return LD**(1/p_value)
+
 
 __author__ = 'Broncio Aguilar-Sanjuan, Victor-Jose Garcia-Garrido, Vladimir Krajnak, Shibabrat Naik'
 __status__ = 'Development'

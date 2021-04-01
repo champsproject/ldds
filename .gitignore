@@ -24,6 +24,4 @@ docs/source/
 dist/*
 build/lib/ldds
 
-
-
 tutorials/.ipynb_checkpoints/

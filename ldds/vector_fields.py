@@ -32,7 +32,7 @@ def HamSaddle1D(t, u, PARAMETERS = [1]):
     """
     Returns vector field for a 1DoF saddle at time t, for an array of points in phase space.
     Number of model parameters: 1 . PARAMETERS = [lamda]
-    Functional form: v = (lamda*y, - lamda*x), with u = (x, y)
+    Functional form: v = (lamda*y, lamda*x), with u = (x, y)
 
     Parameters
     ----------
