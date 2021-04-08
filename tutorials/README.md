@@ -43,5 +43,9 @@ Stochastic Systems (Saddle, Duffing, Double-Gyre)
 
 Compute Lagrangian Descriptor when vector field given as dataset: Non-autonomous Duffing
 
+#### [Tutorial 12](tutorial-12.ipynb) (DONE)
+
+Influence of Integration Time and Grid Resolution on the Computation of Lagrangian Descriptors
+
 #### More to come...
 We encourage contributions from users to develop Jupyter notebooks that extend the capabilities and features of the **LDDS** software package.
