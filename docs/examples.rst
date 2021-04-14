@@ -122,6 +122,15 @@ and its associated vector field is:
 
 5. Non-autonomous double-gyre flow
 
+The double-gyre flow is a classical toy model used in Geophysical fluid dynamics to explore lagrangian coherent structures. The non-autonomous two-dimensional dynamical system that describes the vector field is given by:
+
+.. math::
+   \begin{align}
+   \dot{x} &= -\pi A \sin\left(\dfrac{\pi f(x,t)}{s}\right) \cos\left(\dfrac{\pi y}{s}\right) - \mu x \\[.2cm]
+   \dot{y} &= \pi A \cos\left(\dfrac{\pi f(x,t)}{s}\right) \sin\left(\dfrac{\pi y}{s}\right) \dfrac{\partial f}{\partial x}\left(x,t\right) - \mu y
+   \end{align} 
+
+where we have that :math:`f(x,t) = \varepsilon \sin(\omega t + \phi) x^2 + \left(1-2\varepsilon \sin(\omega t + \phi)\right) x`
 
 Four dimensional phase space
 ----------------------------
