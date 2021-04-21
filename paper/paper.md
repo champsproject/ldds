@@ -30,7 +30,7 @@ affiliations:
 
 ## Statement of Need
 
-Nonlinear dynamical systems are ubiquitous in natural and engineering sciences, for example, fluid mechanics, theoretical chemistry, ship dynamics, rigid body dynamics, atomic physics, solid mechanics, condensed matter physics, mathematical biology, oceanography, meteorology, celestial mechanics [see @wiggins1994normally for a list of collated references]. There has been many advances in understanding phenomena across these disciplines using the geometric viewpoint of the solutions and the underlying structures in the phase space. Chief among these phase space structures are the invariant manifolds that form a barrier between dynamically distinct solutions. In most nonlinear systems, the invariant manifolds are computed using numerical techniques that rely on some form of linearization around equilibrium points followed by continuation and globalization. However, these methods become computationally expensive and challenging when applied to the high-dimensional phase space of chemical reactions [rephrase the introduction from the CNSNS paper] or vector fields defined using numerical simulation or experimental data. This points to the need for techniques that can be paired with trajectory calculations, without excessive computational overhead and at the same time can be visualized along with trajectory data. The Python package, `LDDS`, serves this need for analyzing deterministic and stochastic, continuous and discrete high-dimensional nonlinear dynamical systems described either by an analytical vector field or a trajectory data obtained from numerical simulations or experiments.
+Nonlinear dynamical systems are ubiquitous in natural and engineering sciences, for example, fluid mechanics, theoretical chemistry, ship dynamics, rigid body dynamics, atomic physics, solid mechanics, condensed matter physics, mathematical biology, oceanography, meteorology, celestial mechanics [see @wiggins1994normally for a list of collated references]. There has been many advances in understanding phenomena across these disciplines using the geometric viewpoint of the solutions and the underlying structures in the phase space. Chief among these phase space structures are the invariant manifolds that form a barrier between dynamically distinct solutions. In most nonlinear systems, the invariant manifolds are computed using numerical techniques that rely on some form of linearization around equilibrium points followed by continuation and globalization. However, these methods become computationally expensive and challenging when applied to the high-dimensional phase space of chemical reactions or vector fields defined using numerical simulation or experimental data. This points to the need for techniques that can be paired with trajectory calculations, without excessive computational overhead and at the same time can be visualized along with trajectory data. The Python package, `LDDS`, serves this need for analyzing deterministic and stochastic, continuous and discrete high-dimensional nonlinear dynamical systems described either by an analytical vector field or a trajectory data obtained from numerical simulations or experiments.
 
 To the best of our knowledge, no other software for calculating Lagrangian descriptors exists. A variety of computational tools is available for competing approaches popular in fluid mechanics, such as the identification of Lagrangian coherent structures via finite-time Lyapunov exponents [@lagrangian, @dgftle, @lcstool, @libcfd2lcs, @lcsmatlabkit, @activeBarriers] and finite-size Lyapunov exponents [@lagrangian] or Eulerian coherent structures [@barriertool].
 
@@ -58,6 +58,9 @@ The following dynamical systems are included in this software package as example
 
 Maps:
 * Standard map 
+
+![Lagrangian descriptor for the standard map \label{fig:standard_map}](stdMap.png)
+
 * Hénon map
 
 Flows:
@@ -67,19 +70,26 @@ Two-dimensional phase space:
 * Hamiltonian center (Forced/Unforced)..
 * Hamiltonian saddle (Forced/Unforced)..
 * Undamped Duffing oscillator (Forced/Unforced).
+
+![Lagrangian descriptor for the Duffing oscillator \label{fig:duffing}](duffing.png)
+
 * Saddle-node Hamiltonian (Forced/Unforced)..
 * Double-gyre flow.
+
+![Lagrangian descriptor for the Double-gyre with stochastic forcing \label{fig:stoch_dgyre}](stoch_dgyre.png)
 
 Four dimensional phase space:
 
 * Saddle-center Hamiltonian.
 * Hénon-Heiles Hamiltonian.
 
+![Lagrangian descriptor for the Hénon-Heiles Hamiltonian \label{fig:henon_heiles}](henonheiles.png)
+
 Six dimensional phase space:
 
 * Saddle-center-center Hamiltonian.
 
-## Visualization of Lagrangian Descriptors
+
 
 
 ## Relation to ongoing research projects
