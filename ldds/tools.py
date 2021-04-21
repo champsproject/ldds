@@ -62,12 +62,12 @@ def draw_ld(fig, axis, LD, grid_parameters, subplot_title, interactive, cmap='vi
     vmax = np.nanmax(LD)
     interact_step = (vmax-vmin)/n_levels
 
-    con1 = axis.contourf(points_ax1, points_ax2, LD, cmap=cmap, levels=n_levels)
+    con = axis.contourf(points_ax1, points_ax2, LD, cmap=cmap, levels=n_levels)
     if interactive:
         @widgets.interact(clim_min=(vmin, vmax-interact_step, interact_step),clim_max=(vmin+interact_step, vmax, interact_step))
         def update(clim_min=vmin,clim_max=vmax):
             clim_max = max(clim_min+interact_step, clim_max)
-            con1.set_clim(clim_min,clim_max)
+            con.set_clim(clim_min,clim_max)
 
     axins = inset_axes(axis,
                width="5%",
@@ -78,11 +78,13 @@ def draw_ld(fig, axis, LD, grid_parameters, subplot_title, interactive, cmap='vi
                borderpad=0
                )
     ticks_gradient = np.linspace(vmin,vmax, 11)
-    fig.colorbar(con1, cax=axins, ticks=ticks_gradient, format='%.1f', orientation='vertical')
+    fig.colorbar(con, cax=axins, ticks=ticks_gradient, format='%.1f', orientation='vertical')
 
     axis.set_title(subplot_title)
     axis.set_xlabel(slice_axes_labels[0])
     axis.set_ylabel(slice_axes_labels[1])
+    
+    return con
 
 def draw_ld_pair(LD, LD_gradient, grid_parameters, plot_title, interactive, cmap_gradient):
     """
@@ -118,10 +120,10 @@ def draw_ld_pair(LD, LD_gradient, grid_parameters, plot_title, interactive, cmap
     plt.subplots_adjust(top=0.85, bottom=0.13, wspace=0.34)  #margins to accommodate boundary of interactive figure environment
     plt.suptitle(plot_title)
 
-    draw_ld(fig, ax[0], normalise(LD), grid_parameters, 'LD values', interactive=False)
-    draw_ld(fig, ax[1], LD_gradient, grid_parameters, 'LD gradient magnitude', interactive, cmap=cmap_gradient)
+    con1 = draw_ld(fig, ax[0], normalise(LD), grid_parameters, 'LD values', interactive=False)
+    con2 = draw_ld(fig, ax[1], LD_gradient, grid_parameters, 'LD gradient magnitude', interactive, cmap=cmap_gradient)
 
-    return fig, ax
+    return fig, ax, np.array((con1,con2))
 
 def normalise(A):
     """
