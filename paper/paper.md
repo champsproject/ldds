@@ -1,6 +1,5 @@
 ---
 title: 'LDDS: A python package for computing and visualizing Lagrangian Descriptors for Dynamical Systems'
-date: 8 January 2020
 bibliography: 
 - paper.bib
 - chapter1part1.bib
@@ -32,7 +31,7 @@ affiliations:
 
 Nonlinear dynamical systems are ubiquitous in natural and engineering sciences, for example, fluid mechanics, theoretical chemistry, ship dynamics, rigid body dynamics, atomic physics, solid mechanics, condensed matter physics, mathematical biology, oceanography, meteorology, celestial mechanics [see @wiggins1994normally for a list of collated references]. There has been many advances in understanding phenomena across these disciplines using the geometric viewpoint of the solutions and the underlying structures in the phase space. Chief among these phase space structures are the invariant manifolds that form a barrier between dynamically distinct solutions. In most nonlinear systems, the invariant manifolds are computed using numerical techniques that rely on some form of linearization around equilibrium points followed by continuation and globalization. However, these methods become computationally expensive and challenging when applied to the high-dimensional phase space of chemical reactions or vector fields defined using numerical simulation or experimental data. This points to the need for techniques that can be paired with trajectory calculations, without excessive computational overhead and at the same time can be visualized along with trajectory data. The Python package, `LDDS`, serves this need for analyzing deterministic and stochastic, continuous and discrete high-dimensional nonlinear dynamical systems described either by an analytical vector field or a trajectory data obtained from numerical simulations or experiments.
 
-To the best of our knowledge, no other software for calculating Lagrangian descriptors exists. A variety of computational tools is available for competing approaches popular in fluid mechanics, such as the identification of Lagrangian coherent structures via finite-time Lyapunov exponents [@lagrangian, @dgftle, @lcstool, @libcfd2lcs, @lcsmatlabkit, @activeBarriers] and finite-size Lyapunov exponents [@lagrangian] or Eulerian coherent structures [@barriertool].
+To the best of our knowledge, no other software for calculating Lagrangian descriptors exists. A variety of computational tools is available for competing approaches popular in fluid mechanics, such as the identification of Lagrangian coherent structures via finite-time Lyapunov exponents [@lagrangian], [@dgftle], [@lcstool], [@libcfd2lcs], [@lcsmatlabkit], [@activeBarriers] and finite-size Lyapunov exponents [@lagrangian] or Eulerian coherent structures [@barriertool].
 
 ## Summary and Functionalities
 
@@ -56,14 +55,16 @@ All the different features of the module, and their usage, are illustrated with 
 
 The following dynamical systems are included in this software package as examples to illustrate the application of Lagrangian descriptors:
 
-Maps:
+#### Maps:
+
 * Standard map 
 
 ![Lagrangian descriptor for the standard map \label{fig:standard_map}](stdMap.png)
 
+
 * Hénon map
 
-Flows:
+#### Flows:
 
 Two-dimensional phase space:
 
@@ -91,10 +92,9 @@ Six dimensional phase space:
 
 
 
-
 ## Relation to ongoing research projects
 
-Lagrangian descriptors form the basis of a number of past and present research projects [cite]. The common theme of all these projects is the investigation of phase space structures that drive transport in Hamiltonian systems. We have also co-authored a open community project in the form of an interactive book focused on the theory of Lagrangian descriptors [ldbook2020].
+Lagrangian descriptors form the basis of a number of past and present research projects [cite]. The common theme of all these projects is the investigation of phase space structures that govern phase space transport in nonlinear dynamical systems. We have also co-authored an open-source book project using Jupyter book [@jupyterbook_2020] on the theory and applications of Lagrangian descriptors [@ldbook2020]. This open-source package is the computational companion to that book.
 
 ## Acknowledgements
 
