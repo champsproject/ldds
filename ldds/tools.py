@@ -229,7 +229,8 @@ def draw_all_lds(LD_forward, LD_backward, grid_parameters, tau=np.nan, p_value=n
         if np.isnan(t_final):
             plot_title=''
         else:
-            plot_title = r'Total {}, $\tau={}$'.format(str_method,t_final)mask = LD_forward_gradient>-LD_backward_gradient
+            plot_title = r'Total {}, $\tau={}$'.format(str_method,t_final)
+        mask = LD_forward_gradient>-LD_backward_gradient
         LD_total_gradient = LD_backward_gradient
         LD_total_gradient[mask] = LD_forward_gradient[mask]
         plot_tuple = draw_ld_pair(LD_backward+LD_forward, LD_total_gradient, grid_parameters, plot_title, interactive, 'RdBu')
