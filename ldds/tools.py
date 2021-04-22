@@ -242,5 +242,38 @@ def draw_all_lds(LD_forward, LD_backward, grid_parameters, tau=np.nan, p_value=n
 
     return plot_handles
 
+
+def high_contrast_gradient(plot_handles, cmin, cmax):
+    """
+    Increases the contrast of gradient plots by showing values below cmin as red,
+    between cmin and cmax as white and above cmax as blue.
+
+    Parameters
+    ----------
+    plot_handles : List of tuples of the form (fig, ax, contourf_plot).
+        Contains figure instances, for examples as returned by draw_all_lds.
+        
+    cmin : float, between -1 and 0.
+        Lower threshold.
+        
+    cmax : float, between 0 and 1.
+        Upper threshold.
+    """
+
+    colors=['white']*3
+    cmap = LinearSegmentedColormap.from_list('contrast', colors, N=3)
+    cmap.set_over('tab:blue')
+    cmap.set_under('tab:red')
+    if -1<=cmin<=0<=cmax<=1:
+        plot_handles[2][2][1].cmap = cmap
+        plot_handles[2][2][1].set_clim(cmin,cmax)
+        plot_handles[1][2][1].cmap = cmap
+        plot_handles[1][2][1].set_clim(cmin,0)
+        plot_handles[0][2][1].cmap = cmap
+        plot_handles[0][2][1].set_clim(0,cmax)
+    else:
+        error_mssg = ("Error: cmin or cmax out of range.")
+        print(error_mssg)
+
 __author__ = 'Broncio Aguilar-Sanjuan, Victor-Jose Garcia-Garrido, Vladimir Krajnak, Shibabrat Naik'
 __status__ = 'Development'
