@@ -1,5 +1,5 @@
 ---
-title: 'LDDS: A python package for computing and visualizing Lagrangian Descriptors for Dynamical Systems'
+title: 'LDDS: Python package for computing and visualizing Lagrangian Descriptors for Dynamical Systems'
 bibliography: 
 - paper.bib
 - chapter1part1.bib
