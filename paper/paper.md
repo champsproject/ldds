@@ -24,7 +24,7 @@ affiliations:
     Bristol BS8 1UG, United Kingdom
 - index: 2
   name: Departamento de Física y Matemáticas, Universidad de Alcalá,
-    Alcalá de Henares, 28871, Spain
+    Madrid, 28871, Spain
 ---
 
 ## Statement of Need
@@ -36,6 +36,16 @@ To the best of our knowledge, no other software for calculating Lagrangian descr
 ## Summary and Functionalities
 
 The `LDDS` software is a Python-based module that provides the user with the capability of analyzing the phase space structures of both continuous and discrete nonlinear dynamical systems in the deterministic and stochastic settings by means of the method of Lagrangian descriptors (LDs). The main idea behind this methodology is to define a scalar function, a Lagrangian desccriptor, that accumulates the values taken by a positive function of the phase space variables of the system along the trajectory starting from a given initial condition. This operation is carried out in forward and backward time for all initial conditions on a predefined grid, and the output obtained from the method provides an indicator of the underlying geometry of the phase space of the dynamical system under study. One of the main goals we pursue with this software is to give te tools for reproducible scientific research.
+
+Given a continuous-time dynamical system:
+\begin{equation}
+\dfrac{d \mathbf{x}}{dt} = \mathbf{f}\left(\mathbf{x}(t),t\right)
+\end{equation}
+where $\mathfb{x} \in \mathbb{R}^{n}$ and $\mathfb{f}$ represents the vector field. To compute Lagrangian descriptors, select any initial condition $\mathbf{x}_0 = \mathbf{x}(t_0)$ at time $t = t_0$ and accumulate a positive function of the phase space variables along its trajectory in forward and backward in time in the interval $[t_0-\tau,t_0+\tau]$. This gives the following definition:
+\begin{equation}
+\mathcal{L}\left(\mathbf{x}_0,t_0,\tau\right) = \int_{t_0-\tau}^{t_0+\tau} g(\mathbf{x}(t);\mathbf{x}_0) \, dt
+\end{equation}
+Different versions of the Lagrangian descriptor exist in the literature where the positive function $g$ used varies. These alternative definitions include the use of trajectory arclength, the p-norm of the vector field of the dynamical sysyem, the classical action of Hamiltonian mechanis, etc. The approach provided by Lagrangian descriptors for revealing phase space structure has also been adapted to address discrete-time systems (maps) and stochastic systems.
 
 This open-source package incorporates the following features:
 
@@ -58,6 +68,9 @@ The following dynamical systems are included in this software package as example
 #### Maps:
 
 * Standard map 
+
+The standard map is a discrete-time two-dimensional dynamical system described by the following equations:
+
 
 ![Lagrangian descriptor for the standard map \label{fig:standard_map}](stdMap.png)
 
