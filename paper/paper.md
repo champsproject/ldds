@@ -69,8 +69,23 @@ The following dynamical systems are included in this software package as example
 
 * Standard map 
 
-The standard map is a discrete-time two-dimensional dynamical system described by the following equations:
+The standard map (kicked rotator) is a two-dimensional map used in dynamical systems to study a periodically 
+kicked pendulum. The equations of the discrete system are given by the expressions:
+\begin{equation}
+\begin{cases}
+x_{n+1} = x_{n} + y_{n} - \dfrac{K}{2\pi} \sin(2\pi x_{n}) \\[.2cm]
+y_{n+1} = y_{n} - \dfrac{K}{2\pi} \sin(2\pi x_{n})
+\end{cases}
+\end{equation}
+where $K$ is the parameter that controls the forcing strength of the perturbation. The inverse map is described by:
+\begin{equation}
+\begin{cases}
+    x_{n} = x_{n+1} - y_{n+1} \\[.2cm]
+    y_{n} = y_{n+1} + \dfrac{K}{2\pi} \sin(2\pi (x_{n+1} - y_{n+1}))
+\end{cases}
+\end{equation}
 
+In the following figure we show the output produced by the LDDS software package for the standard map using the model parameter value $K=1.2$.
 
 ![Lagrangian descriptor for the standard map \label{fig:standard_map}](stdMap.png)
 
@@ -85,10 +100,38 @@ Two-dimensional phase space:
 * Hamiltonian saddle (Forced/Unforced)..
 * Undamped Duffing oscillator (Forced/Unforced).
 
+The time-dependent Hamiltonian that describes the forced Doffing oscillator is:
+\begin{equation}
+ H(x,p_x,t) = \dfrac{1}{2}p_x^2 - \dfrac{\alpha}{2}x^2 + \dfrac{\beta}{4}x^4 - f(t) x
+\end{equation}
+where $\alpha$ and $\beta$ are the model parameters and $f(t)$ is the time-dependent focing added to the system. The non-autonomous vector field that defines the dynamical system is given by:
+\begin{equation}
+\begin{cases}
+   \dot{x} = \dfrac{\partial H}{\partial p_x} = f_1(x,p_x) = p_x \\[.2cm]
+   \dot{p}_x = -\dfrac{\partial H}{\partial x} = f_2(x,p_x) = \alpha x - \beta x^3 + f(t)
+\end{cases}
+\end{equation}
+
+In the following figure we show the output produced by the LDDS software package for the forced Duffing oscillator using the model parameter value $\alpha = \beta = 1$. The initial time is $t_0 = 0$ and the perturbation used is of the form $f(t) = A\sin(\omega t)$ where $A = 0.25$ and $\omega = \pi$.
+
 ![Lagrangian descriptor for the Duffing oscillator \label{fig:duffing}](duffing.png)
 
 * Saddle-node Hamiltonian (Forced/Unforced)..
 * Double-gyre flow.
+
+The stochastic dynamical system for the double gyre flow with additive noise is described by the following SDEs:
+\begin{equation}
+\begin{cases}
+   d X_t = \left(-\pi A \sin\left(\dfrac{\pi f(X_t,t)}{s}\right)\cos\left(\dfrac{\pi Y_t}{s}\right) - \mu X_t\right) \, dt + \sigma_1 \, dW_t^1 \\[.2cm]
+   d Y_t = \left(\pi A \cos\left(\dfrac{\pi f(X_t,t)}{s}\right)\sin\left(\dfrac{\pi Y_t}{s}\right)\dfrac{\partial f}{\partial x}\left(X_t,t\right) - \mu Y_t\right) \, dt + \sigma_2  \, dW_t^2
+\end{cases}
+\end{equation}
+where $W^1$ and $W^2$ are Wiener processes and we have that:
+\begin{equation}
+f(X_t,t) = \varepsilon \sin(\omega t + \phi) X_t^2 + \left(1-2\varepsilon\sin(\omega t + \phi)\right)X_t
+\end{equation}
+
+In the following figure we show the output produced by the LDDS software package for the stochastically forced double gyre using a noise amplitude of $\sigma_1 = \sigma_2 = 0.1$. The double gyre model parameters are $A = 0.25$, $\phi = 2\pi$, $\psi = \mu = 0$, $s = 1$, $\varepsilon = 0.25$, and the initial time is $t_0 = 0$.
 
 ![Lagrangian descriptor for the Double-gyre with stochastic forcing \label{fig:stoch_dgyre}](stoch_dgyre.png)
 
@@ -96,6 +139,22 @@ Four dimensional phase space:
 
 * Saddle-center Hamiltonian.
 * Hénon-Heiles Hamiltonian.
+
+The Hénon-Heiles Hamiltonian is given by the functon:
+\begin{equation}
+H(x, p_x) = \frac{1}{2} (p_x^2 + p_y^2) + x^2 y - \frac{1}{3} y^3
+\end{equation}
+where the vector field is:
+\begin{equation}
+\begin{cases}
+ \dot{x} = \dfrac{\partial H}{\partial p_x} =  p_x \\[.3cm]
+ \dot{y} = \dfrac{\partial H}{\partial p_y} = p_y  \\[.3cm]
+ \dot{p}_x = -\dfrac{\partial H}{\partial x} =  -x - 2 x y \\[.3cm]
+ \dot{p}_y = -\dfrac{\partial H}{\partial y} =  -x^2 -y + y^2
+\end{cases}
+\end{equation}
+
+IN the next figure we show the computation of Lagrangian descriptors with the LDDS software package on the phase space slice described by the condition $x = 0$, $p_x > 0$ for an energy of the system $H_0 = 1/5$.
 
 ![Lagrangian descriptor for the Hénon-Heiles Hamiltonian \label{fig:henon_heiles}](henonheiles.png)
 
