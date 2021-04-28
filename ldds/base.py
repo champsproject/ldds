@@ -381,6 +381,7 @@ def fit_pes(filename, clip_max = False):
     dirname = "pes_files"
     dirpath = os.path.join(pathlib.Path(__file__).parent.absolute(), dirname)
     filepath = os.path.join(dirpath, filename+'.hdf5')
+    
     hf = h5py.File(filepath,'r')
     coords = np.array(hf.get('coords'))
     pes_data = np.array(hf.get('pes_data'))
@@ -436,7 +437,12 @@ def fit_vector_field(filename):
         returns a vector field function to be evaluated at (t, u).
         with t a float and u (n,2)-array.
     """
-    hf = h5py.File('ldds/vector_field_files/'+filename+'.hdf5','r')
+    dirname = "vector_field_files"
+    dirpath = os.path.join(pathlib.Path(__file__).parent.absolute(), dirname)
+    filepath = os.path.join(dirpath, filename+'.hdf5')
+    
+    hf = h5py.File(filepath,'r')
+    
     #extract data
     time = np.array(hf.get('sample_time'))
     coords = np.array(hf.get('sample_coords'))

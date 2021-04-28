@@ -47,8 +47,8 @@ def discretise_potential(coords, potential):
 
 def generate_pes_data(coords, potential, filename):
     """
-    Saves 1- or 2-dimensional array of function (potential energy) values on a grid of points to pylds/pes_files/filename.hdf5.
-    File format fixed to HDF5 by default.
+    Saves 1- or 2-dimensional array of function (potential energy) values on a grid of points to 
+    ldds/pes_files/filename.hdf5. File format fixed to HDF5 by default.
 
     Parameters
     ----------
@@ -59,7 +59,7 @@ def generate_pes_data(coords, potential, filename):
         Potential to be discretised.
 
     filename : string
-	Name of hdf5 file to be saved.
+    Name of hdf5 file to be saved.
     """
 
     pes_data = discretise_potential(coords, potential)
@@ -105,7 +105,7 @@ def discretise_vector_field(sample_time_points, sample_coords, vector_field):
 def generate_vector_field_data(sample_time_points, sample_coords, vector_field, filename):
     """
     Saves 2-dimensional array of function (vector field) values on a grid of points to 
-    pylds/vector_field_files/filename.hdf5. File format fixed to HDF5 by default.
+    ldds/vector_field_files/filename.hdf5. File format fixed to HDF5 by default.
 
     Note that storage fails if x_axis and y_axis in sample_coords are not the same length.
 
@@ -123,11 +123,13 @@ def generate_vector_field_data(sample_time_points, sample_coords, vector_field, 
     filename : string
         Name of hdf5 file to be saved.
     """
-
+    
     vector_field_data = discretise_vector_field(sample_time_points, sample_coords, vector_field)
     
-    dirname = 'ldds/vector_field_files'
-    filepath = os.path.join(dirname, filename+'.hdf5')
+    dirname = "vector_field_files"
+    dirpath = os.path.join(pathlib.Path(__file__).parent.absolute(), dirname)
+    filepath = os.path.join(dirpath, filename+'.hdf5')
+    
     hf = h5py.File(filepath,'w')
     
     hf.create_dataset('sample_time', data=np.array(sample_time_points).astype('float64'))
