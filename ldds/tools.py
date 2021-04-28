@@ -63,7 +63,8 @@ def draw_ld(fig, axis, LD, grid_parameters, subplot_title, interactive, cmap='vi
     vmax = np.nanmax(LD)
     interact_step = (vmax-vmin)/n_levels
 
-    con = axis.contourf(points_ax1, points_ax2, LD, cmap=cmap, levels=n_levels)
+#    con = axis.contourf(points_ax1, points_ax2, LD, cmap=cmap, levels=n_levels)
+    con = axis.pcolormesh(points_ax1, points_ax2, LD, cmap=cmap, shading='auto')
     if interactive:
         @widgets.interact(clim_min=(vmin, vmax-interact_step, interact_step),clim_max=(vmin+interact_step, vmax, interact_step))
         def update(clim_min=vmin,clim_max=vmax):
@@ -84,10 +85,10 @@ def draw_ld(fig, axis, LD, grid_parameters, subplot_title, interactive, cmap='vi
     axis.set_title(subplot_title)
     axis.set_xlabel(slice_axes_labels[0])
     axis.set_ylabel(slice_axes_labels[1])
-    
+
     return con
 
-def draw_ld_pair(LD, LD_gradient, grid_parameters, plot_title, interactive, cmap_gradient):
+def draw_ld_pair(LD, LD_gradient_blue, LD_gradient_red, grid_parameters, plot_title, interactive, cmap_gradient):
     """
     Lagrangian descriptor plot wrapper.
 
@@ -122,9 +123,16 @@ def draw_ld_pair(LD, LD_gradient, grid_parameters, plot_title, interactive, cmap
     plt.suptitle(plot_title)
 
     con1 = draw_ld(fig, ax[0], normalise(LD), grid_parameters, 'LD values', interactive=False)
-    con2 = draw_ld(fig, ax[1], LD_gradient, grid_parameters, 'LD gradient magnitude', interactive, cmap=cmap_gradient)
+    if len(LD_gradient_blue)>0:
+        con2 = draw_ld(fig, ax[1], LD_gradient_blue, grid_parameters, 'LD gradient magnitude', interactive, cmap='Blues')
+    else:
+        con2 = np.nan
+    if len(LD_gradient_red)>0:
+        con3 = draw_ld(fig, ax[1], LD_gradient_red, grid_parameters, 'LD gradient magnitude', interactive, cmap='Reds_r')
+    else:
+        con3 = np.nan
 
-    return fig, ax, np.array((con1,con2))
+    return fig, ax, np.array((con1,con2,con3))
 
 def normalise(A):
     """
@@ -216,7 +224,7 @@ def draw_all_lds(LD_forward, LD_backward, grid_parameters, tau=np.nan, p_value=n
         else:
             plot_title = r'Forward {}, $\tau={}$'.format(str_method,t_final)
         LD_forward_gradient = get_gradient_magnitude(LD_forward)
-        plot_tuple = draw_ld_pair(LD_forward, LD_forward_gradient, grid_parameters, plot_title, interactive, 'Blues')
+        plot_tuple = draw_ld_pair(LD_forward, LD_forward_gradient, [], grid_parameters, plot_title, interactive, 'Blues')
         plot_handles.append(plot_tuple)
 
     if len(LD_backward)>0:
@@ -225,7 +233,7 @@ def draw_all_lds(LD_forward, LD_backward, grid_parameters, tau=np.nan, p_value=n
         else:
             plot_title = r'Backward {}, $\tau={}$'.format(str_method,t_final)
         LD_backward_gradient = -get_gradient_magnitude(LD_backward)
-        plot_tuple = draw_ld_pair(LD_backward, LD_backward_gradient, grid_parameters, plot_title, interactive, 'Reds_r')
+        plot_tuple = draw_ld_pair(LD_backward, [], LD_backward_gradient, grid_parameters, plot_title, interactive, 'Reds_r')
         plot_handles.append(plot_tuple)
 
     if len(LD_forward)>0 and len(LD_backward)>0:
@@ -233,12 +241,13 @@ def draw_all_lds(LD_forward, LD_backward, grid_parameters, tau=np.nan, p_value=n
             plot_title=''
         else:
             plot_title = r'Total {}, $\tau={}$'.format(str_method,t_final)
-        mask = LD_forward_gradient>-LD_backward_gradient
-        LD_total_gradient = LD_backward_gradient
-        LD_total_gradient[mask] = LD_forward_gradient[mask]
-        plot_tuple = draw_ld_pair(LD_backward+LD_forward, LD_total_gradient, grid_parameters, plot_title, interactive, 'RdBu')
+        # mask = LD_forward_gradient>-LD_backward_gradient
+        # LD_total_gradient = LD_backward_gradient
+        # LD_total_gradient[mask] = LD_forward_gradient[mask]
+        plot_tuple = draw_ld_pair(LD_backward+LD_forward, LD_forward_gradient, LD_backward_gradient, grid_parameters, plot_title, interactive, 'RdBu')
         plot_handles.append(plot_tuple)
 
+    # high_contrast_gradient(plot_handles,-0.4,0.6)
     plt.show()
 
     return plot_handles
@@ -253,25 +262,34 @@ def high_contrast_gradient(plot_handles, cmin, cmax):
     ----------
     plot_handles : List of tuples of the form (fig, ax, contourf_plot).
         Contains figure instances, for examples as returned by draw_all_lds.
-        
+
     cmin : float, between -1 and 0.
         Lower threshold.
-        
+
     cmax : float, between 0 and 1.
         Upper threshold.
     """
 
-    colors=['white']*3
+    colors=[(1,1,1,0)]*3#['white']*3
     cmap = LinearSegmentedColormap.from_list('contrast', colors, N=3)
     cmap.set_over('tab:blue')
     cmap.set_under('tab:red')
     if -1<=cmin<=0<=cmax<=1:
-        plot_handles[2][2][1].cmap = cmap
-        plot_handles[2][2][1].set_clim(cmin,cmax)
-        plot_handles[1][2][1].cmap = cmap
-        plot_handles[1][2][1].set_clim(cmin,0)
-        plot_handles[0][2][1].cmap = cmap
-        plot_handles[0][2][1].set_clim(0,cmax)
+        for i in range(3):
+            try:
+                plot_handles[i][2][1].cmap = cmap
+                plot_handles[i][2][1].set_clim(cmin,cmax)
+            except:
+                0
+            try:
+                plot_handles[i][2][2].cmap = cmap
+                plot_handles[i][2][2].set_clim(cmin,cmax)
+            except:
+                0
+            # plot_handles[i][0].canvas.draw()
+            # plot_handles[i][0]
+        # plt.show()
+
     else:
         error_mssg = ("Error: cmin or cmax out of range.")
         print(error_mssg)
