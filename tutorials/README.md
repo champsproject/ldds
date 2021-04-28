@@ -1,51 +1,69 @@
+<!-- #region -->
 # Tutorials
 
 This folder contains a collection of useful Notebooks with tutorials on how to use the **LDDS** Lagrangian descriptors Python module for analyzing the phase space structure of dynamical systems.
 
-#### [Tutorial 1](tutorial-1.ipynb) (DONE)
-Continuous 1 DoF systems (no perturbation): Saddle, Center, Duffing (Autononomous) and Double-Gyre (Non-autonomous)
+__[Tutorial 1](tutorial-1.ipynb)__ Continuous 1DoF systems (no perturbation)
 
-#### [Tutorial 2](tutorial-2.ipynb)
+* Hamilton Centre (autonomous)
+* Hamilton Saddle (autonomous)
+* Duffing oscillator (autonomous)
+* Double-Gyre (nonautonomous)
 
-Examples of continuous 1 DoF systems (with perturbation)  -----> Duffing (Non autonomous)
+__[Tutorial 2](tutorial-2.ipynb)__ Lagrangian descriptors for 1 DoF dynamical system with forcing
 
-#### [Tutorial 3](tutorial-3.ipynb) (DONE)
-Compute Lagrangian Descriptor using variable time integration: Saddle-Node and Inverted Duffing
+* Forced Duffing oscillator (nonautonomous)
 
-#### [Tutorial 4](tutorial-4.ipynb)
+__[Tutorial 3](tutorial-3.ipynb)__ Variable time integration
 
-How to create a 1 DoF system of your choice
+* Hamilton Saddle-Node
+* Inverted Duffing oscillator
 
-#### [Tutorial 5](tutorial-5.ipynb) (DONE)
-High-dimensional continous systems: 2DoF Henon-Heiles, 2DoF and 3DoF Index-1 saddle
+__[Tutorial 4](tutorial-4.ipynb)__ Lagrangian descriptors for a user-defined 1 DoF dynamical system
 
-#### [Tutorial 6](tutorial-6.ipynb)
+* Morse oscillator
 
-How to create a 2 DoF system of your choice
+__[Tutorial 5](tutorial-5.ipynb)__ High-dimensional continous systems
 
-#### [Tutorial 7](tutorial-7.ipynb) (DONE)
+* 2DoF Hénon-Heiles
+* 2DoF Index-1 normal form saddle
+* 3DoF index-1 normal form saddle
 
-Compute Lagrangian Descriptor when potential energy surface (PES) given as dataset: Henon-Heiles
+__[Tutorial ](tutorial-6.ipynb)__ Lagrangian descriptors for a user-defined 2 DoF Hamiltonian
 
-#### [Tutorial 8](tutorial-8.ipynb)
+* Double-well Hamiltonian system
 
-Discrete Systems (Henon map y Standard Map)  ---> Show Variable Time (Henon Map)
 
-#### [Tutorial 9](tutorial-9.ipynb) (IN PROGRESS)
+__[Tutorial 7](tutorial-7.ipynb)__ Dynamics using Potential Energy Surface (PES) data
 
-How-To: Set your own discrete map
+* Discretised Hénon-Heiles
 
-#### [Tutorial 10](tutorial-10.ipynb)
+__[Tutorial 8](tutorial-8.ipynb)__ Lagrangian descriptors for maps of discrete systems
 
-Stochastic Systems (Saddle, Duffing, Double-Gyre)
+* The Standard map
+* The Hénon map
 
-#### [Tutorial 11](tutorial-11.ipynb) (DONE)
+__[Tutorial 9](tutorial-9.ipynb)__ User-defined discrete maps
 
-Compute Lagrangian Descriptor when vector field given as dataset: Non-autonomous Duffing
+* The Gauss map
+* The Gingerbreadman map
 
-#### [Tutorial 12](tutorial-12.ipynb) (DONE)
+__[Tutorial 10](tutorial-10.ipynb)__ Lagrangian descriptors for Stochastic Dynamical Systems
 
-Influence of Integration Time and Grid Resolution on the Computation of Lagrangian Descriptors
+* Noisy Saddle
+* Noisy Duffing oscillator 
+* Noisy Double-gyre
 
-#### More to come...
+__[Tutorial 11](tutorial-11.ipynb)__ Dynamics using a vector field dataset
+
+* Discretised forced Duffing oscillator
+
+__[Tutorial 12](tutorial-12.ipynb)__ Integration Time & Grid Resolution for Lagrangian descriptor Simulations
+
+* Arnold's CAT map
+* the Double-gyre flow
+
+__More to come...__
+
 We encourage contributions from users to develop Jupyter notebooks that extend the capabilities and features of the **LDDS** software package.
+<!-- #endregion -->
