@@ -5,10 +5,10 @@ This folder contains a collection of useful Notebooks with tutorials on how to u
 
 __[Tutorial 1](tutorial-1.ipynb)__ Continuous 1DoF systems (no perturbation)
 
-* Hamilton Centre (autonomous)
-* Hamilton Saddle (autonomous)
+* Hamilton centre (autonomous)
+* Hamilton saddle (autonomous)
 * Duffing oscillator (autonomous)
-* Double-Gyre (nonautonomous)
+* Double-gyre (nonautonomous)
 
 __[Tutorial 2](tutorial-2.ipynb)__ Lagrangian descriptors for 1 DoF dynamical system with forcing
 
@@ -16,7 +16,7 @@ __[Tutorial 2](tutorial-2.ipynb)__ Lagrangian descriptors for 1 DoF dynamical sy
 
 __[Tutorial 3](tutorial-3.ipynb)__ Variable time integration
 
-* Hamilton Saddle-Node
+* Hamilton saddle-node
 * Inverted Duffing oscillator
 
 __[Tutorial 4](tutorial-4.ipynb)__ Lagrangian descriptors for a user-defined 1 DoF dynamical system
@@ -29,7 +29,7 @@ __[Tutorial 5](tutorial-5.ipynb)__ High-dimensional continous systems
 * 2DoF Index-1 normal form saddle
 * 3DoF index-1 normal form saddle
 
-__[Tutorial ](tutorial-6.ipynb)__ Lagrangian descriptors for a user-defined 2 DoF Hamiltonian
+__[Tutorial 6](tutorial-6.ipynb)__ Lagrangian descriptors for a user-defined 2 DoF Hamiltonian
 
 * Double-well Hamiltonian system
 
@@ -40,19 +40,19 @@ __[Tutorial 7](tutorial-7.ipynb)__ Dynamics using Potential Energy Surface (PES)
 
 __[Tutorial 8](tutorial-8.ipynb)__ Lagrangian descriptors for maps of discrete systems
 
-* The Standard map
-* The Hénon map
+* Standard map
+* Hénon map
 
 __[Tutorial 9](tutorial-9.ipynb)__ User-defined discrete maps
 
-* The Gauss map
-* The Gingerbreadman map
+* Gauss map
+* Gingerbreadman map
 
 __[Tutorial 10](tutorial-10.ipynb)__ Lagrangian descriptors for Stochastic Dynamical Systems
 
-* Noisy Saddle
+* Noisy saddle
 * Noisy Duffing oscillator 
-* Noisy Double-gyre
+* Noisy double-gyre
 
 __[Tutorial 11](tutorial-11.ipynb)__ Dynamics using a vector field dataset
 
@@ -60,8 +60,8 @@ __[Tutorial 11](tutorial-11.ipynb)__ Dynamics using a vector field dataset
 
 __[Tutorial 12](tutorial-12.ipynb)__ Integration Time & Grid Resolution for Lagrangian descriptor Simulations
 
-* Arnold's CAT map
-* the Double-gyre flow
+* Arnold's cat map
+* Double-gyre flow
 
 __More to come...__
 
