@@ -1,5 +1,21 @@
 ---
 title: 'LDDS: Python package for computing and visualizing Lagrangian Descriptors for Dynamical Systems'
+authors:
+- affiliation: 1
+  name: Broncio Aguilar-Sanjuan 
+  orcid: 0000-
+- affiliation: 2
+  name: V{\'i}ctor J. Garc{\'i}a Garrido 
+  orcid: 0000-
+- affiliation: 1
+  name: Vladim{\i}r Kraj{\v{n}}{\'a}k 
+  orcid: 0000-
+- affiliation: 1
+  name: Shibabrat Naik
+  orcid: 0000-0001-7964-2513
+- affiliation: 1
+  name: Stephen Wiggins
+  orcid: 0000-0002-5036-5863
 bibliography: 
 - paper.bib
 output:
@@ -37,7 +53,7 @@ Given a continuous-time dynamical system:
 \dfrac{d \mathbf{x}}{dt} = \mathbf{f}\left(\mathbf{x}(t),t\right)
 \end{equation}
 
-where $\mathfb{x} \in \mathbb{R}^{n}$ and $\mathfb{f}$ represents the vector field. To compute Lagrangian descriptors, select any initial condition $\mathbf{x}_0 = \mathbf{x}(t_0)$ at time $t = t_0$ and accumulate a positive function of the phase space variables along its trajectory in forward and backward in time in the interval $[t_0-\tau,t_0+\tau]$. This gives the following definition:
+where $\mathbf{x} \in \mathbb{R}^{n}$ and $\mathbf{f}$ represents the vector field. To compute Lagrangian descriptors, select any initial condition $\mathbf{x}_0 = \mathbf{x}(t_0)$ at time $t = t_0$ and accumulate a positive function of the phase space variables along its trajectory in forward and backward in time in the interval $[t_0-\tau,t_0+\tau]$. This gives the following definition:
 
 \begin{equation}
 \mathcal{L}\left(\mathbf{x}_0,t_0,\tau\right) = \int_{t_0-\tau}^{t_0+\tau} g(\mathbf{x}(t);\mathbf{x}_0) \, dt
@@ -88,15 +104,11 @@ In the following figure, we show the output produced by the LDDS software packag
 ![Lagrangian descriptor for the standard map \label{fig:standard_map}](stdMap.png)
 
 
-* Hénon map
-
 #### Flows:
 
 Two-dimensional phase space:
 
-* Hamiltonian center (Forced/Unforced).
-* Hamiltonian saddle (Forced/Unforced).
-* Undamped Duffing oscillator (Forced/Unforced).
+* Forced undamped Duffing oscillator (Forced/Unforced).
 
 The time-dependent Hamiltonian that describes the forced Doffing oscillator is:
 
@@ -117,10 +129,9 @@ In the following figure we show the output produced by the LDDS software package
 
 ![Lagrangian descriptor for the Duffing oscillator \label{fig:duffing}](duffing.png)
 
-* Saddle-node Hamiltonian (Forced/Unforced).
-* Double-gyre flow.
+* Double-gyre flow with stochastic forcing.
 
-The stochastic dynamical system for the double gyre flow with additive noise is described by the following SDEs:
+The stochastic dynamical system for the double gyre flow with additive noise is described by the following stochastic differential equation:
 
 \begin{equation}
 \begin{cases}
@@ -146,25 +157,21 @@ Four-dimensional phase space:
 
 The Hénon-Heiles Hamiltonian is given by the functon:
 \begin{equation}
-H(x, p_x) = \frac{1}{2} (p_x^2 + p_y^2) + x^2 y - \frac{1}{3} y^3
+H(x, y, p_x, p_y) = \frac{1}{2} (p_x^2 + p_y^2) + x^2 y - \frac{1}{3} y^3
 \end{equation}
 where the vector field is:
 \begin{equation}
-\begin{cases}
- \dot{x} = \dfrac{\partial H}{\partial p_x} =  p_x \\[.3cm]
- \dot{y} = \dfrac{\partial H}{\partial p_y} = p_y  \\[.3cm]
- \dot{p}_x = -\dfrac{\partial H}{\partial x} =  -x - 2 x y \\[.3cm]
- \dot{p}_y = -\dfrac{\partial H}{\partial y} =  -x^2 -y + y^2
-\end{cases}
+\begin{aligned}
+ \dot{x} = & \dfrac{\partial H}{\partial p_x} =  p_x \\
+ \dot{y} = & \dfrac{\partial H}{\partial p_y} = p_y  \\
+ \dot{p}_x = & -\dfrac{\partial H}{\partial x} =  -x - 2 x y \\
+ \dot{p}_y = & -\dfrac{\partial H}{\partial y} =  -x^2 -y + y^2
+\end{aligned}
 \end{equation}
 
 IN the next figure we show the computation of Lagrangian descriptors with the LDDS software package on the phase space slice described by the condition $x = 0$, $p_x > 0$ for the energy of the system $H_0 = 1/5$.
 
 ![Lagrangian descriptor for the Hénon-Heiles Hamiltonian \label{fig:henon_heiles}](henonheiles.png)
-
-Six-dimensional phase space:
-
-* Saddle-center-center Hamiltonian.
 
 
 
