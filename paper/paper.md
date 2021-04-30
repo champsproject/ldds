@@ -2,12 +2,6 @@
 title: 'LDDS: Python package for computing and visualizing Lagrangian Descriptors for Dynamical Systems'
 bibliography: 
 - paper.bib
-- chapter1part1.bib
-- ham_dyn.bib
-- hyper.bib
-- KAMChapter.bib
-- lag_des.bib
-- LDs.bib
 output:
   pdf_document:
     fig_caption: yes
@@ -29,13 +23,13 @@ affiliations:
 
 ## Statement of Need
 
-Nonlinear dynamical systems are ubiquitous in natural and engineering sciences, such as, fluid mechanics, theoretical chemistry, ship dynamics, rigid body dynamics, atomic physics, solid mechanics, condensed matter physics, mathematical biology, oceanography, meteorology and celestial mechanics [see @wiggins1994normally for a list of collated references]. There have been many advances in understanding phenomena across these disciplines using the geometric viewpoint of the solutions and the underlying structures in the phase space. Chief among these phase space structures are the invariant manifolds that form a barrier between dynamically distinct solutions. In most nonlinear systems, the invariant manifolds are computed using numerical techniques that rely on some form of linearization around equilibrium points followed by continuation and globalization. However, these methods become computationally expensive and challenging when applied to the high-dimensional phase space of vector fields defined analytically, from numerical simulations or experimental data. This points to the need for techniques that can be paired with trajectory calculations, without excessive computational overhead and at the same time can allow visualization along with trajectory data. The Python package, `LDDS`, serves this need for analyzing deterministic and stochastic, continuous and discrete high-dimensional nonlinear dynamical systems described either by an analytical vector field or from data obtained from numerical simulations or experiments.
+Nonlinear dynamical systems are ubiquitous in natural and engineering sciences, such as, fluid mechanics, theoretical chemistry, ship dynamics, rigid body dynamics, atomic physics, solid mechanics, condensed matter physics, mathematical biology, oceanography, meteorology and celestial mechanics [@wiggins1994normally and references therein]. There have been many advances in understanding phenomena across these disciplines using the geometric viewpoint of the solutions and the underlying structures in the phase space. Chief among these phase space structures are the invariant manifolds that form a barrier between dynamically distinct solutions [@OzoriodeAlmeida1990], [RomKedar90], [@wiggins_role_2016]. In most nonlinear systems, the invariant manifolds are computed using numerical techniques that rely on some form of linearization around equilibrium points followed by continuation and globalization. However, these methods become computationally expensive and challenging when applied to the high-dimensional phase space of vector fields defined analytically, from numerical simulations or experimental data. This points to the need for techniques that can be paired with trajectory calculations, without excessive computational overhead and at the same time can allow visualization along with trajectory data. The Python package, `LDDS`, serves this need for analyzing deterministic and stochastic, continuous and discrete high-dimensional nonlinear dynamical systems described either by an analytical vector field or from data obtained from numerical simulations or experiments.
 
 To the best of our knowledge, no other software for calculating Lagrangian descriptors exists. A variety of computational tools is available for competing approaches popular in fluid mechanics, such as the identification of Lagrangian coherent structures via finite-time Lyapunov exponents [@lagrangian], [@dgftle], [@lcstool], [@libcfd2lcs], [@lcsmatlabkit], [@activeBarriers] and finite-size Lyapunov exponents [@lagrangian] or Eulerian coherent structures [@barriertool].
 
 ## Summary and Functionalities
 
-The `LDDS` software is a Python-based module that provides the user with the capability of analyzing the phase space structures of both continuous and discrete nonlinear dynamical systems in the deterministic and stochastic settings through the method of Lagrangian descriptors (LDs). The main idea behind this methodology is to define a scalar function, a Lagrangian descriptor, that accumulates the values taken by a positive function of the phase space variables of the system along the trajectory starting from a given initial condition. This operation is carried out in forward and backward time for all initial conditions on a predefined grid, and the output obtained from the method provides an indicator of the underlying geometry of the phase space of the dynamical system under study. One of the main goals we pursue with this software is to give the tools for reproducible scientific research.
+The `LDDS` software is a Python-based module that provides the user with the capability of analyzing the phase space structures of both continuous and discrete nonlinear dynamical systems in the deterministic and stochastic settings through the method of Lagrangian descriptors (LDs) [@madrid2009ld], [@mancho_2013]. The main idea behind this methodology is to define a scalar function, a Lagrangian descriptor, that accumulates the values taken by a positive function of the phase space variables of the system along the trajectory starting from a given initial condition. This operation is carried out in forward and backward time for all initial conditions on a predefined grid, and the output obtained from the method provides an indicator of the underlying geometry of the phase space of the dynamical system under study. One of the main goals we pursue with this software is to give the tools for reproducible scientific research.
 
 Given a continuous-time dynamical system:
 
@@ -176,7 +170,7 @@ Six-dimensional phase space:
 
 ## Relation to ongoing research projects
 
-Lagrangian descriptors form the basis of several past and present research projects [cite]. The common theme of all these projects is the investigation of phase space structures that govern phase space transport in nonlinear dynamical systems. We have also co-authored an open-source book project using Jupyter book [@jupyterbook_2020] on the theory and applications of Lagrangian descriptors [@ldbook2020]. This open-source package is the computational companion to that book.
+Lagrangian descriptors form the basis of several past and present research projects [@alvaro1], [@alvaro2], [@carlos2015], [@demian2017], [@naik2019a], [@naik2019b], [@curbelo2019a], [@curbelo2019b], [@GG2020a], [GG2020b], [krajnak2020manifld], [@naik2020], [@gonzalez2020] [@katsanikas2020a]. The common theme of all these projects is the investigation of phase space structures that govern phase space transport in nonlinear dynamical systems. We have also co-authored an open-source book project using Jupyter book [@jupyterbook_2020] on the theory and applications of Lagrangian descriptors [@ldbook2020]. This open-source package is the computational companion to that book.
 
 ## Acknowledgements
 
