@@ -108,7 +108,7 @@ In the following figure, we show the output produced by the LDDS software packag
 
 * Forced undamped Duffing oscillator
 
-The Duffing oscillator is an example of a periodically driven oscillator with nonlinear elasticity [@Kanamaru2008]. This model can describe the oscillations of a pendulum whose stiffness does not obey Hooke's law or the motion of a particle in a double well potential. It is also known as a simple system that can exhibit chaos. 
+The Duffing oscillator is an example of a periodically driven oscillator with nonlinear elasticity [@Kanamaru2008]. This can model the oscillations of a pendulum whose stiffness does not obey Hooke's law or the motion of a particle in a double well potential. It is also known as a simple system that can exhibit chaos. 
 
 As a special case, the forced undamped Duffing oscillator is described by a time-dependent Hamiltonian given by:
 
@@ -129,9 +129,9 @@ In the following figure we show the output produced by the LDDS software package
 
 ![Lagrangian descriptor for the Duffing oscillator \label{fig:duffing}](duffing.png)
 
-* Double-gyre flow with stochastic forcing
+* A double gyre flow with stochastic forcing
 
-The stochastic dynamical system for the double gyre flow with additive noise is described by the following stochastic differential equation:
+The double gyre is a recurrent pattern occurring in geophysical flows [@Coulliette2001]. The stochastic dynamical system for a simplified model of this flow with additive noise is described by the following stochastic differential equations [@Balibrea-Iniesta2016]:
 
 \begin{equation}
 \begin{cases}
