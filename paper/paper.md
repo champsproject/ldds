@@ -106,9 +106,7 @@ In the following figure, we show the output produced by the LDDS software packag
 
 #### Flows:
 
-Two-dimensional phase space:
-
-* Forced undamped Duffing oscillator (Forced/Unforced).
+* Forced undamped Duffing oscillator
 
 The time-dependent Hamiltonian that describes the forced Doffing oscillator is:
 
@@ -129,7 +127,7 @@ In the following figure we show the output produced by the LDDS software package
 
 ![Lagrangian descriptor for the Duffing oscillator \label{fig:duffing}](duffing.png)
 
-* Double-gyre flow with stochastic forcing.
+* Double-gyre flow with stochastic forcing
 
 The stochastic dynamical system for the double gyre flow with additive noise is described by the following stochastic differential equation:
 
@@ -152,7 +150,6 @@ In the following figure we show the output produced by the LDDS software package
 
 Four-dimensional phase space:
 
-* Saddle-center Hamiltonian.
 * Hénon-Heiles Hamiltonian.
 
 The Hénon-Heiles Hamiltonian is given by the functon:
