@@ -83,7 +83,7 @@ The following dynamical systems are included in this software package as example
 
 * Standard map 
 
-The standard map is a two-dimensional map used in dynamical systems to study a number of physical systems such as the cyclotron particle accelerator or the kicked rotor [@Meiss2008]. The equations of the discrete system are given by the expressions:
+The standard map is a two-dimensional map used in dynamical systems to study a number of physical systems such as the cyclotron particle accelerator or a kicked rotor [@Meiss2008]. The equations of the discrete system are given by the expressions:
 
 \begin{equation}
 \begin{cases}
@@ -108,7 +108,9 @@ In the following figure, we show the output produced by the LDDS software packag
 
 * Forced undamped Duffing oscillator
 
-The time-dependent Hamiltonian that describes the forced Doffing oscillator is:
+The Duffing oscillator is an example of a periodically driven oscillator with nonlinear elasticity [@Kanamaru2008]. This model can describe the oscillations of a pendulum whose stiffness does not obey Hooke's law or the motion of a particle in a double well potential. It is also known as a simple system that can exhibit chaos. 
+
+As a special case, the forced undamped Duffing oscillator is described by a time-dependent Hamiltonian given by:
 
 \begin{equation}
  H(x,p_x,t) = \dfrac{1}{2}p_x^2 - \dfrac{\alpha}{2}x^2 + \dfrac{\beta}{4}x^4 - f(t) x
