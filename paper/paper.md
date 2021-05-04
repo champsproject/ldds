@@ -53,13 +53,13 @@ Given a continuous-time dynamical system:
 \dfrac{d \mathbf{x}}{dt} = \mathbf{f}\left(\mathbf{x}(t),t\right)
 \end{equation}
 
-where $\mathbf{x} \in \mathbb{R}^{n}$ and $\mathbf{f}$ represents the vector field. To compute Lagrangian descriptors, select any initial condition $\mathbf{x}_0 = \mathbf{x}(t_0)$ at time $t = t_0$ and accumulate a positive function of the phase space variables along its trajectory in forward and backward in time in the interval $[t_0-\tau,t_0+\tau]$. This gives the following definition:
+where $\mathbf{x} \in \mathbb{R}^{n}$ and $\mathbf{f}$ represents the vector field. To compute Lagrangian descriptors, select any initial condition $\mathbf{x}_0 = \mathbf{x}(t_0)$ at time $t = t_0$ and accumulate a positive function of the phase space coordinates, $g(\mathbf{x}(t);\mathbf{x}_0)$, along its trajectory in forward and backward time over the interval $[t_0-\tau,t_0+\tau]$. This gives the following definition:
 
 \begin{equation}
 \mathcal{L}\left(\mathbf{x}_0,t_0,\tau\right) = \int_{t_0-\tau}^{t_0+\tau} g(\mathbf{x}(t);\mathbf{x}_0) \, dt
 \end{equation}
 
-Different versions of the Lagrangian descriptor exist in the literature where the adopted positive function $g$ varies. These alternative definitions include the use of trajectory arclength, the p-norm of the vector field of the dynamical system, the Maupertuis' action of Hamiltonian mechanics, etc. The approach provided by Lagrangian descriptors for revealing phase space structure has also been adapted to address discrete-time systems (maps) and stochastic systems.
+Different formulations of the Lagrangian descriptor exist in the literature where the positive function $g$ is: the arc length of a trajectory in phase space, the arc length of a trajectory projected on the configuration space, and the sum of the $p$-norm of the vector field components, the Maupertuis' action of Hamiltonian mechanics. The approach provided by Lagrangian descriptors for revealing phase space structure has also been adapted to address discrete-time systems (maps) and stochastic systems.
 
 This open-source package incorporates the following features:
 
