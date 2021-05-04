@@ -83,8 +83,8 @@ The following dynamical systems are included in this software package as example
 
 * Standard map 
 
-The standard map (kicked rotator) is a two-dimensional map used in dynamical systems to study a periodically 
-kicked pendulum. The equations of the discrete system are given by the expressions:
+The standard map is a two-dimensional map used in dynamical systems to study a number of physical systems such as the cyclotron particle accelerator or the kicked rotor [@Meiss2008]. The equations of the discrete system are given by the expressions:
+
 \begin{equation}
 \begin{cases}
 x_{n+1} = x_{n} + y_{n} - \dfrac{K}{2\pi} \sin(2\pi x_{n}) \\[.2cm]
@@ -152,7 +152,8 @@ Four-dimensional phase space:
 
 * Hénon-Heiles Hamiltonian.
 
-The Hénon-Heiles Hamiltonian is given by the functon:
+The Hénon-Heiles system is a simplified model describing the restricted motion of a star around the center of a galaxy [@Henon1964]. This system is a paradigmatic example of a time-independent Hamiltonian with two degrees of freedom, given by the function:
+
 \begin{equation}
 H(x, y, p_x, p_y) = \frac{1}{2} (p_x^2 + p_y^2) + x^2 y - \frac{1}{3} y^3
 \end{equation}
@@ -166,7 +167,7 @@ where the vector field is:
 \end{aligned}
 \end{equation}
 
-IN the next figure we show the computation of Lagrangian descriptors with the LDDS software package on the phase space slice described by the condition $x = 0$, $p_x > 0$ for the energy of the system $H_0 = 1/5$.
+In the next figure we show the computation of Lagrangian descriptors with the LDDS software package on the phase space slice described by the condition $x = 0$, $p_x > 0$ for the energy of the system $H_0 = 1/5$.
 
 ![Lagrangian descriptor for the Hénon-Heiles Hamiltonian \label{fig:henon_heiles}](henonheiles.png)
 
