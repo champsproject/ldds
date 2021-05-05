@@ -6,10 +6,10 @@ authors:
   orcid: 0000-0001-8068-6417
 - affiliation: 2
   name: V{\'i}ctor J. Garc{\'i}a Garrido 
-  orcid: 0000-
+  orcid: 0000-0003-0557-3193
 - affiliation: 1
   name: Vladim{\i}r Kraj{\v{n}}{\'a}k 
-  orcid: 0000-
+  orcid: 0000-0001-6052-7531
 - affiliation: 1
   name: Shibabrat Naik
   orcid: 0000-0001-7964-2513
