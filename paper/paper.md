@@ -133,7 +133,7 @@ In the following figure we show the output produced by the LDDS software package
 
 * A double gyre flow with stochastic forcing
 
-The double gyre is a recurrent pattern occurring in geophysical flows [@Coulliette2001]. The stochastic dynamical system for a simplified model of this flow [@Shadden2005] with additive noise is described by the following stochastic differential equations [@Balibrea-Iniesta2016]:
+The double gyre is a recurrent pattern occurring in geophysical flows [@Coulliette2001]. The stochastic dynamical system for a simplified model of this flow [@Shadden2005] with additive noise is described by the following stochastic differential equations [@balibrea2016lagrangian]:
 
 \begin{equation}
 \begin{cases}
