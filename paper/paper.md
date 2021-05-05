@@ -110,7 +110,7 @@ In the following figure, we show the output produced by the LDDS software packag
 
 * Forced undamped Duffing oscillator
 
-The Duffing oscillator is an example of a periodically driven oscillator with nonlinear elasticity [@Kovacic2011]. This can model the oscillations of a pendulum whose stiffness does not obey Hooke's law or the motion of a particle in a double-well potential. It is also known as a simple system that can exhibit chaos. 
+The Duffing oscillator is an example of a periodically driven oscillator with nonlinear elasticity [@duffing1918], [@Kovacic2011]. This can model the oscillations of a pendulum whose stiffness does not obey Hooke's law or the motion of a particle in a double-well potential. It is also known as a simple system that can exhibit chaos. 
 
 As a special case, the forced undamped Duffing oscillator is described by a time-dependent Hamiltonian given by:
 
