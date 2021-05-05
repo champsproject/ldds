@@ -5,7 +5,7 @@ authors:
   name: Broncio Aguilar-Sanjuan 
   orcid: 0000-0001-8068-6417
 - affiliation: 2
-  name: Víctor J. Garc{ía Garrido 
+  name: Víctor J. García Garrido 
   orcid: 0000-0003-0557-3193
 - affiliation: 1
   name: Vladimír Krajňák 
