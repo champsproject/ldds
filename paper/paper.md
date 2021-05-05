@@ -85,7 +85,7 @@ The following dynamical systems are included in this software package as example
 
 * Standard map 
 
-The standard map is a two-dimensional map used in dynamical systems to study a number of physical systems such as the cyclotron particle accelerator or a kicked rotor [@meiss_symplectic_1992],  [@Meiss2008]. The equations of the discrete system are given by the expressions:
+The standard map is a two-dimensional map used in dynamical systems to study a number of physical systems such as the cyclotron particle accelerator or a kicked rotor [@Chirikov1969],[@meiss_symplectic_1992],[@Meiss2008]. The equations of the discrete system are given by the expressions:
 
 \begin{equation}
 \begin{cases}
@@ -110,7 +110,7 @@ In the following figure, we show the output produced by the LDDS software packag
 
 * Forced undamped Duffing oscillator
 
-The Duffing oscillator is an example of a periodically driven oscillator with nonlinear elasticity [@Kanamaru2008]. This can model the oscillations of a pendulum whose stiffness does not obey Hooke's law or the motion of a particle in a double-well potential. It is also known as a simple system that can exhibit chaos. 
+The Duffing oscillator is an example of a periodically driven oscillator with nonlinear elasticity [@Kovacic2011]. This can model the oscillations of a pendulum whose stiffness does not obey Hooke's law or the motion of a particle in a double-well potential. It is also known as a simple system that can exhibit chaos. 
 
 As a special case, the forced undamped Duffing oscillator is described by a time-dependent Hamiltonian given by:
 
@@ -133,7 +133,7 @@ In the following figure we show the output produced by the LDDS software package
 
 * A double gyre flow with stochastic forcing
 
-The double gyre is a recurrent pattern occurring in geophysical flows [@Coulliette2001]. The stochastic dynamical system for a simplified model of this flow with additive noise is described by the following stochastic differential equations [@Balibrea-Iniesta2016]:
+The double gyre is a recurrent pattern occurring in geophysical flows [@Coulliette2001]. The stochastic dynamical system for a simplified model of this flow [@Shadden2005] with additive noise is described by the following stochastic differential equations [@Balibrea-Iniesta2016]:
 
 \begin{equation}
 \begin{cases}
