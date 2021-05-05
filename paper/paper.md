@@ -3,7 +3,7 @@ title: 'LDDS: Python package for computing and visualizing Lagrangian Descriptor
 authors:
 - affiliation: 1
   name: Broncio Aguilar-Sanjuan 
-  orcid: 0000-
+  orcid: 0000-0001-8068-6417
 - affiliation: 2
   name: V{\'i}ctor J. Garc{\'i}a Garrido 
   orcid: 0000-
