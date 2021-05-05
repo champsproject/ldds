@@ -16,15 +16,17 @@ authors:
 - affiliation: 1
   name: Stephen Wiggins
   orcid: 0000-0002-5036-5863
-bibliography: 
-- paper.bib
 output:
   pdf_document:
     fig_caption: yes
     fig_height: 3
+    citation_package: natbib
   html_document:
     fig_caption: yes
     fig_height: 3
+bibliography: paper.bib
+biblio-style: aiplike
+natbiboptions: round
 tags:
 - Dynamical systems
 - Lagrangian descriptors
@@ -39,7 +41,7 @@ affiliations:
 
 ## Statement of Need
 
-Nonlinear dynamical systems are ubiquitous in natural and engineering sciences, such as fluid mechanics, theoretical chemistry, ship dynamics, rigid body dynamics, atomic physics, solid mechanics, condensed matter physics, mathematical biology, oceanography, meteorology and celestial mechanics [@wiggins1994normally and references therein]. There have been many advances in understanding phenomena across these disciplines using the geometric viewpoint of the solutions and the underlying structures in the phase space [@mackay_transport_1984], [@koon_heteroclinic_2000], [@meiss15], [@zhong_tube_2018], [@zhong_geometry_2020]. Chief among these phase space structures are the invariant manifolds that form a barrier between dynamically distinct solutions [@OzoriodeAlmeida1990], [@RomKedar90], [@wiggins_role_2016]. In most nonlinear systems, the invariant manifolds are computed using numerical techniques that rely on some form of linearization around equilibrium points followed by continuation and globalization. However, these methods become computationally expensive and challenging when applied to the high-dimensional phase space of vector fields defined analytically, from numerical simulations or experimental data. This points to the need for techniques that can be paired with trajectory calculations, without the excessive computational overhead and at the same time can allow visualization along with trajectory data. The Python package, `LDDS`, serves this need for analyzing deterministic and stochastic, continuous and discrete high-dimensional nonlinear dynamical systems described either by an analytical vector field or from data obtained from numerical simulations or experiments.
+Nonlinear dynamical systems are ubiquitous in natural and engineering sciences, such as fluid mechanics, theoretical chemistry, ship dynamics, rigid body dynamics, atomic physics, solid mechanics, condensed matter physics, mathematical biology, oceanography, meteorology and celestial mechanics [@wiggins1994normally and references therein]. There have been many advances in understanding phenomena across these disciplines using the geometric viewpoint of the solutions and the underlying structures in the phase space; for example [@mackay_transport_1984], [@romkedar_analytical_1990], [@OzoriodeAlmeida1990], [@RomKedar90], [@meiss_symplectic_1992], [@koon_heteroclinic_2000], [@waalkens_escape_2005], [@meiss15], [@wiggins_role_2016], [@zhong_tube_2018], [@zhong_geometry_2020]. Chief among these phase space structures are the invariant manifolds that form a barrier between dynamically distinct solutions. In most nonlinear systems, the invariant manifolds are computed using numerical techniques that rely on some form of linearization around equilibrium points followed by continuation and globalization. However, these methods become computationally expensive and challenging when applied to the high-dimensional phase space of vector fields defined analytically, from numerical simulations or experimental data. This points to the need for techniques that can be paired with trajectory calculations, without the excessive computational overhead and at the same time can allow visualization along with trajectory data. The Python package, `LDDS`, serves this need for analyzing deterministic and stochastic, continuous and discrete high-dimensional nonlinear dynamical systems described either by an analytical vector field or from data obtained from numerical simulations or experiments.
 
 To the best of our knowledge, no other software for calculating Lagrangian descriptors exists. A variety of computational tools is available for competing approaches popular in fluid mechanics, such as the identification of Lagrangian coherent structures via finite-time Lyapunov exponents [@lagrangian], [@dgftle], [@lcstool], [@libcfd2lcs], [@lcsmatlabkit], [@activeBarriers] and finite-size Lyapunov exponents [@lagrangian] or Eulerian coherent structures [@barriertool].
 
@@ -83,7 +85,7 @@ The following dynamical systems are included in this software package as example
 
 * Standard map 
 
-The standard map is a two-dimensional map used in dynamical systems to study a number of physical systems such as the cyclotron particle accelerator or a kicked rotor [@Meiss2008]. The equations of the discrete system are given by the expressions:
+The standard map is a two-dimensional map used in dynamical systems to study a number of physical systems such as the cyclotron particle accelerator or a kicked rotor [@meiss_symplectic_1992],  [@Meiss2008]. The equations of the discrete system are given by the expressions:
 
 \begin{equation}
 \begin{cases}
