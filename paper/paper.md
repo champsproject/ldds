@@ -5,7 +5,7 @@ authors:
   name: Broncio Aguilar-Sanjuan 
   orcid: 0000-0001-8068-6417
 - affiliation: 2
-  name: Víctor J. García Garrido 
+  name: Víctor J. García-Garrido 
   orcid: 0000-0003-0557-3193
 - affiliation: 1
   name: Vladimír Krajňák 
@@ -61,7 +61,7 @@ where $\mathbf{x} \in \mathbb{R}^{n}$ and $\mathbf{f}$ represents the vector fie
 \mathcal{L}\left(\mathbf{x}_0,t_0,\tau\right) = \int_{t_0-\tau}^{t_0+\tau} g(\mathbf{x}(t);\mathbf{x}_0) \, dt
 \end{equation}
 
-Different formulations of the Lagrangian descriptor exist in the literature where the positive function $g$ is: the arc length of a trajectory in phase space, the arc length of a trajectory projected on the configuration space, and the sum of the $p$-norm of the vector field components, the Maupertuis' action of Hamiltonian mechanics. The approach provided by Lagrangian descriptors for revealing phase space structure has also been adapted to address discrete-time systems (maps) and stochastic systems.
+Different formulations of the Lagrangian descriptor exist in the literature where the positive function $g$ is: the arc length of a trajectory in phase space, the arc length of a trajectory projected on the configuration space, the sum of the $p$-norm of the vector field components [@lopesino2017], and the Maupertuis' action of Hamiltonian mechanics. The approach provided by Lagrangian descriptors for revealing phase space structure has also been adapted to address discrete-time systems (maps) and stochastic systems.
 
 This open-source package incorporates the following features:
 
@@ -179,7 +179,7 @@ In the next figure, we show the computation of Lagrangian descriptors with the L
 
 ## Relation to ongoing research projects
 
-Lagrangian descriptors form the basis of several past and present research projects [@alvaro1], [@alvaro2], [@carlos2015], [@craven2015lagrangian], [@craven2016deconstructing], [@gg2016], [@balibrea2016lagrangian], [@demian2017], [@craven2017lagrangian], [@feldmaier2017obtaining], [@junginger2017chemical], [@gg2018], [@patra2018detecting], [@naik2019a], [@naik2019b], [@curbelo2019a], [@curbelo2019b], [@revuelta2019unveiling], [@GG2020a], [@GG2020b], [@krajnak2020manifld], [@naik2020], [@gonzalez2020], [@katsanikas2020a]. The common theme of all these projects is the investigation of phase space structures that govern phase space transport in nonlinear dynamical systems. We have also co-authored an open-source book project using Jupyter book [@jupyterbook_2020] on the theory and applications of Lagrangian descriptors [@ldbook2020]. This open-source package is the computational companion to that book.
+Lagrangian descriptors form the basis of several past and present research projects [@alvaro1], [@alvaro2], [@carlos2015], [@craven2015lagrangian], [@craven2016deconstructing], [@gg2016], [@balibrea2016lagrangian], [@demian2017], [@craven2017lagrangian], [@feldmaier2017obtaining], [@junginger2017chemical], [@gg2018], [@ramos2018], [@patra2018detecting], [@naik2019a], [@naik2019b], [@curbelo2019a], [@curbelo2019b], [@revuelta2019unveiling], [@GG2020a], [@GG2020b], [@krajnak2020manifld], [@naik2020], [@gonzalez2020], [@katsanikas2020a]. The common theme of all these projects is the investigation of phase space structures that govern phase space transport in nonlinear dynamical systems. We have also co-authored an open-source book project using Jupyter book [@jupyterbook_2020] on the theory and applications of Lagrangian descriptors [@ldbook2020]. This open-source package is the computational companion to that book.
 
 ## Acknowledgements
 
