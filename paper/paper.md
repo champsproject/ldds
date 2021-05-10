@@ -61,7 +61,7 @@ where $\mathbf{x} \in \mathbb{R}^{n}$ and $\mathbf{f}$ represents the vector fie
 \mathcal{L}\left(\mathbf{x}_0,t_0,\tau\right) = \int_{t_0-\tau}^{t_0+\tau} g(\mathbf{x}(t);\mathbf{x}_0) \, dt
 \end{equation}
 
-Different formulations of the Lagrangian descriptor exist in the literature where the positive function $g$ is: the arc length of a trajectory in phase space, the arc length of a trajectory projected on the configuration space, the sum of the $p$-norm of the vector field components [@lopesino2017], and the Maupertuis' action of Hamiltonian mechanics. The approach provided by Lagrangian descriptors for revealing phase space structure has also been adapted to address discrete-time systems (maps) and stochastic systems.
+Different formulations of the Lagrangian descriptor exist in the literature where the non-negative function $g$ is: the arclength of a trajectory in phase space, the arclength of a trajectory projected on the configuration space, the $p$-norm or $p$-quasinorm [@lopesino2017], and the Maupertuis' action of Hamiltonian mechanics. The approach provided by Lagrangian descriptors for revealing phase space structure has also been adapted to address discrete-time systems (maps) and stochastic systems.
 
 This open-source package incorporates the following features:
 
@@ -103,7 +103,7 @@ where $K$ is the parameter that controls the forcing strength of the perturbatio
 
 In the following figure, we show the output produced by the LDDS software package for the standard map using the model parameter value $K=1.2$.
 
-![Lagrangian descriptor for the standard map \label{fig:standard_map}](stdMap.png)
+![Lagrangian descriptor contour plot for the standard map, using $p=0.5$-quasinorm and integration time $\tau=15$. \label{fig:standard_map}](stdMap.png)
 
 
 #### Flows:
@@ -129,7 +129,7 @@ where $\alpha$ and $\beta$ are the model parameters and $f(t)$ is the time-depen
 
 In the following figure we show the output produced by the LDDS software package for the forced Duffing oscillator using the model parameter value $\alpha = \beta = 1$. The initial time is $t_0 = 0$ and the perturbation used is of the form $f(t) = A\sin(\omega t)$ where $A = 0.25$ and $\omega = \pi$.
 
-![Lagrangian descriptor for the Duffing oscillator \label{fig:duffing}](duffing.png)
+![Lagrangian descriptor contour plot for the Duffing oscillator, using $p=0.5$-quasinorm and integration time $\tau=15$. \label{fig:duffing}](duffing.png)
 
 * A double gyre flow with stochastic forcing
 
@@ -150,7 +150,7 @@ f(X_t,t) = \varepsilon \sin(\omega t + \phi) X_t^2 + \left(1-2\varepsilon\sin(\o
 
 In the following figure we show the output produced by the LDDS software package for the stochastically forced double gyre using a noise amplitude of $\sigma_1 = \sigma_2 = 0.1$. The double gyre model parameters are $A = 0.25$, $\phi = 2\pi$, $\psi = \mu = 0$, $s = 1$, $\varepsilon = 0.25$, and the initial time is $t_0 = 0$.
 
-![Lagrangian descriptor for the Double-gyre with stochastic forcing \label{fig:stoch_dgyre}](stoch_dgyre.png)
+![Lagrangian descriptor contour plot for the Double-gyre with stochastic forcing, using $p=0.5$-quasinorm and integration time $\tau=15$. \label{fig:stoch_dgyre}](stoch_dgyre.png)
 
 Four-dimensional phase space:
 
@@ -173,7 +173,7 @@ where the vector field is:
 
 In the next figure, we show the computation of Lagrangian descriptors with the LDDS software package on the phase space slice described by the condition $x = 0$, $p_x > 0$ for the energy of the system $H_0 = 1/5$.
 
-![Lagrangian descriptor for the Hénon-Heiles Hamiltonian \label{fig:henon_heiles}](henonheiles.png)
+![Lagrangian descriptor contour plot for the Hénon-Heiles Hamiltonian, using $p=0.5$-quasinorm and integration time $\tau=15$. \label{fig:henon_heiles}](henonheiles.png)
 
 
 
