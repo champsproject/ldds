@@ -47,21 +47,21 @@ To the best of our knowledge, no other software for calculating Lagrangian descr
 
 ## Summary and Functionalities
 
-The `LDDS` software is a Python-based module that provides the user with the capability of analyzing the phase space structures of both continuous and discrete nonlinear dynamical systems in the deterministic and stochastic settings through the method of Lagrangian descriptors (LDs) [@madrid2009ld], [@mancho_2013]. The main idea behind this methodology is to define a scalar function, a Lagrangian descriptor, that accumulates the values taken by a positive function of the phase space variables of the system along the trajectory starting from a given initial condition. This operation is carried out in forward and backward time for all initial conditions on a predefined grid, and the output obtained from the method provides an indicator of the underlying geometry of the phase space of the dynamical system under study. One of the main goals we pursue with this software is to give the tools for reproducible scientific research.
+The `LDDS` software is a Python-based module that provides the user with the capability of analyzing the phase space structures of both continuous and discrete nonlinear dynamical systems in the deterministic and stochastic settings through the method of Lagrangian descriptors (LDs) [@madrid2009ld], [@mancho_2013]. The main idea behind this methodology is to define a non-negative scalar function, a Lagrangian descriptor, that captures a dynamical property of the evolution of a trajectory. Different formulations of the Lagrangian descriptor exist in the literature where the non-negative function is: the arclength of a trajectory in phase space, the arclength of a trajectory projected on the configuration space, the $p$-norm or $p$-quasinorm [@lopesino2017], and the Maupertuis' action of Hamiltonian mechanics. The approach provided by Lagrangian descriptors for revealing phase space structure has also been adapted to address discrete-time systems (maps) and stochastic systems.
 
-Given a continuous-time dynamical system:
+Consider a continuous-time dynamical system:
 
 \begin{equation}
 \dfrac{d \mathbf{x}}{dt} = \mathbf{f}\left(\mathbf{x}(t),t\right)
 \end{equation}
 
-where $\mathbf{x} \in \mathbb{R}^{n}$ and $\mathbf{f}$ represents the vector field. To compute Lagrangian descriptors, select any initial condition $\mathbf{x}_0 = \mathbf{x}(t_0)$ at time $t = t_0$ and accumulate a positive function of the phase space coordinates, $g(\mathbf{x}(t);\mathbf{x}_0)$, along its trajectory in forward and backward time over the interval $[t_0-\tau,t_0+\tau]$. This gives the following definition:
+where $\mathbf{x} \in \mathbb{R}^{n}$ and $\mathbf{f}$ is the vector field. Starting from an initial condition $\mathbf{x}_0 = \mathbf{x}(t_0)$ at time $t = t_0$, the Lagrangian descriptor $g(\mathbf{x}(t);\mathbf{x}_0)$ is integrated together with the trajectory forward and backward time over the interval $[t_0-\tau,t_0+\tau]$,
 
 \begin{equation}
-\mathcal{L}\left(\mathbf{x}_0,t_0,\tau\right) = \int_{t_0-\tau}^{t_0+\tau} g(\mathbf{x}(t);\mathbf{x}_0) \, dt
+\mathcal{L}\left(\mathbf{x}_0,t_0,\tau\right) = \int_{t_0-\tau}^{t_0+\tau} g(\mathbf{x}(t);\mathbf{x}_0) \, dt.
 \end{equation}
 
-Different formulations of the Lagrangian descriptor exist in the literature where the non-negative function $g$ is: the arclength of a trajectory in phase space, the arclength of a trajectory projected on the configuration space, the $p$-norm or $p$-quasinorm [@lopesino2017], and the Maupertuis' action of Hamiltonian mechanics. The approach provided by Lagrangian descriptors for revealing phase space structure has also been adapted to address discrete-time systems (maps) and stochastic systems.
+Large differnces in values obtained for initial conditions on a predefined grid indicate the presence of the phase space structures in the system and provide insight into their geometry. One of the main goals we pursue with this software is to make Lagrangian descriptors available to a large scientific audience and enable them to use this tool for reproducible research.
 
 This open-source package incorporates the following features:
 
