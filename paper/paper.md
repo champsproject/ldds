@@ -25,7 +25,7 @@ output:
     fig_caption: yes
     fig_height: 3
 bibliography: paper.bib
-biblio-style: aiplike
+biblio-style: apalike
 natbiboptions: round
 tags:
 - Dynamical systems
