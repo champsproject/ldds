@@ -145,7 +145,7 @@ The double gyre is a recurrent pattern occurring in geophysical flows [@Coulliet
 where $W^1$ and $W^2$ are Wiener processes and we have that:
 
 \begin{equation}
-f(X_t,t) = \varepsilon \sin(\omega t + \phi) X_t^2 + \left(1-2\varepsilon\sin(\omega t + \psi)\right) \, X_t
+f(X_t,t) = \varepsilon \sin(\omega t + \psi) X_t^2 + \left(1-2\varepsilon\sin(\omega t + \psi)\right) \, X_t
 \end{equation}
 
 In the following figure we show the output produced by the LDDS software package for the stochastically forced double gyre using a noise amplitude of $\sigma_1 = \sigma_2 = 0.1$. The double gyre model parameters are $A = 0.25$, $\omega = 2\pi$, $\psi = \mu = 0$, $s = 1$, $\varepsilon = 0.25$, and the initial time is $t_0 = 0$.
