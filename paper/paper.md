@@ -55,7 +55,7 @@ Consider a continuous-time dynamical system:
 \dfrac{d \mathbf{x}}{dt} = \mathbf{f}\left(\mathbf{x}(t),t\right)
 \end{equation}
 
-where $\mathbf{x} \in \mathbb{R}^{n}$ and $\mathbf{f}$ is the vector field. Starting from an initial condition $\mathbf{x}_0 = \mathbf{x}(t_0)$ at time $t = t_0$, the Lagrangian descriptor $g(\mathbf{x}(t);\mathbf{x}_0)$ is integrated together with the trajectory forward and backward time over the interval $[t_0-\tau,t_0+\tau]$,
+where $\mathbf{x} \in \mathbb{R}^{n}$ and $\mathbf{f}$ is the vector field. Starting from an initial condition $\mathbf{x}_0 = \mathbf{x}(t_0)$ at time $t = t_0$,  $g(\mathbf{x}(t);\mathbf{x}_0)$ is integrated together with the trajectory forward and backward time over the interval $[t_0-\tau,t_0+\tau]$ to give the Lagrangian descriptor,
 
 \begin{equation}
 \mathcal{L}\left(\mathbf{x}_0,t_0,\tau\right) = \int_{t_0-\tau}^{t_0+\tau} g(\mathbf{x}(t);\mathbf{x}_0) \, dt.
