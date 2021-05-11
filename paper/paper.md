@@ -47,7 +47,7 @@ To the best of our knowledge, no other software for calculating Lagrangian descr
 
 ## Summary and Functionalities
 
-The `LDDS` software is a Python-based module that provides the user with the capability of analyzing the phase space structures of both continuous and discrete nonlinear dynamical systems in the deterministic and stochastic settings through the method of Lagrangian descriptors (LDs) [@madrid2009ld], [@mancho_2013]. The main idea behind this methodology is to define a non-negative scalar function, a Lagrangian descriptor, that captures a dynamical property of the evolution of a trajectory. Different formulations of the Lagrangian descriptor exist in the literature where the non-negative function is: the arclength of a trajectory in phase space, the arclength of a trajectory projected on the configuration space, the $p$-norm or $p$-quasinorm [@lopesino2017], and the Maupertuis' action of Hamiltonian mechanics. The approach provided by Lagrangian descriptors for revealing phase space structure has also been adapted to address discrete-time systems (maps) and stochastic systems.
+The `LDDS` software is a Python-based module that provides the user with the capability of analyzing the phase space structures of both continuous and discrete nonlinear dynamical systems in the deterministic and stochastic settings through the method of Lagrangian descriptors (LDs). The main idea behind this methodology is to define a non-negative scalar function, a Lagrangian descriptor, that captures a dynamical property of the evolution of a trajectory. Different formulations of the Lagrangian descriptor exist in the literature where the non-negative function is: the arclength of a trajectory in phase space [@madrid2009ld], [@mancho_2013], the arclength of a trajectory projected on the configuration space [@craven2015lagrangian], the $p$-norm or $p$-quasinorm [@lopesino2017], and the Maupertuis' action of Hamiltonian mechanics. The approach provided by Lagrangian descriptors for revealing phase space structure has also been adapted to address discrete-time systems (maps) and stochastic systems.
 
 Consider a continuous-time dynamical system:
 
@@ -70,7 +70,7 @@ This open-source package incorporates the following features:
 * Computation of LDs for a system of two stochastic differential equations with additive noise.
 * Computation of LDs on two-dimensional phase space planes for Hamiltonian systems with 2 or more degrees of freedom (DoF).
 * Application of LDs to Hamiltonian systems with 2 DoF where the potential energy surface is known on a discrete spatial grid.
-* Computation of LDs from a Spatio-temporal discretization of a two-dimensional time-dependent vector field.
+* Computation of LDs from a spatio-temporal discretization of a two-dimensional time-dependent vector field.
 * Visual extraction of the invariant stable and unstable manifolds from the LD scalar field values.
 * Addition to time-dependent external forcings for two-dimensional continuous dynamical systems.
 * Different definitions for the Lagrangian descriptor function found in the literature.
@@ -123,7 +123,7 @@ where $\alpha$ and $\beta$ are the model parameters and $f(t)$ is the time-depen
 \begin{equation}
 \begin{cases}
    \dot{x} = \dfrac{\partial H}{\partial p_x} = f_1(x,p_x) = p_x \\[.2cm]
-   \dot{p}_x = -\dfrac{\partial H}{\partial x} = f_2(x,p_x) = \alpha x - \beta x^3 + f(t)
+   \dot{p}_x = -\dfrac{\partial H}{\partial x} = f_2(x,p_x,t) = \alpha x - \beta x^3 + f(t)
 \end{cases}
 \end{equation}
 
@@ -145,10 +145,10 @@ The double gyre is a recurrent pattern occurring in geophysical flows [@Coulliet
 where $W^1$ and $W^2$ are Wiener processes and we have that:
 
 \begin{equation}
-f(X_t,t) = \varepsilon \sin(\omega t + \phi) X_t^2 + \left(1-2\varepsilon\sin(\omega t + \phi)\right)X_t
+f(X_t,t) = \varepsilon \sin(\omega t + \phi) X_t^2 + \left(1-2\varepsilon\sin(\omega t + \psi)\right) \, X_t
 \end{equation}
 
-In the following figure we show the output produced by the LDDS software package for the stochastically forced double gyre using a noise amplitude of $\sigma_1 = \sigma_2 = 0.1$. The double gyre model parameters are $A = 0.25$, $\phi = 2\pi$, $\psi = \mu = 0$, $s = 1$, $\varepsilon = 0.25$, and the initial time is $t_0 = 0$.
+In the following figure we show the output produced by the LDDS software package for the stochastically forced double gyre using a noise amplitude of $\sigma_1 = \sigma_2 = 0.1$. The double gyre model parameters are $A = 0.25$, $\omega = 2\pi$, $\psi = \mu = 0$, $s = 1$, $\varepsilon = 0.25$, and the initial time is $t_0 = 0$.
 
 ![Lagrangian descriptor contour plot for the Double-gyre with stochastic forcing, using $p=0.5$-quasinorm and integration time $\tau=15$. \label{fig:stoch_dgyre}](stoch_dgyre.png)
 
@@ -159,7 +159,7 @@ Four-dimensional phase space:
 The Hénon-Heiles system is a simplified model describing the restricted motion of a star around the center of a galaxy [@Henon1964]. This system is a paradigmatic example of a time-independent Hamiltonian with two degrees of freedom, given by the function:
 
 \begin{equation}
-H(x, y, p_x, p_y) = \frac{1}{2} (p_x^2 + p_y^2) + x^2 y - \frac{1}{3} y^3
+H(x, y, p_x, p_y) = \frac{1}{2} (p_x^2 + p_y^2) + \frac{1}{2} (x^2 + y^2) + x^2 y - \frac{1}{3} y^3
 \end{equation}
 where the vector field is:
 \begin{equation}
