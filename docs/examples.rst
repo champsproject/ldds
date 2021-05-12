@@ -155,7 +155,7 @@ The Hamiltonian function:
 .. math::
    H(x,y,p_x,p_y) = \dfrac{1}{2} \left( p_x^2 + p_y^2 + y^2 - x^2) \right),  \label{eqn:ham_saddle2dof}
 
-is the normal form of a 2 DoF system with a saddle-center equilibrium point at the origin. The dynamics of any 2 DoF dynamical system near a potential saddle point is conjugate to this system.
+is the normal form of a 2 DoF system with a saddle-center equilibrium point at the origin. The dynamics of any 2 DoF dynamical system near a potential index-1 saddle point is conjugate to this system.
 The associated equations of motion are:
 
 .. math::
@@ -195,7 +195,7 @@ The Hamiltonian function:
 .. math::
    H(x,y,z,p_x,p_y,p_z) = \dfrac{1}{2} \left( p_x^2 + p_y^2+ p_z^2 - x^2 + y^2 + z^2) \right),  \label{eqn:ham_saddle3dof}
 
-is the normal form of a 3 DoF system with a saddle-center-center equilibrium point at the origin.
+is the normal form of a 3 DoF system with a saddle-center-center equilibrium point at the origin (also referred to as an index-1 saddle).
 The associated equations of motion are:
 
 .. math::
