@@ -4,6 +4,7 @@
 References
 ==========
 
+
 .. [madrid2009] Madrid, J. A. J. and Mancho, A. M. (2009) Distinguished trajectories in time dependent vector fields. Chaos, 19, 013111.
 
 .. [lopesino2017] Lopesino, C., Balibrea-Iniesta, F., García-Garrido, V. J., Wiggins, S., and Mancho, A. M. (2017). A theoretical framework for Lagrangian descriptors. International Journal of Bifurcation and Chaos, 27(01), 1730001.
