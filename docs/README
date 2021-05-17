@@ -1,8 +1,8 @@
 Documentation for lds
 ---------------------
 
-This collection of files generates the documentation webpage
-https://lds.readthedocs.io/. To generate the full web page:
+Files for generating the documentation at
+https://ldds.readthedocs.io/en/latest/. To generate the full web page:
 
     make html
 
@@ -17,7 +17,7 @@ and then:
 
 
 Check the generated doc locally
----------------------------------------
+-------------------------------
 
 First of, generate the html documentation::
 
