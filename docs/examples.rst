@@ -123,10 +123,12 @@ The inverted Duffing oscillator can be obtained from Hamiltonian ~\eqref{eqn:eqn
 4. Saddle-node Hamiltonian 
 
 This system is defined by the Hamiltonian:
+
 .. math::
     H(x,p_x) = \dfrac{1}{2}p_x^2 + \dfrac{1}{2}x^2 + \dfrac{1}{3}x^3, \label{eqn:ham_saddnode}
 
 and its associated equations of motion are:
+
 .. math::
     \begin{align}
     \dot{x} = \dfrac{\partial H}{\partial p_x} =  p_x, \\
