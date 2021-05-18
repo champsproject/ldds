@@ -88,10 +88,9 @@ Periodic orbits and invariant manifolds
 
    In the context of this software, it is sufficient to know that a **manifold** is a set which *locally* has the structure of Euclidean space. For the "typical" dynamical systems in applications, a manifold is a :math:`m`-dimensional surface embedded in :math:`\mathbb{R}^n`.
 
-   **Invariant manifolds** are a set of points, which is also a **manifold**, in phase space such that trajectories with initial conditions in the set remain in the set forever in both forward and backward time.
+   **Invariant manifolds** are a set of points, which is also a **manifold**, in phase space such that trajectories with initial conditions in the set remain in the set forever. In the context of this software, we are interested in invariant manifolds of hyperbolic equilibrium points or hyperbolic periodic orbits. Thus, when trajectories on an invariant manifold asymptotically approach the equilibrium point or the periodic orbit for :math:`t \rightarrow \infty` (or :math:`t \rightarrow -\infty`), the invariant manifold is called a **stable** (or **unstable**) invariant manifold. Mathematical definitions of these manifolds can be found in Chapter 3 of [wiggins2003]_ and Chapter 6 of [wiggins2017]_.
 
-
-
+   Lagrangian descriptors identify stable (or unstable) invariant manifolds when the initial conditions are integrated for the time interval :math:`[t_0, t_0 + \tau]` (or :math:`[t_0, t_0 - \tau]`), respectively. 
 
 
 ==========

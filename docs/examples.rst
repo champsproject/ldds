@@ -1,8 +1,11 @@
 Examples
 ========
 
+.. examples::
+
+
 Discrete systems
-----
+----------------
 
 1. Standard map
 
@@ -48,7 +51,7 @@ The inverse Hénon map is:
 
 
 Continuous systems with one degree of freedom
----------------------------
+---------------------------------------------
 
 1. Hamiltonian center
 
@@ -148,7 +151,7 @@ The double-gyre flow is a classical system popular in geophysical fluid dynamics
 where we have that :math:`f(x,t) = \varepsilon \sin(\omega t + \phi) x^2 + \left(1-2\varepsilon \sin(\omega t + \phi)\right) x`.
 
 Continuous systems with two degrees of freedom
-----------------------------
+----------------------------------------------
 
 1. `Saddle-center <https://champsproject.github.io/lagrangian_descriptors/content/chapter2_1.html#two-degrees-of-freedom-and-the-hyperbolic-periodic-orbit>`_ 
 
@@ -188,7 +191,7 @@ and Hamilton's equations of motion are:
 This system is a fundamental system for studying complex dynamics. Depending on the value of total energy, it can exhibit different dynamical behaviour ranging from near-integrable to completely chaotic.
 
 Continuous systems with three degrees of freedom
----------------------------
+------------------------------------------------
 
 1. `Saddle-center-center <https://champsproject.github.io/lagrangian_descriptors/content/chapter2_1.html#three-and-more-degrees-of-freedom-and-nhims>`_
 

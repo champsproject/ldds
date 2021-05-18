@@ -1,7 +1,7 @@
-pylds
-=====
+LDDS
+====
 
 .. toctree::
    :maxdepth: 4
 
-   pylds
+   ldds

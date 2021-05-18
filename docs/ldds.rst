@@ -1,29 +1,29 @@
-pylds package
-=============
+LDDS 
+====
 
 Submodules
 ----------
 
-pylds.base module
+ldds.base module
 -----------------
 
-.. automodule:: pylds.base
+.. automodule:: ldds.base
    :members:
    :undoc-members:
    :show-inheritance:
 
-pylds.tools module
+ldds.tools module
 ------------------
 
-.. automodule:: pylds.tools
+.. automodule:: ldds.tools
    :members:
    :undoc-members:
    :show-inheritance:
 
-pylds.vector\_fields module
+ldds.vector\_fields module
 ---------------------------
 
-.. automodule:: pylds.vector_fields
+.. automodule:: ldds.vector_fields
    :members:
    :undoc-members:
    :show-inheritance:
@@ -32,7 +32,7 @@ pylds.vector\_fields module
 Module contents
 ---------------
 
-.. automodule:: pylds
+.. automodule:: ldds
    :members:
    :undoc-members:
    :show-inheritance:

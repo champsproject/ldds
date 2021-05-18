@@ -7,24 +7,21 @@
 
 :globalsidebartoc: True
 
-=================================
-Welcome to documentation for LDDS
-=================================
+============================================================
+Documentation for Lagrangian Descriptor in Dynamical Systems
+============================================================
 
 .. Define an order for the Table of Contents
 
 .. toctree::
    :maxdepth: 2
 
-   tutorial
    getting_started
+   introduction
    user_guide
-   glossary
    examples
+   glossary
 
-
-.. automodule:: pylds.base
-   :members:
 
 Indices and tables
 ==================
