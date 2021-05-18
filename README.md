@@ -129,6 +129,8 @@ Guidelines on how to contribute to this package can be found [here](https://gith
 
 ## License
 
+See the [LICENSE](LICENSE) file for license rights and limitations.
+
 
 ## Acknowledgements
 
