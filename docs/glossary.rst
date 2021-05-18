@@ -86,7 +86,9 @@ Periodic orbits and invariant manifolds
 
    An orbit of :math:`x_0 \in \mathbb{R}^n` is said to be a **periodic orbit** of period :math:`k` if :math:`g^k(x_0) = x_0`.
 
-   **Invariant manifolds** 
+   In the context of this software, it is sufficient to know that a **manifold** is a set which *locally* has the structure of Euclidean space. For the "typical" dynamical systems in applications, a manifold is a :math:`m`-dimensional surface embedded in :math:`\mathbb{R}^n`.
+
+   **Invariant manifolds** are a set of points, which is also a **manifold**, in phase space such that trajectories with initial conditions in the set remain in the set forever in both forward and backward time.
 
 
 
