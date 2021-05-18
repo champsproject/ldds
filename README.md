@@ -18,9 +18,9 @@
 LDDS
 ====
 
-[![Documentation Status](https://readthedocs.org/projects/ldds/badge/?version=latest)](https://ldds.readthedocs.io/en/latest/?badge=latest)
+[![.github/workflows/draft-pdf.yml](https://github.com/champsproject/ldds/actions/workflows/draft-pdf.yml/badge.svg?branch=develop)](https://github.com/champsproject/ldds/actions/workflows/draft-pdf.yml)
 
-[![DOI](linktoZenodorepo.svg)](linktoZenodo)
+[![Documentation Status](https://readthedocs.org/projects/ldds/badge/?version=latest)](https://ldds.readthedocs.io/en/latest/?badge=latest)
 <!-- #endregion -->
 
 ## Description
