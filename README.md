@@ -5,12 +5,12 @@
 * [Description](#description)
 * [Dependencies and installation](#dependencies-and-installation)
 	* [Installing from source](#installing-from-source)
+    * [Testing](#testing)
 * [Documentation](#documentation)
-* [Testing](#testing)
-* [Examples and Tutorials](#examples)
+* [Examples and Tutorials](#examples-and-tutorials)
 * [How to cite](#how-to-cite)
 * [Authors and contributors](#authors-and-contributors)
-* [Contributing](#contribute)
+* [Contributing](#contributing)
 * [License](#license)
 * [Acknowledgements](#acknowledgements)
 
@@ -18,9 +18,9 @@
 LDDS
 ====
 
-[![Documentation Status](https://readthedocs.org/projects/ldds/badge/?version=latest)](https://ldds.readthedocs.io/en/latest/?badge=latest)
+[![.github/workflows/draft-pdf.yml](https://github.com/champsproject/ldds/actions/workflows/draft-pdf.yml/badge.svg?branch=develop)](https://github.com/champsproject/ldds/actions/workflows/draft-pdf.yml)
 
-[![DOI](linktoZenodorepo.svg)](linktoZenodo)
+[![Documentation Status](https://readthedocs.org/projects/ldds/badge/?version=latest)](https://ldds.readthedocs.io/en/latest/?badge=latest)
 <!-- #endregion -->
 
 ## Description
@@ -40,7 +40,7 @@ The `setup.py` should install the dependencies listed in
 [requirements.txt](https://github.com/champsproject/ldds/blob/develop/requirements.txt) using
 
 ``` bash
-> pip install -r requirements.txt (or pip3 install -r requirements.txt)
+pip install -r requirements.txt (or pip3 install -r requirements.txt)
 ```
 
 
@@ -48,10 +48,28 @@ The `setup.py` should install the dependencies listed in
 Clone the git repository and install `ldds` as a module using
 
 ``` bash
-> git clone git@github.com:champsproject/ldds.git
-> cd ldds
-> python setup.py install
+git clone git@github.com:champsproject/ldds.git
+cd ldds
+python setup.py install
 ```
+
+<!-- #region -->
+### Testing 
+
+Test your installation with following command:
+
+```bash
+python -m unittest
+```
+
+You should see something like the following on the terminal:
+
+```bash
+Ran 1 test in 11.173s
+
+OK
+```
+<!-- #endregion -->
 
 <!-- #region -->
 ## Documentation
@@ -59,30 +77,27 @@ Clone the git repository and install `ldds` as a module using
 **LDDS** uses [Sphinx](http://www.sphinx-doc.org/en/stable/) for documentation and is made available online [here](https://ldds.readthedocs.io/en/latest/?badge=latest#). To build the html version of the docs locally simply:
 
 ```bash
-> cd docs
-> make html
+cd docs
+make html
 ```
 
 The generated html can be viewed by opening `docs/_build/html/index.html`.
 <!-- #endregion -->
 
-## Testing 
-
-
 ## Examples and Tutorials 
 
 You can find useful tutorials on how to use LDDS in the [tutorials](tutorials/README.md) folder.
 
-Here we show some examples of the graphical output produced with `ldds` for a deterministic ([Tutorial 2](tutorials/tutorial-2.ipynb)) and a stochastic ([Tutorial 10](tutorials/tutorial-10.ipynb)) benchmark systems:
+Here we show two examples of the output contour maps produced with `ldds` for the Lagrangian Descriptor values of a deterministic ([Tutorial 2](tutorials/tutorial-2.ipynb)) and a stochastic ([Tutorial 10](tutorials/tutorial-10.ipynb)) benchmark system:
 
 <p align="center">
-<img src="paper/duffing.png">
-<em>A Lagrangian Descriptor contour map for the Duffing oscillator with harmonic forcing.</em>
+<img src="paper/duffing.png" alt>
+<em>Duffing oscillator with harmonic forcing.</em>
 </p>
 
 <p align="center">
-<img src="paper/stoch_dgyre.png">
-<em>A Lagrangian Descriptor contour map for the double-gyre with stochastic forcing.</em>
+<img src="paper/stoch_dgyre.png" alt>
+<em>Double-gyre with stochastic forcing.</em>
 </p>
 
 
@@ -98,7 +113,7 @@ Or if you use LaTeX:
 
 ```tex
 @misc{LDDS,
-  author = {B. Aguilar-Sanjuan and V. Garcia-Garrido and V. Krajňák and S. Naik},
+  author = {B. Aguilar-Sanjuan and V. Garc{\'i}a-Garrido and V. Kraj\v{n}{\'a}k and S. Naik},
   title = {{LDDS}: {P}ython package for computing and visualizing {L}agrangian {D}escriptors in {D}ynamical {S}ystems.},
   howpublished = {\url{https://github.com/champsproject/ldds}}
 }
@@ -126,6 +141,8 @@ Guidelines on how to contribute to this package can be found [here](https://gith
 
 
 ## License
+
+See the [LICENSE](LICENSE) file for license rights and limitations.
 
 
 ## Acknowledgements
