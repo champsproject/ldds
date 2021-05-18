@@ -71,6 +71,20 @@ The generated html can be viewed by opening `docs/_build/html/index.html`.
 
 ## Examples and Tutorials 
 
+You can find useful tutorials on how to use LDDS in the [tutorials](tutorials/README.md) folder.
+
+Here we show some examples of the graphical output produced with `ldds` for a deterministic ([Tutorial 2](tutorials/tutorial-2.ipynb)) and a stochastic ([Tutorial 10](tutorials/tutorial-10.ipynb)) benchmark systems:
+
+<p align="center">
+<img src="paper/duffing.png">
+<em>A Lagrangian Descriptor contour map for the Duffing oscillator with harmonic forcing.</em>
+</p>
+
+<p align="center">
+<img src="paper/stoch_dgyre.png">
+<em>A Lagrangian Descriptor contour map for the double-gyre with stochastic forcing.</em>
+</p>
+
 
 ## How to cite
 
