@@ -61,14 +61,32 @@ Equilibrium solutions, linear stability
 
    Cautionary note: In case of non-autonomous vector fields, this definition of equilibrium solutions do not apply to the "frozen" (fixing :math:`t = \bar{t}`) vector field. Further explanation based on an example is given in the Chapter 1 of Ref. [wiggins2003]_ 
 
-   Linear stability of an equilibrium solution (or point in phase space) of a vector field is given by the sign of the real part of the eigenvalues of the Jacobian of the vector field. More details on different type of stability is given in Ref. [wiggins2003]_ and [wiggins2017]_.
+   We give the definition for the type of linear stability which is most relevant for this software.
+   
+   For a linear, autonomous vector field on :math:`\mathbb{R}^n`:
+   
+   .. math::
+      \begin{equation}
+      \dot{x} = A x, \qquad x(0) = x_0, \qquad x \in \mathbb{R}^n
+      \end{equation}
 
+   If :math:`A` has no eigenvalues with zero real part, the linear stability of the origin is determined by the real part of the eigenvalues :math:`A`. 
 
+   If all of the real parts of the eigenvalues are strictly less than zero, then the origin is asymptotically **stable**. If at least one of the eigenvalues of :math:`A` has real part strictly larger than zero, then the origin is **unstable**.
+   
+   The origin of is said to be **hyperbolic** if none of the real parts of the eigenvalues of :math:`A` have zero real parts. Hyperbolic equilibria of linear, autonomous vector fields on :math:`\mathbb{R}^N` can be either sinks, sources, or saddles.
+   
+   More details on classification of stability of equilibria can be found in Ref. [wiggins2017]_.
 
 
 Periodic orbits and invariant manifolds
 ---------------------------------------
 
+   A solution of vector field through the point :math:`x_0` is said to be a **periodic solution** of period :math:`T` if there exists :math:`T > 0` such that :math:`x(t, t_0) = x(t + T, x_0)` for all :math:`t \in \mathbb{R}`.
+
+   An orbit of :math:`x_0 \in \mathbb{R}^n` is said to be a **periodic orbit** of period :math:`k` if :math:`g^k(x_0) = x_0`.
+
+   **Invariant manifolds** 
 
 
 
