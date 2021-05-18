@@ -5,12 +5,12 @@
 * [Description](#description)
 * [Dependencies and installation](#dependencies-and-installation)
 	* [Installing from source](#installing-from-source)
+    * [Testing](#testing)
 * [Documentation](#documentation)
-* [Testing](#testing)
-* [Examples and Tutorials](#examples)
+* [Examples and Tutorials](#examples-and-tutorials)
 * [How to cite](#how-to-cite)
 * [Authors and contributors](#authors-and-contributors)
-* [Contributing](#contribute)
+* [Contributing](#contributing)
 * [License](#license)
 * [Acknowledgements](#acknowledgements)
 
@@ -54,6 +54,24 @@ Clone the git repository and install `ldds` as a module using
 ```
 
 <!-- #region -->
+### Testing 
+
+Test your installation with following command:
+
+```bash
+python -m unittest
+```
+
+You should see something like the following on the terminal:
+
+```bash
+Ran 1 test in 11.173s
+
+OK
+```
+<!-- #endregion -->
+
+<!-- #region -->
 ## Documentation
 
 **LDDS** uses [Sphinx](http://www.sphinx-doc.org/en/stable/) for documentation and is made available online [here](https://ldds.readthedocs.io/en/latest/?badge=latest#). To build the html version of the docs locally simply:
@@ -66,11 +84,6 @@ Clone the git repository and install `ldds` as a module using
 The generated html can be viewed by opening `docs/_build/html/index.html`.
 <!-- #endregion -->
 
-## Testing 
-
-
-
-
 ## Examples and Tutorials 
 
 You can find useful tutorials on how to use LDDS in the [tutorials](tutorials/README.md) folder.
@@ -78,7 +91,7 @@ You can find useful tutorials on how to use LDDS in the [tutorials](tutorials/RE
 Here we show two examples of the output contour maps produced with `ldds` for the Lagrangian Descriptor values of a deterministic ([Tutorial 2](tutorials/tutorial-2.ipynb)) and a stochastic ([Tutorial 10](tutorials/tutorial-10.ipynb)) benchmark system:
 
 <p align="center">
-<img src="paper/duffing.png">
+<img src="paper/duffing.png" alt>
 <em>Duffing oscillator with harmonic forcing.</em>
 </p>
 
@@ -100,7 +113,7 @@ Or if you use LaTeX:
 
 ```tex
 @misc{LDDS,
-  author = {B. Aguilar-Sanjuan and V. Garcia-Garrido and V. Krajňák and S. Naik},
+  author = {B. Aguilar-Sanjuan and V. Garc{\'i}a-Garrido and V. Kraj\v{n}{\'a}k and S. Naik},
   title = {{LDDS}: {P}ython package for computing and visualizing {L}agrangian {D}escriptors in {D}ynamical {S}ystems.},
   howpublished = {\url{https://github.com/champsproject/ldds}}
 }
