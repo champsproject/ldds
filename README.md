@@ -1,14 +1,19 @@
+<!-- #region -->
 **LDDS**: Python package for Computation of Lagrangian Descriptors of Dynamical Systems.
 
 ## Table of contents
-  -   [Summary](#summary)
-  -   [Installation](#installation)
-  -   [Usage](#usage)
-  -   [Tests](#tests)
-  -   [Contributing](#contributing)
-  -   [Acknowledgements](#acknowledgements)
-  -   [Copyright and License](#copyright-and-license)
-  -   [References](#references)
+* [Description](#description)
+* [Dependencies and installation](#dependencies-and-installation)
+	* [Installing from source](#installing-from-source)
+* [Documentation](#documentation)
+* [Testing](#testing)
+* [Examples and Tutorials](#examples)
+* [How to cite](#how-to-cite)
+* [Authors and contributors](#authors-and-contributors)
+* [Contributing](#contribute)
+* [License](#license)
+* [Acknowledgements](#acknowledgements)
+
 
 LDDS
 ====
@@ -16,10 +21,17 @@ LDDS
 [![Documentation Status](https://readthedocs.org/projects/ldds/badge/?version=latest)](https://ldds.readthedocs.io/en/latest/?badge=latest)
 
 [![DOI](linktoZenodorepo.svg)](linktoZenodo)
-
+<!-- #endregion -->
 
 ## Description
 
+**LDDS** is an open-source Python module that uses the method of **Lagrangian Descriptors** (LDs) for visualization of phase space structures of dynamical systems.
+
+First introduced by Madrid & Mancho (Chaos 2009), the method of LDs defines a function, called the Lagrangian descriptor function, defined as a scalar field that maps a set of initial condition in phase space to the "arc length" integral of their evolving trajectories in time. This approach is capable of highlighting the phase space geometry of invariant manifolds associated with periodic orbits and equilibria of dynamical systems. Over the years new formulations of the method have been developed for enhanced visualization of phase space structures. See our [online book](https://champsproject.github.io/lagrangian_descriptors) for an overview on the topic. 
+
+In LDDS we implemented the majority of the LD variants and users can be able to work with dynamical systems with continuous flows and discrete maps in deterministic and stochastic settings, with high-dimensional vector fields described as analytical expressions or numerical data. See the [**Examples and Tutorials**](#examples) section below to have an idea of the versatility of this package.
+
+Nonlinear dynamical systems are ubiquitous in natural and engineering sciences, such as fluid mechanics, theoretical chemistry, ship dynamics, rigid body dynamics, atomic physics, solid mechanics, condensed matter physics, mathematical biology, oceanography, meteorology and celestial mechanics [@wiggins1994normally and references therein]. We expect our package to enable researchers in these and other areas to take advantage of the LDs methods in research.
 
 
 ## Dependencies and installation
@@ -41,18 +53,10 @@ Clone the git repository and install `ldds` as a module using
 > python setup.py install
 ```
 
-Now `ldds` module is available for import along with the functions to run examples and tests. The following lines of code imports the `ldds` module, imports the function to compute Lagrangian descriptor, imports the vector field and Hamiltonian for the two degrees of freedom quadratic normal form Hamiltonian with index one saddle.
-
-``` python
-import ldds
-from ldds.base import compute_lagrangian_descriptor
-from ldds.vector_fields import quadratic_normalform_saddlecenter
-from ldds.hamiltonians import quadratic_normal_form_saddlecenter_ha
-```
-
+<!-- #region -->
 ## Documentation
 
-**LDDS** uses [Sphinx](http://www.sphinx-doc.org/en/stable/) for documentation and is made available online [here](https://ldds.readthedocs.io/en/latest/?badge=latest#) using [Read the Docs](https://readthedocs.org/). To build the html version of the docs locally simply:
+**LDDS** uses [Sphinx](http://www.sphinx-doc.org/en/stable/) for documentation and is made available online [here](https://ldds.readthedocs.io/en/latest/?badge=latest#). To build the html version of the docs locally simply:
 
 ```bash
 > cd docs
@@ -60,11 +64,54 @@ from ldds.hamiltonians import quadratic_normal_form_saddlecenter_ha
 ```
 
 The generated html can be viewed by opening `docs/_build/html/index.html`.
+<!-- #endregion -->
 
+## Testing 
+
+
+## Examples and Tutorials 
+
+
+## How to cite
+
+_NOTE 19 May 2020_ : We have recently submitted LDDS to [JOSS](https://joss.theoj.org/) and now awaiting revision. 
+
+If you use this package in your publications, provisionally you can cite the package as follows:
+
+> LDDS: Python package for Computation of Lagrangian Descriptors of Dynamical Systems. https://github.com/champsproject/ldds 
+
+Or if you use LaTeX:
+
+```tex
+@misc{LDDS,
+  author = {B. Aguilar-Sanjuan and V. Garcia-Garrido and V. Krajňák and S. Naik},
+  title = {{LDDS}: {P}ython package for computing and visualizing {L}agrangian {D}escriptors in {D}ynamical {S}ystems.},
+  howpublished = {\url{https://github.com/champsproject/ldds}}
+}
+```
+
+<!-- #region -->
+## Authors and contributors
+
+**LDDS** is currently developed and mantained by 
+
+* [Broncio Aguilar-Sanjuan](mailto:broncio.aguilarsanjuan@bristol.ac.uk) _University of Bristol_ , UK
+* [Víctor J. García-Garrido](mailto:vjose.garcia@uah.es) _Universidad de Alcalá_ , Spain
+* [Vladimír Krajňák](mailto:v.krajnak@bristol.ac.uk) _University of Bristol_ , UK
+* [Shibabrat Naik](mailto:s.naik@bristol.ac.uk) _University of Bristol_ , UK
+
+
+with the support of and supervision of [Prof. Stephen Wiggins](mailto:s.wiggins@bristol.ac.uk) (_University of Bristol_ , UK), under the [CHAMPS Project](https://champsproject.com/).
+
+Contact us by email for further information or questions about **LDDS**, or suggest pull requests. Contributions improving either the code or the documentation are welcome!
+<!-- #endregion -->
 
 ## Contributing 
 
 Guidelines on how to contribute to this package can be found [here](https://github.com/champsproject/ldds/blob/develop/contributing.md) along with the code of conduct [here](https://github.com/champsproject/ldds/blob/develop/code_of_conduct.md) for engaging with the fellow contributors. As and when we receive improvements to the package, we will acknowledge the pull request and the contributor in this section.
+
+
+## License
 
 
 ## Acknowledgements
