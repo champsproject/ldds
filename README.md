@@ -40,7 +40,7 @@ The `setup.py` should install the dependencies listed in
 [requirements.txt](https://github.com/champsproject/ldds/blob/develop/requirements.txt) using
 
 ``` bash
-> pip install -r requirements.txt (or pip3 install -r requirements.txt)
+pip install -r requirements.txt (or pip3 install -r requirements.txt)
 ```
 
 
@@ -48,9 +48,9 @@ The `setup.py` should install the dependencies listed in
 Clone the git repository and install `ldds` as a module using
 
 ``` bash
-> git clone git@github.com:champsproject/ldds.git
-> cd ldds
-> python setup.py install
+git clone git@github.com:champsproject/ldds.git
+cd ldds
+python setup.py install
 ```
 
 <!-- #region -->
@@ -77,8 +77,8 @@ OK
 **LDDS** uses [Sphinx](http://www.sphinx-doc.org/en/stable/) for documentation and is made available online [here](https://ldds.readthedocs.io/en/latest/?badge=latest#). To build the html version of the docs locally simply:
 
 ```bash
-> cd docs
-> make html
+cd docs
+make html
 ```
 
 The generated html can be viewed by opening `docs/_build/html/index.html`.
