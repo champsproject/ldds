@@ -23,7 +23,7 @@ Vector field, map, phase space, trajectory
       \dot{x} = f(x,t; \mu)
       \end{equation}
 
-   with :math:`x \in U \subset \mathbb{R}^n, t \in \mathbb{R}^1`, and :math:`\mu \in V \subset \mathbb{R}^p` wheere :math:`U, V` are open sets in :math:`\mathbb{R}^n, \mathbb{R}^p`, respectively, as a **vector field** or an **ordinary differential equation**. The above form is referred to as a non-autonomous or time-dependent ODE.
+   with :math:`x \in U \subset \mathbb{R}^n, t \in \mathbb{R}^1`, and :math:`\mu \in V \subset \mathbb{R}^p` where :math:`U, V` are open sets in :math:`\mathbb{R}^n, \mathbb{R}^p`, respectively, is an **ordinary differential equation** and :math:`f` is a **vector field**. The above form is referred to as a non-autonomous or time-dependent ODE.
 
    The equation of the form
 
@@ -34,7 +34,7 @@ Vector field, map, phase space, trajectory
 
    as a **map or difference equation**. 
 
-   We refer to the space of dependent variables as the **phase space**. Both of these form of equations are referred to as dynamical system. Solution of the ordinary differential equations, :math:`x(t,t0,x0)` will be referred to as the **trajectory or phase curve** through the point :math:`x_0` at :math:`t = t_0`.
+   We refer to the space of dependent variables as the **phase space**. Both of these form of equations are referred to as dynamical system. Solution of the ordinary differential equations, :math:`x(t,t_0,x_0)` will be referred to as the **trajectory or phase curve** through the point :math:`x_0` at :math:`t = t_0`.
 
    The goal of dynamical systems analysis is to understand the geometry of solution curves in phase space. 
 
@@ -54,7 +54,7 @@ Equilibrium solutions, linear stability
    
    .. math::
       \begin{equation}
-      f(\bar{x}) = 0.
+      f(\bar{x}; \mu) = 0.
       \end{equation}
 
    This constant solution of a vector field, that is a point in phase space where the vector field is zero, is also referred to as a "fixed point", "steady state", "stationary point", "rest point".
@@ -82,9 +82,9 @@ Equilibrium solutions, linear stability
 Periodic orbits and invariant manifolds
 ---------------------------------------
 
-   A solution of vector field through the point :math:`x_0` is said to be a **periodic solution** of period :math:`T` if there exists :math:`T > 0` such that :math:`x(t, t_0) = x(t + T, x_0)` for all :math:`t \in \mathbb{R}`.
+   A solution :math:`x` of a dynamical system passing through the point :math:`x(0)=x_0` is said to be a **periodic solution** of period :math:`T` if there exists :math:`T > 0` such that :math:`x(t) = x(t + T)` for all :math:`t \in \mathbb{R}`.
 
-   An orbit of :math:`x_0 \in \mathbb{R}^n` is said to be a **periodic orbit** of period :math:`k` if :math:`g^k(x_0) = x_0`.
+   In a discrete system, an orbit of a point :math:`x_0 \in \mathbb{R}^n` is said to be a **periodic orbit** of period :math:`k` if :math:`g^k(x_0) = x_0`.
 
    In the context of this software, it is sufficient to know that a **manifold** is a set which *locally* has the structure of Euclidean space. For the "typical" dynamical systems in applications, a manifold is a :math:`m`-dimensional surface embedded in :math:`\mathbb{R}^n`.
 
