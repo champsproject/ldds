@@ -113,7 +113,7 @@ Or if you use LaTeX:
 
 ```tex
 @misc{LDDS,
-  author = {B. Aguilar-Sanjuan and V. Garc{\'i}a-Garrido and V. Kraj\v{n}{\'a}k and S. Naik},
+  author = {B. Aguilar-Sanjuan and V. Garc{\'i}a-Garrido and V. Kraj\v{n}{\'a}k and S. Naik and S. Wiggins},
   title = {{LDDS}: {P}ython package for computing and visualizing {L}agrangian {D}escriptors in {D}ynamical {S}ystems.},
   howpublished = {\url{https://github.com/champsproject/ldds}}
 }
