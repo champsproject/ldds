@@ -18,7 +18,7 @@
 LDDS
 ====
 
-Markdown: [![status](https://joss.theoj.org/papers/708c2c717f803733ce017abb10f06030/status.svg)](https://joss.theoj.org/papers/708c2c717f803733ce017abb10f06030)
+[![status](https://joss.theoj.org/papers/708c2c717f803733ce017abb10f06030/status.svg)](https://joss.theoj.org/papers/708c2c717f803733ce017abb10f06030)
 
 [![.github/workflows/draft-pdf.yml](https://github.com/champsproject/ldds/actions/workflows/draft-pdf.yml/badge.svg?branch=develop)](https://github.com/champsproject/ldds/actions/workflows/draft-pdf.yml)
 
