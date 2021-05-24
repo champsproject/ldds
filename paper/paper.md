@@ -27,6 +27,8 @@ output:
 bibliography: paper.bib
 biblio-style: apalike
 natbiboptions: round
+date: 19 May 2021
+year: 2021
 tags:
 - Dynamical systems
 - Lagrangian descriptors
