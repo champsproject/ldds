@@ -18,6 +18,8 @@
 LDDS
 ====
 
+Markdown: [![status](https://joss.theoj.org/papers/708c2c717f803733ce017abb10f06030/status.svg)](https://joss.theoj.org/papers/708c2c717f803733ce017abb10f06030)
+
 [![.github/workflows/draft-pdf.yml](https://github.com/champsproject/ldds/actions/workflows/draft-pdf.yml/badge.svg?branch=develop)](https://github.com/champsproject/ldds/actions/workflows/draft-pdf.yml)
 
 [![Documentation Status](https://readthedocs.org/projects/ldds/badge/?version=latest)](https://ldds.readthedocs.io/en/latest/?badge=latest)
@@ -84,22 +86,24 @@ make html
 The generated html can be viewed by opening `docs/_build/html/index.html`.
 <!-- #endregion -->
 
+<!-- #region -->
 ## Examples and Tutorials 
 
 You can find useful tutorials on how to use LDDS in the [tutorials](tutorials/README.md) folder.
 
 Here we show two examples of the output contour maps produced with `ldds` for the Lagrangian Descriptor values of a deterministic ([Tutorial 2](tutorials/tutorial-2.ipynb)) and a stochastic ([Tutorial 10](tutorials/tutorial-10.ipynb)) benchmark system:
 
-<p align="center">
+<p style="text-align:center">
 <img src="paper/duffing.png" alt>
 <em>Duffing oscillator with harmonic forcing.</em>
 </p>
 
-<p align="center">
-<img src="paper/stoch_dgyre.png" alt>
+
+<p style="text-align:center">
+<img src="paper/stoch_dgyre.png">
 <em>Double-gyre with stochastic forcing.</em>
 </p>
-
+<!-- #endregion -->
 
 ## How to cite
 
