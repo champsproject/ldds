@@ -63,6 +63,7 @@ python setup.py install
 Test your installation with following command:
 
 ```bash
+cd ldds/tests
 python -m unittest
 ```
 
