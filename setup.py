@@ -41,6 +41,7 @@ def main():
         # packages=find_packages(exclude=('test','data', 'docs')),
         packages=['ldds'],
         package_dir={'ldds': 'ldds'},
+        package_data={'ldds': ['pes_files/HenonHeiles_pes_data.hdf5', 'vector_field_files/Duffing_perturbed_vector_field_data.hdf5']},
 
         install_requires = requirements
     )
