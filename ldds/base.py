@@ -317,7 +317,8 @@ def vector_field_flat(t, points, vector_field, p_value, box_boundaries):
     points : ndarray, shape(n,3)
 
     vector_field: function
-        User defined vector field.
+        vector field over phase space, must return 2D array of vectors over a 2D array of initial conditions
+        and given as input to the API function `vector_field_flat` to be turned into a 1D array (column).
 
     p_value : float, optional
         Exponent in Lagrangian descriptor definition.
@@ -550,7 +551,8 @@ def compute_lagrangian_descriptor(grid_parameters, vector_field, tau, p_value=0.
         input parameters of limits and size of mesh per axis
 
     vector_field: function
-        vector field over phase space
+        vector field over phase space, must return 2D array of vectors over a 2D array of initial conditions
+        and given as input to the API function `vector_field_flat` to be turned into a 1D array (column).
 
     tau : float
         Upper limit of integration.
