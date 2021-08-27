@@ -19,7 +19,7 @@ where :math:`\mathbf{v}(\mathbf{x},t) \in C^r (r \geq 1)` in :math:`\mathbf{x}` 
     M_p(\mathbf{x}_{0},t_0,\tau) = \displaystyle{\int^{t_0+\tau}_{t_0-\tau} \sum_{i=1}^{n} |\dot{x}_{i}(t;\mathbf{x}_{0})|^p \; dt} \label{eqn:M_function}
     \end{equation}
 
-where :math:`p \in (0,1]` and :math:`\tau \in \mathbb{R}^{+}` are freely chosen parameters,  and the overdot symbol represents the derivative with respect to time. It is to be noted here that there are three formulations of the function :math:`M_p` in the literature: the arc length of a trajectory in phase space [madrid2009]_, the arc length of a trajectory projected on the configuration space [junginger2016transition]_, [junginger2016uncovering]_, [junginger2017chemical]_, and the sum of the :math:`p`-norm of the vector field components [lopesino2015]_, [lopesino2017]_.
+where :math:`p \in (0,1]` and :math:`\tau \in \mathbb{R}^{+}` are freely chosen parameters,  and the overdot symbol represents the derivative with respect to time. It is to be noted here that there are three formulations of the function :math:`M_p` in the literature: the arc length of a trajectory in phase space [madrid2009]_, the arc length of a trajectory projected on the configuration space [junginger2016lagrangian]_, [junginger2016transition]_, [junginger2016uncovering]_, [junginger2017chemical]_ and the sum of the :math:`p`-norm of the vector field components [lopesino2015]_, [lopesino2017]_.
 Although the latter formulation of the Lagrangian descriptor developed in Refs. [lopesino2015]_, [lopesino2017]_ does not resemble the arc length, the numerical results using either of these forms have been shown to be in agreement and promise of predictive capability in geophysical flows ([delacamara2012]_, [garciagarrido2015]_, [ramos2018]_, [mendoza2014lagrangian]_). The formulation we adopt here is motivated by the fact that this allows for proving rigorous result, which we will discuss in the next section, connecting the singular features and minimum in the LD plots with NHIM and its stable and unstable manifolds. 
 It follows from the result that 
 
@@ -51,6 +51,8 @@ References
    
    
 .. [madrid2009] Madrid, J. A. J. and Mancho, A. M. (2009) Distinguished trajectories in time dependent vector fields. Chaos, 19, 013111.
+
+.. [demian2017] Demian, A. S., and Wiggins, S. (2017). Detection of periodic orbits in Hamiltonian systems using Lagrangian descriptors. International Journal of Bifurcation and Chaos, 27(14), 1750225.
 
 .. [lopesino2017] Lopesino, C., Balibrea-Iniesta, F., García-Garrido, V. J., Wiggins, S., and Mancho, A. M. (2017). A theoretical framework for Lagrangian descriptors. International Journal of Bifurcation and Chaos, 27(01), 1730001.
 
