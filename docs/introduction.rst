@@ -1,3 +1,12 @@
+The purpose of this guide is to give a brief overview of the theory and illustrate the computation and visualization of Lagrangian descriptors for dynamical systems. We recommend that the user is familiar with nonlinear dynamical systems concepts mentioned in the :ref:`glossary`. Then, reading the brief introduction to the method of Lagrangian descriptor below and benchmark systems in :ref:`examples`.
+
+Background and motivation
+=========================
+
+Understanding the geometry of the phase space of a dynamical system is a fundamental step in developing a complete picture of the dynamics. A trajectory diagnostic technique is a quick and practical approach to discovering the geometry of the structures that characterize phase space transport. This approach has become useful in analyzing a multitude of systems across geophysical fluid dynamics and chemical reactions. Lagrangian Descriptors for Dynamical Systems, or LDDS, is an open-source software written in Python represents a contribution in this direction using the method of Lagrangian descriptors. The basic idea behind this methodology is applicable to continuous or discrete dynamical system with or without periodic, aperiodic, stochastic forcing and with or without dissipation. The method encodes the geometry of phase space structures in the initial conditions on a two dimensional section by calculating a geometric property of the trajectories obtained from the initial conditions. 
+
+Lagrangian descriptor is a scalar functional defined on a grid of initial conditions that assigns to every point a real number obtained by accumulating the values of a non-negative function along the trajectory starting from that initial condition in forward and backward time. There are many definitions of this non-negative function for computing Lagrangian descriptors (LDs) in the literature. Examples of such functions include the arclength of the trajectory, the p-norm of the components of the vector field defining the dynamical system under study, the Maupertuis classical action, etc. There is no definition of LDs that is better than the rest, and the choice depends on the dynamical characteristics of the system addressed. In this sense, there is always a trial and error stage where one would assess the different definitions, two-dimensional sections, integration time length for a given dynamical system. The LDDS package provides the user with an interface to perform such computations in a rapid prototyping manner. 
+
 Lagrangian descriptors
 ======================
 
@@ -38,12 +47,6 @@ where the stable and unstable manifolds (:math:`\mathcal{W}^s(\mathbf{x}_0, t_0)
 
 
 
-.. automodule:: base
-   :members:
-
-.. automodule:: tools
-   :members:
-
 
 ==========
 References
@@ -78,4 +81,6 @@ References
 .. [ramos2018] Ramos, A. G., García-Garrido, V. J., Mancho, A. M., Wiggins, S., Coca, J., Glenn, S., Schofield, O., Kohut, J., Aragon, D., Kerfoot, J., Haskins, T., Miles, T., Haldeman, C., Strandskov, N., All- sup, B., Jones, C., and Shapiro., J. (2018). Lagrangian coherent structure assisted path planning for transoceanic autonomous underwater vehicle missions. Scientfic Reports, 4, 4575.
 
 .. [delacamara2012] de la Cámara, A., Mancho, A. M., Ide, K., Serrano, E., and Mechoso, C. (2012). Routes of transport across the Antarctic polar vortex in the southern spring. J. Atmos. Sci., 69(2), 753–767.
+
+
 

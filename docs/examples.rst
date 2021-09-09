@@ -2,6 +2,9 @@
 Examples
 ========
 
+
+.. examples:
+
 Some examples used in the tutorial and considered as benchmark systems in dynamical systems.
 
 

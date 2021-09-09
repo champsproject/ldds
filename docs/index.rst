@@ -7,20 +7,21 @@
 
 :globalsidebartoc: True
 
-============================================================
-Documentation for Lagrangian Descriptor in Dynamical Systems
-============================================================
+============================================
+Lagrangian Descriptors for Dynamical Systems
+============================================
 
 .. Define an order for the Table of Contents
 
 .. toctree::
    :maxdepth: 2
+   :caption: User Guide
 
-   getting_started
+   user_guide 
    introduction
-   user_guide
    examples
    glossary
+   modules
 
 
 Indices and tables
