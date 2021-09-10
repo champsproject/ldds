@@ -17,8 +17,8 @@ kicked pendulum. Its equations of motion are given by the expressions:
 
 .. math::
    \begin{align}
-    x_{n+1} &= x_{n} + y_{n} - \dfrac{K}{2\pi} \sin(2\pi x_{n)),
-    y_{n+1} &= y_{n} - \dfrac{K}{2\pi} \sin(2\pi x_{n)),
+    x_{n+1} = x_{n} + y_{n} - \dfrac{K}{2\pi} \sin(2\pi x_{n)),
+    y_{n+1} = y_{n} - \dfrac{K}{2\pi} \sin(2\pi x_{n)),
    \end{align}
 
 where :math:`K` is the parameter that controls the forcing strength of the perturbation.
