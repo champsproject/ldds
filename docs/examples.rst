@@ -2,10 +2,9 @@
 Examples
 ========
 
+
 Some examples used in the tutorial and considered as benchmark systems in dynamical systems. At the end of each systems's equations, there are links to Ipython notebook with implementation and visualization details.
 
-
-.. examples::
 
 Discrete systems
 ================
@@ -53,7 +52,7 @@ The inverse Hénon map is:
     y_{n} = \dfrac{x_{n+1} - a + y_{n+1}^2}{b}.
    \end{align}
 
-`Ipython notebook with implementation and visualization for standard map and Hénon map <https://github.com/champsproject/ldds/blob/develop/tutorials/tutorial-8.ipynb>`_
+`Ipython notebook for standard map and Hénon map <https://github.com/champsproject/ldds/blob/develop/tutorials/tutorial-8.ipynb>`_
 
 
 
@@ -133,6 +132,8 @@ c. Inverted
 
 The inverted Duffing oscillator can be obtained from Hamiltonian ~\eqref{eqn:eqn:ham_duff}, by setting the parameters :math:`\alpha = \beta = - 1`.
 
+
+
 4. Saddle-node Hamiltonian 
 
 This system is defined by the Hamiltonian:
@@ -147,6 +148,8 @@ and its associated equations of motion are:
     \dot{x} = \dfrac{\partial H}{\partial p_x} =  p_x, \\
     \dot{p}_x = -\dfrac{\partial H}{\partial x} =  -x - x^2.
     \end{align} 
+
+`Ipython notebook on saddle-node Hamiltonian and inverted Duffing oscillator <https://github.com/champsproject/ldds/blob/develop/tutorials/tutorial-3.ipynb>`_
 
 5. Non-autonomous double-gyre flow
 
@@ -202,6 +205,8 @@ and Hamilton's equations of motion are:
 
 This system is a fundamental system for studying complex dynamics. Depending on the value of total energy, it can exhibit different dynamical behaviour ranging from near-integrable to completely chaotic.
 
+
+
 Three degrees of freedom
 ------------------------
 
@@ -226,4 +231,4 @@ The associated equations of motion are:
    \end{align}
 
 
-
+`Ipython notebook on Hénon-Heiles Hamiltonian, two and three degrees of freedom quadratic normal form with index-1 saddle <https://github.com/champsproject/ldds/blob/develop/tutorials/tutorial-5.ipynb>`_
