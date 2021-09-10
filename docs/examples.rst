@@ -2,14 +2,13 @@
 Examples
 ========
 
-
-.. examples:
-
 Some examples used in the tutorial and considered as benchmark systems in dynamical systems.
 
 
+.. examples::
+
 Discrete systems
-----------------
+================
 
 1. Standard map
 
@@ -54,9 +53,15 @@ The inverse Hénon map is:
     y_{n} = \dfrac{x_{n+1} - a + y_{n+1}^2}{b}.
    \end{align}
 
+`Ipython notebook with implementation and visualization for standard map and Hénon map <https://github.com/champsproject/ldds/blob/develop/tutorials/tutorial-8.ipynb>`_
 
-Continuous systems with one degree of freedom
----------------------------------------------
+
+
+Continuous systems 
+==================
+
+One degree of freedom
+---------------------
 
 1. Hamiltonian center
 
@@ -98,7 +103,7 @@ The Hamiltonian function:
 .. math::
    H(x,p_x,t) = \dfrac{1}{2}p_x^2 - \dfrac{\alpha}{2}x^2 + \dfrac{\beta}{4}x^4, \label{eqn:ham_duff}
 
-with :math:`\alpha,\beta>0`describes the Duffing oscillator with the associated equations of motion
+with :math:`\alpha,\beta>0` describes the Duffing oscillator with the associated equations of motion
 
 .. math::
    \begin{align}
@@ -155,8 +160,9 @@ The double-gyre flow is a classical system popular in geophysical fluid dynamics
 
 where we have that :math:`f(x,t) = \varepsilon \sin(\omega t + \phi) x^2 + \left(1-2\varepsilon \sin(\omega t + \phi)\right) x`.
 
-Continuous systems with two degrees of freedom
-----------------------------------------------
+
+Two degrees of freedom
+----------------------
 
 1. `Saddle-center <https://champsproject.github.io/lagrangian_descriptors/content/chapter2_1.html#two-degrees-of-freedom-and-the-hyperbolic-periodic-orbit>`_ 
 
@@ -195,8 +201,8 @@ and Hamilton's equations of motion are:
 
 This system is a fundamental system for studying complex dynamics. Depending on the value of total energy, it can exhibit different dynamical behaviour ranging from near-integrable to completely chaotic.
 
-Continuous systems with three degrees of freedom
-------------------------------------------------
+Three degrees of freedom
+------------------------
 
 1. `Saddle-center-center <https://champsproject.github.io/lagrangian_descriptors/content/chapter2_1.html#three-and-more-degrees-of-freedom-and-nhims>`_
 
@@ -218,8 +224,5 @@ The associated equations of motion are:
    \dot{p}_z &= -\dfrac{\partial H}{\partial z}= - z.
    \end{align}
 
-
-.. automodule:: vector_fields
-   :members:
 
 

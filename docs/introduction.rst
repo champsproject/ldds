@@ -1,4 +1,9 @@
-The purpose of this guide is to give a brief overview of the theory and illustrate the computation and visualization of Lagrangian descriptors for dynamical systems. We recommend that the user is familiar with nonlinear dynamical systems concepts mentioned in the :ref:`glossary`. Then, reading the brief introduction to the method of Lagrangian descriptor below and benchmark systems in :ref:`examples`.
+============
+Introduction
+============
+
+
+The purpose of this guide is to give a brief overview of the theory, illustrate the computation and visualization of Lagrangian descriptors for dynamical systems, and automatically generated API documentation. We recommend that the user is familiar with nonlinear dynamical systems concepts mentioned in the :ref:`glossary`. Then, reading the brief introduction to the method of Lagrangian descriptor below and benchmark systems in :ref:`examples`.
 
 Background and motivation
 =========================
@@ -9,8 +14,6 @@ Lagrangian descriptor is a scalar functional defined on a grid of initial condit
 
 Lagrangian descriptors
 ======================
-
-LDDS is a Python library for computing Lagrangian descriptors in dynamical systems.
 
 The Lagrangian descriptor (LD) as presented in Refs. [madrid2009]_, [mancho2013]_ is an arc-length of a trajectory calculated on a chosen initial time :math:`t_0` and measured for fixed forward and backward integration time, :math:`\tau`. For continuous time dynamical systems, Ref. [lopesino2017]_ gives an alternative definition of the LD which is useful for proving rigorous results and can be computed along with the trajectory. It provides a characterization of the notion of singular features of the LD that facilitates a proof for detecting invariant manifolds in certain model situations.  In addition, the "additive nature" of this new definition of LD provides 
 an approach for assessing the influence of each degree-of-freedom separately on the Lagrangian descriptor.  This property was used in Ref. [demian2017]_ which showed that a Lagrangian descriptor can be used to detect Lyapunov periodic orbits in the two degrees-of-freedom Hénon-Heiles Hamiltonian system. We will describe this procedure for two and three degrees-of-freedom linear autonomous Hamiltonian systems. We begin by establishing notation in the general setting of a time-dependent vector field where 
@@ -46,9 +49,6 @@ where the stable and unstable manifolds (:math:`\mathcal{W}^s(\mathbf{x}_0, t_0)
     \end{align}
 
 
-
-
-==========
 References
 ==========
    

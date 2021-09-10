@@ -17,7 +17,7 @@ Lagrangian Descriptors for Dynamical Systems
    :maxdepth: 2
    :caption: User Guide
 
-   user_guide 
+   
    introduction
    examples
    glossary
