@@ -23,7 +23,7 @@ __[Tutorial 4](tutorial-4.ipynb)__ Lagrangian descriptors for a user-defined 1 D
 
 * Morse oscillator
 
-__[Tutorial 5](tutorial-5.ipynb)__ High-dimensional continous systems
+__[Tutorial 5](tutorial-5.ipynb)__ High-dimensional continuous systems
 
 * 2DoF Hénon-Heiles
 * 2DoF Index-1 normal form saddle
