@@ -2,7 +2,7 @@
 Examples
 ========
 
-Some examples used in the tutorial and considered as benchmark systems in dynamical systems.
+Some examples used in the tutorial and considered as benchmark systems in dynamical systems. At the end of each systems's equations, there are links to Ipython notebook with implementation and visualization details.
 
 
 .. examples::
@@ -160,6 +160,7 @@ The double-gyre flow is a classical system popular in geophysical fluid dynamics
 
 where we have that :math:`f(x,t) = \varepsilon \sin(\omega t + \phi) x^2 + \left(1-2\varepsilon \sin(\omega t + \phi)\right) x`.
 
+`Ipython notebook on Hamiltonian center, saddle, and double gyre <https://github.com/champsproject/ldds/blob/develop/tutorials/tutorial-1.ipynb>`_
 
 Two degrees of freedom
 ----------------------

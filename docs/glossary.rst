@@ -93,9 +93,8 @@ Periodic orbits and invariant manifolds
    Lagrangian descriptors identify stable (or unstable) invariant manifolds when the initial conditions are integrated for the time interval :math:`[t_0, t_0 + \tau]` (or :math:`[t_0, t_0 - \tau]`), respectively. 
 
 
-==========
-References
-==========
+References: textbooks
+^^^^^^^^^^^^^^^^^^^^^
    
 .. [wiggins2003] Wiggins, S., (2003) Introduction to applied nonlinear dynamical systems and chaos (Vol. 2). Springer Science & Business Media.
 

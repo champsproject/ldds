@@ -5,7 +5,7 @@ Submodules
 ----------
 
 ldds.base module
------------------
+----------------
 
 .. automodule:: ldds.base
    :members:
@@ -13,7 +13,7 @@ ldds.base module
    :show-inheritance:
 
 ldds.tools module
-------------------
+-----------------
 
 .. automodule:: ldds.tools
    :members:
@@ -21,7 +21,7 @@ ldds.tools module
    :show-inheritance:
 
 ldds.vector\_fields module
----------------------------
+--------------------------
 
 .. automodule:: ldds.vector_fields
    :members:
