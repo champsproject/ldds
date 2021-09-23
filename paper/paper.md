@@ -43,13 +43,13 @@ affiliations:
 
 ## Statement of Need
 
-Nonlinear dynamical systems are ubiquitous in natural and engineering sciences, such as fluid mechanics, theoretical chemistry, ship dynamics, rigid body dynamics, atomic physics, solid mechanics, condensed matter physics, mathematical biology, oceanography, meteorology and celestial mechanics [@wiggins1994normally and references therein]. There have been many advances in understanding phenomena across these disciplines using the geometric viewpoint of the solutions and the underlying structures in the phase space; for example [@mackay_transport_1984], [@romkedar_analytical_1990], [@OzoriodeAlmeida1990], [@RomKedar90], [@meiss_symplectic_1992], [@koon_heteroclinic_2000], [@waalkens_escape_2005], [@meiss15], [@wiggins_role_2016], [@zhong_tube_2018], [@zhong_geometry_2020]. Chief among these phase space structures are the invariant manifolds that form a barrier between dynamically distinct solutions. In most nonlinear systems, the invariant manifolds are computed using numerical techniques that rely on some form of linearization around equilibrium points followed by continuation and globalization. However, these methods become computationally expensive and challenging when applied to the high-dimensional phase space of vector fields defined analytically, from numerical simulations or experimental data. This points to the need for techniques that can be paired with trajectory calculations, without the excessive computational overhead and at the same time can allow visualization along with trajectory data. The Python package, `LDDS`, serves this need for analyzing deterministic and stochastic, continuous and discrete high-dimensional nonlinear dynamical systems described either by an analytical vector field or from data obtained from numerical simulations or experiments.
+Nonlinear dynamical systems are ubiquitous in natural and engineering sciences, such as fluid mechanics, theoretical chemistry, ship dynamics, rigid body dynamics, atomic physics, solid mechanics, condensed matter physics, mathematical biology, oceanography, meteorology and celestial mechanics [@wiggins1994normally and references therein]. There have been many advances in understanding phenomena across these disciplines using the geometric viewpoint of the solutions and the underlying structures in the phase space; for example @mackay_transport_1984, @romkedar_analytical_1990, @OzoriodeAlmeida1990, @RomKedar90, @meiss_symplectic_1992, @koon_heteroclinic_2000, @waalkens_escape_2005, @meiss15, @wiggins_role_2016, @zhong_tube_2018, @zhong_geometry_2020. Chief among these phase space structures are the invariant manifolds that form a barrier between dynamically distinct solutions. In most nonlinear systems, the invariant manifolds are computed using numerical techniques that rely on some form of linearization around equilibrium points followed by continuation and globalization. However, these methods become computationally expensive and challenging when applied to the high-dimensional phase space of vector fields defined analytically, from numerical simulations or experimental data. This points to the need for techniques that can be paired with trajectory calculations, without the excessive computational overhead and at the same time can allow visualization along with trajectory data. The Python package, `LDDS`, serves this need for analyzing deterministic and stochastic, continuous and discrete high-dimensional nonlinear dynamical systems described either by an analytical vector field or from data obtained from numerical simulations or experiments.
 
-To the best of our knowledge, no other open-source software exists for computing Lagrangian descriptors. However, a variety of computational tools are available for obtaining phase space structures in fluid mechanics, such as the identification of Lagrangian coherent structures via finite-time Lyapunov exponents [@lagrangian], [@dgftle], [@lcstool], [@libcfd2lcs], [@lcsmatlabkit], [@activeBarriers] and finite-size Lyapunov exponents [@lagrangian], Eulerian coherent structures [@barriertool]. Our goal with this software is to make Lagrangian descriptors available to the wider scientific community and enable the use of this method for reproducible and replicable computational dynamical systems.
+To the best of our knowledge, no other open-source software exists for computing Lagrangian descriptors. However, a variety of computational tools are available for obtaining phase space structures in fluid mechanics, such as the identification of Lagrangian coherent structures via finite-time Lyapunov exponents (@lagrangian, @dgftle, @lcstool, @libcfd2lcs, @lcsmatlabkit, @activeBarriers) and finite-size Lyapunov exponents (@lagrangian), Eulerian coherent structures (@barriertool). Our goal with this software is to make Lagrangian descriptors available to the wider scientific community and enable the use of this method for reproducible and replicable computational dynamical systems.
 
 ## Summary and Functionalities
 
-The `LDDS` software is a Python-based module that provides the user with the capability of analyzing the phase space structures of both continuous and discrete nonlinear dynamical systems in the deterministic and stochastic settings using Lagrangian descriptors (LDs). The main idea of this method is to define a scalar valued functional called Lagrangian descriptor as the integral of a non-negative function $g(\mathbf{x}(t);\mathbf{x}_0)$ which encodes a dynamical property of a trajectory at the initial condition, $\mathbf{x}_0$. Different formulations of the Lagrangian descriptor exist in the literature where the non-negative function $g(\mathbf{x}(t);\mathbf{x}_0)$ is given by: the arclength of a trajectory in phase space [@madrid2009ld], [@mancho_2013], the arclength of a trajectory projected on the configuration space [@craven2015lagrangian], the $p$-norm or $p$-quasinorm [@lopesino2017], and the Maupertuis' action of Hamiltonian mechanics [@gonzalez2020]. The approach provided by Lagrangian descriptors for revealing phase space structure has also been adapted to address discrete-time systems (maps) and stochastic systems.
+The `LDDS` software is a Python-based module that provides the user with the capability of analyzing the phase space structures of both continuous and discrete nonlinear dynamical systems in the deterministic and stochastic settings using Lagrangian descriptors (LDs). The main idea of this method is to define a scalar valued functional called Lagrangian descriptor as the integral of a non-negative function $g(\mathbf{x}(t);\mathbf{x}_0)$ which encodes a dynamical property of a trajectory at the initial condition, $\mathbf{x}_0$. Different formulations of the Lagrangian descriptor exist in the literature where the non-negative function $g(\mathbf{x}(t);\mathbf{x}_0)$ is given by: the arclength of a trajectory in phase space (@madrid2009ld, @mancho_2013), the arclength of a trajectory projected on the configuration space (@craven2015lagrangian), the $p$-norm or $p$-quasinorm (@lopesino2017), and the Maupertuis' action of Hamiltonian mechanics (@gonzalez2020). The approach provided by Lagrangian descriptors for revealing phase space structure has also been adapted to address discrete-time systems (maps) and stochastic systems.
 
 Briefly, for a continuous-time dynamical system:
 
@@ -63,7 +63,7 @@ where $\mathbf{x} \in \mathbb{R}^{n}$ and $\mathbf{f}$ is the vector field, star
 \mathcal{L}\left(\mathbf{x}_0,t_0,\tau\right) = \int_{t_0-\tau}^{t_0+\tau} g(\mathbf{x}(t);\mathbf{x}_0) \, dt.
 \end{equation}
 
-at the initial condition. When this computation is performed for a 2D grid of initial conditions over long enough integration time interval and the corresponding contour map is visualized, one can detect phase space structures at the points with extremum LD values that also have a singularity (non-differentiability) [@lopesino2017,@naik2019a]. 
+at the initial condition. When this computation is performed for a 2D grid of initial conditions over long enough integration time interval and the corresponding contour map is visualized, one can detect phase space structures at the points with extremum LD values that also have a singularity (non-differentiability) (@lopesino2017, @naik2019a). 
 
 This open-source software incorporates the following features:
 
@@ -87,7 +87,7 @@ To illustrate the use of this software, we have applied the method to some of th
 
 * Standard map 
 
-The standard map is a two-dimensional map used in dynamical systems to study a number of physical systems such as the cyclotron particle accelerator or a kicked rotor [@Chirikov1969],[@meiss_symplectic_1992],[@Meiss2008]. The equations of the discrete system are given by the expressions:
+The standard map is a two-dimensional map used in dynamical systems to study a number of physical systems such as the cyclotron particle accelerator or a kicked rotor (@Chirikov1969, @meiss_symplectic_1992, @Meiss2008). The equations of the discrete system are given by the expressions:
 
 \begin{equation}
 \begin{cases}
@@ -112,7 +112,7 @@ In the following figure, we show the output produced by the LDDS software packag
 
 * Forced undamped Duffing oscillator
 
-The Duffing oscillator is an example of a periodically driven oscillator with nonlinear elasticity [@duffing1918], [@Kovacic2011]. This can model the oscillations of a pendulum whose stiffness does not obey Hooke's law or the motion of a particle in a double-well potential. It is also known as a simple system that can exhibit chaos. 
+The Duffing oscillator is an example of a periodically driven oscillator with nonlinear elasticity (@duffing1918, @Kovacic2011). This can model the oscillations of a pendulum whose stiffness does not obey Hooke's law or the motion of a particle in a double-well potential. It is also known as a simple system that can exhibit chaos. 
 
 As a special case, the forced undamped Duffing oscillator is described by a time-dependent Hamiltonian given by:
 
@@ -135,7 +135,7 @@ In the following figure we show the output produced by the LDDS software package
 
 * A double gyre flow with stochastic forcing
 
-The double gyre is a recurrent pattern occurring in geophysical flows [@Coulliette2001]. The stochastic dynamical system for a simplified model of this flow [@Shadden2005] with additive noise is described by the following stochastic differential equations [@balibrea2016lagrangian]:
+The double gyre is a recurrent pattern occurring in geophysical flows (@Coulliette2001). The stochastic dynamical system for a simplified model of this flow (@Shadden2005) with additive noise is described by the following stochastic differential equations (@balibrea2016lagrangian):
 
 \begin{equation}
 \begin{cases}
@@ -158,7 +158,7 @@ Four-dimensional phase space:
 
 * Hénon-Heiles Hamiltonian.
 
-The Hénon-Heiles system is a simplified model describing the restricted motion of a star around the center of a galaxy [@Henon1964]. This system is a paradigmatic example of a time-independent Hamiltonian with two degrees of freedom, given by the function:
+The Hénon-Heiles system is a simplified model describing the restricted motion of a star around the center of a galaxy (@Henon1964). This system is a paradigmatic example of a time-independent Hamiltonian with two degrees of freedom, given by the function:
 
 \begin{equation}
 H(x, y, p_x, p_y) = \frac{1}{2} (p_x^2 + p_y^2) + \frac{1}{2} (x^2 + y^2) + x^2 y - \frac{1}{3} y^3
@@ -181,7 +181,7 @@ In the next figure, we show the computation of Lagrangian descriptors with the L
 
 ## Relation to ongoing research projects
 
-Lagrangian descriptors form the basis of several past and ongoing research projects [@alvaro1], [@alvaro2], [@carlos2015], [@craven2015lagrangian], [@craven2016deconstructing], [@gg2016], [@balibrea2016lagrangian], [@demian2017], [@craven2017lagrangian], [@feldmaier2017obtaining], [@junginger2017chemical], [@gg2018], [@ramos2018], [@patra2018detecting], [@naik2019a], [@naik2019b], [@curbelo2019a], [@curbelo2019b], [@revuelta2019unveiling], [@GG2020a], [@GG2020b], [@krajnak2020manifld], [@naik2020], [@gonzalez2020], [@katsanikas2020a]. The common theme of all these projects is the investigation of phase space structures that govern phase space transport in nonlinear dynamical systems. We have also published an open-source book using Jupyter Book [@jupyterbook_2020] on the theory and applications of Lagrangian descriptors [@ldbook2020]. This open-source package is the computational companion to the book.
+Lagrangian descriptors form the basis of several past and ongoing research projects (@alvaro1, @alvaro2, @carlos2015, @craven2015lagrangian, @craven2016deconstructing, @gg2016, @balibrea2016lagrangian, @demian2017, @craven2017lagrangian, @feldmaier2017obtaining, @junginger2017chemical, @gg2018, @ramos2018, @patra2018detecting, @naik2019a, @naik2019b, @curbelo2019a, @curbelo2019b, @revuelta2019unveiling, @GG2020a, @GG2020b, @krajnak2020manifld, @naik2020, @gonzalez2020, @katsanikas2020a). The common theme of all these projects is the investigation of phase space structures that govern phase space transport in nonlinear dynamical systems. We have also published an open-source book using Jupyter Book @jupyterbook_2020 on the theory and applications of Lagrangian descriptors @ldbook2020. This open-source package is the computational companion to the book.
 
 ## Acknowledgements
 
